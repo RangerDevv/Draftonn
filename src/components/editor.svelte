@@ -1,0 +1,78 @@
+<script>
+import EditorJS from '@editorjs/editorjs';
+// only import the following: Embed, header, link, list, quote, table, InlineCode, warning, paragraph
+import List from '@editorjs/list';
+import Quote from '@editorjs/quote';
+import Embed from '@editorjs/embed';
+import Link from '@editorjs/link';
+import Table from '@editorjs/table';
+import InlineCode from '@editorjs/inline-code';
+import Warning from '@editorjs/warning';
+import Paragraph from 'editorjs-paragraph-with-alignment';
+import Header from 'editorjs-header-with-alignment'
+import ToggleBlock from 'editorjs-toggle-block';
+import Hyperlink from 'editorjs-hyperlink';
+import Marker from '@editorjs/marker';
+
+const editor = new EditorJS(
+    {
+        holder: 'editor',
+        tools: {
+            header: Header,
+            list: List,
+            quote: Quote,
+            embed: Embed,
+            link: Link,
+            table: Table,
+            inlineCode: InlineCode,
+            warning: Warning,
+            paragraph: {
+                class: Paragraph,
+                inlineToolbar: true,
+            },
+            toggleBlock: {
+                class: ToggleBlock,
+                inlineToolbar: true,
+            },
+            hyperlink: {
+                class: Hyperlink,
+                inlineToolbar: true,
+            },
+            marker: {
+                class: Marker,
+                inlineToolbar: true,
+                shortcut: 'CMD+SHIFT+M',
+            },
+        },
+    }
+)
+</script>
+<main>
+<div id="editor"></div>
+
+<style>
+    .editor {
+        width: 100%;
+        height: 100%;
+    }
+
+    h1 {
+        font-size: 2rem;
+    }
+    h2 {
+        font-size: 1.5rem;
+    }
+    h3 {
+        font-size: 1.17rem;
+    }
+    h4 {
+        font-size: 1rem;
+    }
+    h5 {
+        font-size: .83rem;
+    }
+    h6 {
+        font-size: .67rem;
+    }
+</style>
+</main>

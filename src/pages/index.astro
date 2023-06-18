@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Card from '../components/Card.astro';
+import Editor from '../components/editor.svelte';
 ---
 
 <Layout title="Welcome to Astro.">
@@ -33,6 +34,7 @@ import Card from '../components/Card.astro';
 			/>
 		</ul>
 	</main>
+	<Editor client:only="Svelte" />
 </Layout>
 
 <style>
