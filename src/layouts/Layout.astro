@@ -8,7 +8,20 @@ const { title } = Astro.props;
 let user = Astro.cookies.get('user').value;
 let loggedIn = user && user !== 'undefined';
 ---
+<script>
+	import { appwriteUser } from "../lib/backend";
 
+	let LogOutBtn = document.getElementById('logout') as HTMLAnchorElement;
+
+	LogOutBtn.onclick = function logOut() {
+		appwriteUser.deleteSession('current').then(() => {
+			document.cookie = `user=; expires=${new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toUTCString()}; path=/`;
+			document.cookie = `userName=; expires=${new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toUTCString()}; path=/`;
+			document.cookie = `session=; expires=${new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toUTCString()}; path=/`;
+			window.location.href = '/';
+		});
+	}
+</script>
 <!DOCTYPE html>
 <html lang="en" class="bg-gray-200 text-gray-900">
 	<head>
@@ -32,7 +45,7 @@ let loggedIn = user && user !== 'undefined';
 				<a href="/profile">📌</a>
 				</div>
 				<div class="tooltip" data-tip="Logout">
-				<a href="/logout">↩️</a>
+				<a id="logout">↩️</a>
 				</div>
 			</div>
 		) : (
