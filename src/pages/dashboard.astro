@@ -5,7 +5,7 @@ import Layout from "../layouts/Layout.astro";
     // get the data from the cookie named user
     let user = document.cookie.split(';').find((item) => item.includes('user'));
     // if the user cookie exists then do nothing else redirect to the login page
-    if (!user) {
+    if (user) {
         window.location.href = '/login';
     }
 </script>

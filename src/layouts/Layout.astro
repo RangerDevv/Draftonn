@@ -4,6 +4,9 @@ export interface Props {
 }
 
 const { title } = Astro.props;
+
+let user = Astro.cookies.get('user').value;
+let loggedIn = user && user !== 'undefined';
 ---
 
 <!DOCTYPE html>
@@ -16,6 +19,24 @@ const { title } = Astro.props;
 		<meta name="generator" content={Astro.generator} />
 		<title>{title}</title>
 	</head>
+	<!--  a nav that is a side drawer on both mobile and desktop -->
+	<nav>
+		<!--  an arrow that is on the edge of the nav -->
+		<p class="text-2xl 2xl:text-4xl text-right mr-1">⇒</p>
+		{loggedIn ? (
+			<>
+				<a href="/dashboard">Home</a>
+				<a href="/profile">Profile</a>
+				<a href="/logout">Logout</a>
+			</>
+		) : (
+			<>
+				<a href="/">Home</a>
+				<a href="/login">Login</a>
+				<a href="/signup">Signup</a>
+			</>
+		)}
+	</nav>
 	<body>
 		<slot />
 	</body>
@@ -32,5 +53,43 @@ const { title } = Astro.props;
 	code {
 		font-family: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono,
 			Bitstream Vera Sans Mono, Courier New, monospace;
+	}
+	/*  make the nav a side drawer on mobile and desktop */
+	nav {
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 20vw;
+		height: 100vh;
+		background-color: white;
+		box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+		transform: translateX(-90%);
+		transition: transform 0.3s ease-in-out;
+	}
+
+	/*  on mobile, make the nav full screen */
+	@media (max-width: 600px) {
+		nav {
+			width: 100vw;
+		}
+	}
+
+	nav:hover {
+		transform: translateX(0);
+	}
+	nav a {
+		display: block;
+		padding: 1rem;
+		text-decoration: none;
+		color: black;
+	}
+	nav a:hover {
+		background-color: #f1f1f1;
+	}
+	nav a:active {
+		background-color: #e1e1e1;
+	}
+	nav a:focus {
+		outline: 2px solid #f1f1f1;
 	}
 </style>
