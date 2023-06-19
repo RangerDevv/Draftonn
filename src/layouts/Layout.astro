@@ -10,7 +10,7 @@ let loggedIn = user && user !== 'undefined';
 ---
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="bg-gray-200 text-gray-900">
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="description" content="Astro description">
@@ -24,17 +24,29 @@ let loggedIn = user && user !== 'undefined';
 		<!--  an arrow that is on the edge of the nav -->
 		<p class="text-2xl 2xl:text-4xl text-right mr-1">⇒</p>
 		{loggedIn ? (
-			<>
-				<a href="/dashboard">Home</a>
-				<a href="/profile">Profile</a>
-				<a href="/logout">Logout</a>
-			</>
+			<div class="flex flex-row justify-center text-2xl">
+				<div class="tooltip" data-tip="Home">
+				<a href="/dashboard">🏠</a>
+				</div>
+				<div class="tooltip" data-tip="Profile">
+				<a href="/profile">📌</a>
+				</div>
+				<div class="tooltip" data-tip="Logout">
+				<a href="/logout">↩️</a>
+				</div>
+			</div>
 		) : (
-			<>
-				<a href="/">Home</a>
-				<a href="/login">Login</a>
-				<a href="/signup">Signup</a>
-			</>
+			<div class="flex flex-row justify-center text-2xl">
+				<div class="tooltip" data-tip="Home">
+				<a href="/">🏠</a>
+				</div>
+				<div class="tooltip" data-tip="Login">
+				<a href="/login">🔑</a>
+				</div>
+				<div class="tooltip" data-tip="Signup">
+				<a href="/signup">📝</a>
+				</div>
+			</div>
 		)}
 	</nav>
 	<body>
@@ -45,6 +57,8 @@ let loggedIn = user && user !== 'undefined';
 	:root {
 		--accent: 124, 58, 237;
 		--accent-gradient: linear-gradient(45deg, rgb(var(--accent)), #da62c4 30%, white 60%);
+		background-color: #F6F6F6;
+		color: #000000;
 	}
 	html {
 		font-family: system-ui, sans-serif;
