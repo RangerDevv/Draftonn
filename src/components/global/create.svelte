@@ -24,8 +24,8 @@ function createDocument() {
             "IsPublic": false,
         }
     ).then((response) => {
-        console.log(response);
         window.location.href = '/doc/'+response.$id;
+        console.log(response);
     }, (error) => {
         console.log(error);
     });
