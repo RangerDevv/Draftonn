@@ -15,7 +15,7 @@ let DocumentName = "";
 function createDocument() {
     appwriteDatabases.createDocument(
         ID.unique(), 
-        databaseId, 
+        "648bc6ddddf63e135f4d", 
         collectionId, 
         {
             "Name": DocumentName,
@@ -43,7 +43,7 @@ function createDocument() {
     <h3 class="font-bold text-2xl text-gray-900 text-center">Create Document</h3>
     <label for="name" class="text-gray-800">Name</label>
     <input type="text" id="name" bind:value={DocumentName} class="input input-bordered bg-gray-400" placeholder="Name" />
-    <label for="database" class="text-gray-800">Database</label>
+    <label for="database" class="text-gray-800">Type Of Document</label>
     <select id="database" class="select select-bordered bg-gray-400" bind:value={collectionId}>
         <option value="648bc7024074897c154d">Document</option>
     </select>
