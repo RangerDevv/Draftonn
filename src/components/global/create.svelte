@@ -14,9 +14,9 @@ let DocumentName = "";
 
 function createDocument() {
     appwriteDatabases.createDocument(
-        ID.unique(), 
-        "648bc6ddddf63e135f4d", 
+        databaseId,
         collectionId, 
+        ID.unique(), 
         {
             "Name": DocumentName,
             "AuthorName": AuthorName,
