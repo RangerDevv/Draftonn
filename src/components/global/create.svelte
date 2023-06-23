@@ -25,6 +25,7 @@ function createDocument() {
         }
     ).then((response) => {
         console.log(response);
+        window.location.href = '/doc/' + response.$id;
     }, (error) => {
         console.log(error);
     });
