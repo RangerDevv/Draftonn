@@ -1,4 +1,4 @@
-<script>
+1<script>
 import EditorJS from '@editorjs/editorjs';
 // only import the following: Embed, header, link, list, quote, table, InlineCode, warning, paragraph
 import List from '@editorjs/list';
@@ -64,9 +64,7 @@ const editor = new EditorJS(
         },
         data: JSON.parse(docContent),
     }
-)
-
-editor;
+);
 </script>
 <main>
 <div id="editor"></div>
