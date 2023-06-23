@@ -6,6 +6,7 @@ export interface Props {
 const { title } = Astro.props;
 
 let user = Astro.cookies.get('user').value;
+let Name = Astro.cookies.get('userName').value;
 let loggedIn = user && user !== 'undefined';
 
 import Create from '../components/global/create.svelte';
@@ -51,7 +52,7 @@ import Create from '../components/global/create.svelte';
 				<a id="logout">↩️</a>
 				</div>
 			</div>
-			<Create client:only="Svelte" />
+			<Create client:only="Svelte" AuthorName={Name} AuthorUid={user} />
 			</>
 		) : (
 			<>
