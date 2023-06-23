@@ -71,7 +71,8 @@ const editor = new EditorJS(
 <style>
     .editor {
         width: 100%;
-        height: 100%;
+        height: 100vh;
+        padding: 2rem;
     }
 
     h1 {
