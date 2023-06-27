@@ -19,7 +19,23 @@ export let pid = "";
 let databaseId = "648bc6ddddf63e135f4d";
 let collectionId = "648bc7024074897c154d";
 
-let loadedData = ' ';
+// make the loaded data a variable that stores JSON data
+let loadedData = '';
+
+let loadedDocument = Backend.appwriteDatabases.getDocument(databaseId, collectionId, pid).then((response) => {
+    console.log(response);
+}, (error) => {
+    console.log(error);
+});
+
+if (loadedDocument.Content !== ' ' || loadedDocument !== null || loadedDocument !== undefined) {
+    loadedData = loadedDocument.Content;
+    console.log('The document is not empty' + loadedData);
+} else {
+    loadedData = editor.save();
+    console.log('The document is empty' + loadedData);
+}
+
 
 const editor = new EditorJS(
     {
@@ -55,20 +71,6 @@ const editor = new EditorJS(
         data: JSON.parse(loadedData),
     }
 );
-
-let loadedDocument = Backend.appwriteDatabases.getDocument(databaseId, collectionId, pid).then((response) => {
-    console.log(response);
-}, (error) => {
-    console.log(error);
-});
-
-if (loadedDocument !== ' ' || loadedDocument !== null || loadedDocument !== undefined) {
-    loadedData = loadedDocument.Content;
-    console.log(loadedData);
-} else {
-    loadedData = editor.save();
-}
-
 
 function save() {
     editor.save().then((outputData) => {
