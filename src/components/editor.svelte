@@ -65,17 +65,43 @@ Backend.appwriteDatabases.getDocument(databaseId, collectionId, pid).then((respo
             data: JSON.parse(loadedData),
         }
     );
+
+    function save() {
+        editor.save().then((outputData) => {
+            console.log('Article data: ', outputData);
+            Backend.appwriteDatabases.updateDocument(databaseId, collectionId, pid,
+            {
+                Content: JSON.stringify(outputData),
+            }
+            ).then((response) => {
+                console.log(response);
+            }, (error) => {
+                console.log(error);
+            });
+        }).catch((error) => {
+            console.log('Saving failed: ', error)
+        });
+    }
 }, (error) => {
     console.log(error);
 });
+
 function save() {
     editor.save().then((outputData) => {
-        console.log('Article data: ', outputData)
+        console.log('Article data: ', outputData);
+        Backend.appwriteDatabases.updateDocument(databaseId, collectionId, pid,
+        {
+            Content: JSON.stringify(outputData),
+        }
+        ).then((response) => {
+            console.log(response);
+        }, (error) => {
+            console.log(error);
+        });
     }).catch((error) => {
         console.log('Saving failed: ', error)
     });
 }
-
 </script>
 <main>
 <div id="editor"></div>
