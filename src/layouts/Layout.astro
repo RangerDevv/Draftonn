@@ -52,7 +52,9 @@ import Create from '../components/global/create.svelte';
 				<a id="logout">↩️</a>
 				</div>
 			</div>
-			<Create client:only="Svelte" AuthorName={Name} AuthorUid={user} />
+			<div class="flex justify-center">
+				<Create client:only="Svelte" AuthorName={Name} AuthorUid={user} />
+			</div>
 			</>
 		) : (
 			<>
@@ -66,9 +68,7 @@ import Create from '../components/global/create.svelte';
 				<div class="tooltip" data-tip="Signup">
 				<a href="/signup">📝</a>
 				</div>
-
 			</div>
-			<Create client:only="Svelte" />
 			</>
 		)}
 	</nav>
@@ -102,6 +102,7 @@ import Create from '../components/global/create.svelte';
 		box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 		transform: translateX(-90%);
 		transition: transform 0.3s ease-in-out;
+		z-index: 100;
 	}
 
 	/*  on mobile, make the nav full screen */
