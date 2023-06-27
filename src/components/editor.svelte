@@ -66,7 +66,7 @@ Backend.appwriteDatabases.getDocument(databaseId, collectionId, pid).then((respo
         }
     );
 
-    function save() {
+    document.getElementById('save').onclick = function save() {
         editor.save().then((outputData) => {
             console.log('Article data: ', outputData);
             Backend.appwriteDatabases.updateDocument(databaseId, collectionId, pid,
@@ -85,27 +85,10 @@ Backend.appwriteDatabases.getDocument(databaseId, collectionId, pid).then((respo
 }, (error) => {
     console.log(error);
 });
-
-function save() {
-    editor.save().then((outputData) => {
-        console.log('Article data: ', outputData);
-        Backend.appwriteDatabases.updateDocument(databaseId, collectionId, pid,
-        {
-            Content: JSON.stringify(outputData),
-        }
-        ).then((response) => {
-            console.log(response);
-        }, (error) => {
-            console.log(error);
-        });
-    }).catch((error) => {
-        console.log('Saving failed: ', error)
-    });
-}
 </script>
 <main>
 <div id="editor"></div>
-<button on:click={save}>Save</button>
+<button id="save">Save</button>
 
 <style>
     .editor {
