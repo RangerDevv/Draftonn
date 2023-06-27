@@ -1,4 +1,4 @@
-1<script>
+<script>
 import EditorJS from '@editorjs/editorjs';
 // only import the following: Embed, header, link, list, quote, table, InlineCode, warning, paragraph
 import List from '@editorjs/list';
@@ -22,56 +22,52 @@ let collectionId = "648bc7024074897c154d";
 // make the loaded data a variable that stores JSON data
 let loadedData = '';
 
-let loadedDocument = Backend.appwriteDatabases.getDocument(databaseId, collectionId, pid).then((response) => {
+Backend.appwriteDatabases.getDocument(databaseId, collectionId, pid).then((response) => {
     console.log(response);
+    if (response.Content !== ' ' || response !== null || response !== undefined) {
+        loadedData = response.Content;
+        console.log('The document is not empty' + loadedData);
+    } else {
+        loadedData = editor.save();
+        console.log('The document is empty' + loadedData);
+    }
+    const editor = new EditorJS(
+        {
+            holder: 'editor',
+            placeholder: 'Start writing your article... Press tab to see the toolbar',
+            tools: {
+                header: Header,
+                list: List,
+                quote: Quote,
+                embed: Embed,
+                link: Link,
+                table: Table,
+                inlineCode: InlineCode,
+                warning: Warning,
+                paragraph: {
+                    class: Paragraph,
+                    inlineToolbar: true,
+                },
+                toggleBlock: {
+                    class: ToggleBlock,
+                    inlineToolbar: true,
+                },
+                hyperlink: {
+                    class: Hyperlink,
+                    inlineToolbar: true,
+                },
+                marker: {
+                    class: Marker,
+                    inlineToolbar: true,
+                    shortcut: 'CMD+SHIFT+M',
+                },
+            },
+            data: JSON.parse(loadedData),
+        }
+    );
 }, (error) => {
     console.log(error);
 });
-
-if (loadedDocument.Content !== ' ' || loadedDocument !== null || loadedDocument !== undefined) {
-    loadedData = loadedDocument.Content;
-    console.log('The document is not empty' + loadedData);
-} else {
-    loadedData = editor.save();
-    console.log('The document is empty' + loadedData);
-}
-
-
-const editor = new EditorJS(
-    {
-        holder: 'editor',
-        placeholder: 'Start writing your article... Press tab to see the toolbar',
-        tools: {
-            header: Header,
-            list: List,
-            quote: Quote,
-            embed: Embed,
-            link: Link,
-            table: Table,
-            inlineCode: InlineCode,
-            warning: Warning,
-            paragraph: {
-                class: Paragraph,
-                inlineToolbar: true,
-            },
-            toggleBlock: {
-                class: ToggleBlock,
-                inlineToolbar: true,
-            },
-            hyperlink: {
-                class: Hyperlink,
-                inlineToolbar: true,
-            },
-            marker: {
-                class: Marker,
-                inlineToolbar: true,
-                shortcut: 'CMD+SHIFT+M',
-            },
-        },
-        data: JSON.parse(loadedData),
-    }
-);
-
 function save() {
     editor.save().then((outputData) => {
         console.log('Article data: ', outputData)
