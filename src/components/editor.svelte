@@ -23,9 +23,6 @@ let loadedData = ''
 
 let loadedDocument = Backend.appwriteDatabases.getDocument(databaseId, collectionId, pid);
 
-if (loadedDocument !== ' ') {
-    loadedData = loadedDocument.Content;
-}
 
 
 const editor = new EditorJS(
@@ -58,9 +55,15 @@ const editor = new EditorJS(
                 shortcut: 'CMD+SHIFT+M',
             },
         },
-        data: loadedData,
     }
 );
+
+if (loadedDocument !== ' ') {
+    loadedData = loadedDocument.Content;
+    console.log(loadedData);
+} else {
+    loadedData = editor.save();
+}
 
 function save() {
     editor.save().then((outputData) => {
