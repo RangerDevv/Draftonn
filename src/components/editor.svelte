@@ -13,22 +13,18 @@ import Header from 'editorjs-header-with-alignment'
 import ToggleBlock from 'editorjs-toggle-block';
 import Hyperlink from 'editorjs-hyperlink';
 import Marker from '@editorjs/marker';
-import appwriteDatabases from '../lib/backend';
+import * as Backend from '../lib/backend';
 
 export let pid = "";
 let databaseId = "648bc6ddddf63e135f4d";
 let collectionId = "648bc7024074897c154d";
 
-let loadedDocument = appwriteDatabases.getDocument(databaseId, collectionId, pid).then((response) => {
-    console.log(response);
-}, (error) => {
-    console.log(error);
-});
+let data = ''
 
-let  docContent = ""
+let loadedDocument = Backend.appwriteDatabases.getDocument(databaseId, collectionId, pid);
 
-if (loadedDocument.content != " ") {
-    docContent = loadedDocument.content;
+if (loadedDocument !== ' ') {
+    data = loadedDocument.Content;
 }
 
 
