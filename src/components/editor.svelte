@@ -19,12 +19,14 @@ export let pid = "";
 let databaseId = "648bc6ddddf63e135f4d";
 let collectionId = "648bc7024074897c154d";
 
+let LoadedTitle = "";
 let loadedData = '';
 
 Backend.appwriteDatabases.getDocument(databaseId, collectionId, pid).then((response) => {
     console.log(response);
     if (response.Content !== ' ' || response !== null || response !== undefined) {
         loadedData = response.Content;
+        LoadedTitle = response.Name;
         console.log('The document is not empty' + loadedData);
         if (loadedData === ' ') {
             loadedData = JSON.stringify(editor.save());
@@ -74,6 +76,7 @@ Backend.appwriteDatabases.getDocument(databaseId, collectionId, pid).then((respo
             Backend.appwriteDatabases.updateDocument(databaseId, collectionId, pid,
             {
                 Content: JSON.stringify(outputData),
+                Name: LoadedTitle,
             }
             ).then((response) => {
                 console.log(response);
@@ -89,6 +92,7 @@ Backend.appwriteDatabases.getDocument(databaseId, collectionId, pid).then((respo
 });
 </script>
 <main>
+<input type="text" bind:value={LoadedTitle} placeholder="Title" class="border-none text-4xl font-bold text-center">
 <div id="editor"></div>
 <button id="save">Save</button>
 
