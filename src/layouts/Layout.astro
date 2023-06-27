@@ -19,7 +19,7 @@ if (loggedIn) {
 	// only get the docs that are from the user
 	RawDocs.then((response) => {
 		response.documents.forEach((doc: any) => {
-			if (doc.AuthorName === user) {
+			if (doc.AuthorUid === user) {
 				UserDocs.push(doc);
 			}
 		});
