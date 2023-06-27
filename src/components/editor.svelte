@@ -19,12 +19,12 @@ export let pid = "";
 let databaseId = "648bc6ddddf63e135f4d";
 let collectionId = "648bc7024074897c154d";
 
-let data = ''
+let loadedData = ''
 
 let loadedDocument = Backend.appwriteDatabases.getDocument(databaseId, collectionId, pid);
 
 if (loadedDocument !== ' ') {
-    data = loadedDocument.Content;
+    loadedData = loadedDocument.Content;
 }
 
 
@@ -58,11 +58,22 @@ const editor = new EditorJS(
                 shortcut: 'CMD+SHIFT+M',
             },
         },
+        data: loadedData,
     }
 );
+
+function save() {
+    editor.save().then((outputData) => {
+        console.log('Article data: ', outputData)
+    }).catch((error) => {
+        console.log('Saving failed: ', error)
+    });
+}
+
 </script>
 <main>
 <div id="editor"></div>
+<button on:click={save}>Save</button>
 
 <style>
     .editor {
@@ -88,6 +99,12 @@ const editor = new EditorJS(
     }
     h6 {
         font-size: .67rem;
+    }
+
+    /* center the button */
+    button {
+        display: block;
+        margin: 0 auto;
     }
 </style>
 </main>
