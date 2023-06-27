@@ -12,16 +12,7 @@ let user = Astro.cookies.get('user').value;
 let Name = Astro.cookies.get('userName').value;
 let loggedIn = user && user !== 'undefined';
 
-let UserDocs = [] as any[];
-
 if (loggedIn) {
-	UserDocs = appwriteDatabases.listDocuments(
-		'648bc6ddddf63e135f4d', 
-		'648bc7024074897c154d', 
-		[
-			Query.search('AuthorUid', user as string)
-		]
-		);
 }
 import Create from '../components/global/create.svelte';
 ---
@@ -68,14 +59,6 @@ import Create from '../components/global/create.svelte';
 			</div>
 			<div class="flex justify-center">
 				<Create client:only="Svelte" AuthorName={Name} AuthorUid={user} />
-
-				{UserDocs.map((doc: any) => (
-					<div class="flex flex-col justify-center">
-						<a href={`/doc/${doc.$id}`} class="text-center">
-							{doc.Name}
-						</a>
-					</div>
-				))}
 			</div>
 			</>
 		) : (
