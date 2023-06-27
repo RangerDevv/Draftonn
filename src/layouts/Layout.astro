@@ -8,18 +8,14 @@ const { title } = Astro.props;
 import { appwriteDatabases } from '../lib/backend';
 import { Query } from 'appwrite';
 
-let user = Astro.cookies.get('user').value;
+let user = Astro.cookies.get('user').value as string;
 let Name = Astro.cookies.get('userName').value;
 let loggedIn = user && user !== 'undefined';
 
 let UserDocs = [] as any;
 
 if (loggedIn) {
-	const RawDocs = appwriteDatabases.listDocuments('648bc6ddddf63e135f4d', '648bc7024074897c154d');
-	// only get the docs that are from the user
-	RawDocs.then((response) => {
-		UserDocs = response.documents.filter((doc: any) => doc.AuthorUid === user);
-	});
+	const RawDocs = appwriteDatabases.listDocuments('648bc6ddddf63e135f4d', '648bc7024074897c154d', [Query.equal('AuthorUid', user)]);
 }
 import Create from '../components/global/create.svelte';
 ---
