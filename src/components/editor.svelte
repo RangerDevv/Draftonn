@@ -21,7 +21,12 @@ let collectionId = "648bc7024074897c154d";
 
 let loadedData = ''
 
-let loadedDocument = Backend.appwriteDatabases.getDocument(databaseId, collectionId, pid);
+let loadedDocument = Backend.appwriteDatabases.getDocument(databaseId, collectionId, pid).then((response) => {
+    console.log(response);
+    loadedDocument = response;
+}, (error) => {
+    console.log(error);
+});
 
 
 
