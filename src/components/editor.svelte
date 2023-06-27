@@ -92,7 +92,7 @@ Backend.appwriteDatabases.getDocument(databaseId, collectionId, pid).then((respo
 });
 </script>
 <main>
-<input type="text" bind:value={LoadedTitle} placeholder="Title" class="border-none text-4xl font-bold text-center">
+<input type="text" bind:value={LoadedTitle} placeholder="Title" class="border-none text-4xl font-bold text-center bg-transparent active:border-none mx-auto self-center">
 <div id="editor"></div>
 <button id="save">Save</button>
 
@@ -126,6 +126,12 @@ Backend.appwriteDatabases.getDocument(databaseId, collectionId, pid).then((respo
     button {
         display: block;
         margin: 0 auto;
+    }
+
+    /*  remove border from input */
+    input {
+        border: none;
+        outline: none;
     }
 </style>
 </main>

@@ -15,7 +15,7 @@ let loggedIn = user && user !== 'undefined';
 let UserDocs = [] as any;
 
 if (loggedIn) {
-	const RawDocs = appwriteDatabases.listDocuments('648bc6ddddf63e135f4d', '648bc7024074897c154d', [Query.equal('AuthorUid', user)]);
+	UserDocs = appwriteDatabases.listDocuments('648bc6ddddf63e135f4d', '648bc7024074897c154d', [Query.equal('AuthorUid', user)]);
 }
 import Create from '../components/global/create.svelte';
 ---
