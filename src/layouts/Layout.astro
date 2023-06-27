@@ -18,11 +18,7 @@ if (loggedIn) {
 	const RawDocs = appwriteDatabases.listDocuments('648bc6ddddf63e135f4d', '648bc7024074897c154d');
 	// only get the docs that are from the user
 	RawDocs.then((response) => {
-		response.documents.filter((doc: any) => {
-			if (doc.AuthorUid === user) {
-				UserDocs.push(doc);
-			}
-		});
+		UserDocs = response.documents.filter((doc: any) => doc.AuthorUid === user);
 	});
 }
 import Create from '../components/global/create.svelte';
