@@ -12,7 +12,7 @@ let user = Astro.cookies.get('user').value;
 let Name = Astro.cookies.get('userName').value;
 let loggedIn = user && user !== 'undefined';
 
-let UserDocs = [] as any;
+let UserDocs = [] as any[];
 
 if (loggedIn) {
 	UserDocs = appwriteDatabases.listDocuments(
