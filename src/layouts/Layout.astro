@@ -5,10 +5,26 @@ export interface Props {
 
 const { title } = Astro.props;
 
+import { appwriteDatabases } from '../lib/backend';
+import { Query } from 'appwrite';
+
 let user = Astro.cookies.get('user').value;
 let Name = Astro.cookies.get('userName').value;
 let loggedIn = user && user !== 'undefined';
 
+let UserDocs = [] as any;
+
+if (loggedIn) {
+	const RawDocs = appwriteDatabases.listDocuments('648bc6ddddf63e135f4d', '648bc7024074897c154d');
+	// only get the docs that are from the user
+	RawDocs.then((response) => {
+		response.documents.forEach((doc: any) => {
+			if (doc.author === user) {
+				UserDocs.push(doc);
+			}
+		});
+	});
+}
 import Create from '../components/global/create.svelte';
 ---
 <script>
@@ -54,6 +70,12 @@ import Create from '../components/global/create.svelte';
 			</div>
 			<div class="flex justify-center">
 				<Create client:only="Svelte" AuthorName={Name} AuthorUid={user} />
+
+				{UserDocs.map((doc: any) => (
+					<div class="tooltip" data-tip={doc.Name}>
+						<a href={`/doc/${doc.$id}`}>{doc.Name}</a>
+					</div>
+				))}
 			</div>
 			</>
 		) : (
