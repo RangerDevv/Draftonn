@@ -24,6 +24,7 @@ let loadedData = ' ';
 const editor = new EditorJS(
     {
         holder: 'editor',
+        placeholder: 'Start writing your article... Press tab to see the toolbar',
         tools: {
             header: Header,
             list: List,
@@ -61,7 +62,7 @@ let loadedDocument = Backend.appwriteDatabases.getDocument(databaseId, collectio
     console.log(error);
 });
 
-if (loadedDocument !== ' ') {
+if (loadedDocument !== ' ' || loadedDocument !== null || loadedDocument !== undefined) {
     loadedData = loadedDocument.Content;
     console.log(loadedData);
 } else {
