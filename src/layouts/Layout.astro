@@ -18,7 +18,7 @@ if (loggedIn) {
 	const RawDocs = appwriteDatabases.listDocuments('648bc6ddddf63e135f4d', '648bc7024074897c154d');
 	// only get the docs that are from the user
 	RawDocs.then((response) => {
-		response.documents.forEach((doc: any) => {
+		response.documents.filter((doc: any) => {
 			if (doc.AuthorUid === user) {
 				UserDocs.push(doc);
 			}
