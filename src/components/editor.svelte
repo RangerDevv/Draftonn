@@ -60,6 +60,7 @@ const editor = new EditorJS(
                 shortcut: 'CMD+SHIFT+M',
             },
         },
+        data: JSON.parse(loadedData),
     }
 );
 
