@@ -55,6 +55,12 @@ const editor = new EditorJS(
     }
 );
 
+let loadedDocument = Backend.appwriteDatabases.getDocument(databaseId, collectionId, pid).then((response) => {
+    console.log(response);
+}, (error) => {
+    console.log(error);
+});
+
 if (loadedDocument !== ' ') {
     loadedData = loadedDocument.Content;
     console.log(loadedData);
@@ -62,11 +68,6 @@ if (loadedDocument !== ' ') {
     loadedData = editor.save();
 }
 
-let loadedDocument = Backend.appwriteDatabases.getDocument(databaseId, collectionId, pid).then((response) => {
-    console.log(response);
-}, (error) => {
-    console.log(error);
-});
 
 function save() {
     editor.save().then((outputData) => {
