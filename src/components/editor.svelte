@@ -132,6 +132,10 @@ Backend.appwriteDatabases.getDocument(databaseId, collectionId, pid).then((respo
     input {
         border: none;
         outline: none;
+        /* center the input */
+        display: block;
+        margin: 0 auto;
+        padding-top: 1rem;
     }
 </style>
 </main>
