@@ -77,12 +77,11 @@ Backend.appwriteDatabases.getDocument(databaseId, collectionId, pid).then((respo
     document.getElementById('save').onclick = function save() {
         editor.save().then((outputData) => {
             console.log('Article data: ', outputData);
-            const lastUpdated = new Date().toISOString();
             Backend.appwriteDatabases.updateDocument(databaseId, collectionId, pid,
             {
                 Content: JSON.stringify(outputData),
                 Name: LoadedTitle,
-                LastUpdated: lastUpdated,
+                LastUpdated: new Date.now().toISOString(),
             }
             ).then((response) => {
                 console.log(response);
@@ -101,12 +100,11 @@ Backend.appwriteDatabases.getDocument(databaseId, collectionId, pid).then((respo
 function autoSave() {
     editor.save().then((outputData) => {
         console.log('Article data: ', outputData);
-        const lastUpdated = new Date().toISOString();
         Backend.appwriteDatabases.updateDocument(databaseId, collectionId, pid,
         {
             Content: JSON.stringify(outputData),
             Name: LoadedTitle,
-            LastUpdated: lastUpdated,
+            LastUpdated: new Date.now().toISOString(),
         }
         ).then((response) => {
             console.log(response);
