@@ -21,12 +21,14 @@ let collectionId = "648bc7024074897c154d";
 
 let LoadedTitle = "";
 let loadedData = '';
+let LoadedDate = "";
 
 Backend.appwriteDatabases.getDocument(databaseId, collectionId, pid).then((response) => {
     console.log(response);
     if (response.Content !== ' ' || response !== null || response !== undefined) {
         loadedData = response.Content;
         LoadedTitle = response.Name;
+        LoadedDate = response.LastUpdated;
         console.log('The document is not empty' + loadedData);
         if (loadedData === ' ') {
             loadedData = JSON.stringify(editor.save());
@@ -77,6 +79,7 @@ Backend.appwriteDatabases.getDocument(databaseId, collectionId, pid).then((respo
             {
                 Content: JSON.stringify(outputData),
                 Name: LoadedTitle,
+                LastUpdated: Date.now(),
             }
             ).then((response) => {
                 console.log(response);
@@ -90,9 +93,40 @@ Backend.appwriteDatabases.getDocument(databaseId, collectionId, pid).then((respo
 }, (error) => {
     console.log(error);
 });
+
+// autosave function that is called every 5 seconds or when the user leaves the page
+function autoSave() {
+    editor.save().then((outputData) => {
+        console.log('Article data: ', outputData);
+        Backend.appwriteDatabases.updateDocument(databaseId, collectionId, pid,
+        {
+            Content: JSON.stringify(outputData),
+            Name: LoadedTitle,
+            LastUpdated: Date.now(),
+        }
+        ).then((response) => {
+            console.log(response);
+        }, (error) => {
+            console.log(error);
+        });
+    }).catch((error) => {
+        console.log('Saving failed: ', error)
+    });
+}
+
+// call the autosave function every 5 seconds
+setInterval(autoSave, 5000);
+
+// call the autosave function when the user leaves the page
+window.onbeforeunload = function () {
+    autoSave();
+}
 </script>
 <main>
+<div class=" flex flex-row justify-center items-center gap-8 p-2">
 <input type="text" bind:value={LoadedTitle} placeholder="Title" class="border-none text-4xl font-bold text-center bg-transparent active:border-none mx-auto self-center">
+<p class="text-center text-gray-400 text-sm pr-8">Last updated: {LoadedDate}</p>
+</div>
 <div id="editor"></div>
 <button id="save">Save</button>
 
