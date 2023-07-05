@@ -127,7 +127,7 @@ window.onbeforeunload = function () {
 <main>
 <div class=" flex flex-row justify-center items-center gap-8 p-2">
 <input type="text" bind:value={LoadedTitle} placeholder="Title" class="border-none text-4xl font-bold text-center bg-transparent active:border-none mx-auto self-center">
-<p class="text-center text-gray-400 text-sm pr-8">Last updated: {LoadedDate}</p>
+<p class="text-center text-gray-400 text-sm pr-8">Last updated: {LoadedDate.substring(0, 10).replaceAll('-', '/') + ' ' + LoadedDate.substring(11, 16).replaceAll('-', ':')}</p>
 </div>
 <div id="editor"></div>
 <button id="save">Save</button>
