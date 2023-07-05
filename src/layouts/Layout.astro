@@ -73,7 +73,7 @@ import Create from '../components/global/create.svelte';
 			</div>
 			<div class="flex flex-col p-10 gap-5">
 				{Docs.map((doc) => (
-					<div class="flex flex-row justify-center">
+					<div class="flex flex-row">
 						<a href={`/doc/${doc.$id}`} class="text-2xl text-black">{doc.Name}</a>
 					</div>
 				))}
