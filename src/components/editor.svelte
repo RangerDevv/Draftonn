@@ -23,6 +23,8 @@ let LoadedTitle = "";
 let loadedData = '';
 let LoadedDate = "";
 
+let editor;
+
 Backend.appwriteDatabases.getDocument(databaseId, collectionId, pid).then((response) => {
     console.log(response);
     if (response.Content !== ' ' || response !== null || response !== undefined) {
@@ -37,7 +39,7 @@ Backend.appwriteDatabases.getDocument(databaseId, collectionId, pid).then((respo
         loadedData = editor.save();
         console.log('The document is empty' + loadedData);
     }
-    const editor = new EditorJS(
+    editor = new EditorJS(
         {
             holder: 'editor',
             placeholder: 'Start writing your article... Press tab to see the toolbar',
@@ -75,11 +77,12 @@ Backend.appwriteDatabases.getDocument(databaseId, collectionId, pid).then((respo
     document.getElementById('save').onclick = function save() {
         editor.save().then((outputData) => {
             console.log('Article data: ', outputData);
+            const lastUpdated = new Date().getTime();
             Backend.appwriteDatabases.updateDocument(databaseId, collectionId, pid,
             {
                 Content: JSON.stringify(outputData),
                 Name: LoadedTitle,
-                LastUpdated: Date.now(),
+                LastUpdated: lastUpdated,
             }
             ).then((response) => {
                 console.log(response);
@@ -98,11 +101,12 @@ Backend.appwriteDatabases.getDocument(databaseId, collectionId, pid).then((respo
 function autoSave() {
     editor.save().then((outputData) => {
         console.log('Article data: ', outputData);
+        const lastUpdated = new Date().getTime();
         Backend.appwriteDatabases.updateDocument(databaseId, collectionId, pid,
         {
             Content: JSON.stringify(outputData),
             Name: LoadedTitle,
-            LastUpdated: Date.now(),
+            LastUpdated: lastUpdated,
         }
         ).then((response) => {
             console.log(response);
