@@ -23,7 +23,7 @@ let collectionId = "648bc7024074897c154d";
 let LoadedTitle = "";
 let loadedData = '';
 let LoadedDate = "";
-let docVisibility = false;
+let docVisibility = null;
 let AuthorUid = "";
 
 let editor;
@@ -130,7 +130,12 @@ window.onbeforeunload = function () {
 }
 </script>
 <main>
-
+{#if docVisibility==null}
+<div class=" flex flex-col justify-center items-center pt-[40vh] gap-20">
+<p class="text-center text-6xl text-slate-950">🌐</p>
+<span class="loading loading-infinity loading-lg text-black"></span>
+</div>
+{:else}
 {#if docVisibility==true || user === AuthorUid}
 <div class=" flex flex-row justify-center items-center gap-8 p-2">
 <input type="text" bind:value={LoadedTitle} placeholder="Title" class="border-none text-4xl font-bold text-center bg-transparent active:border-none mx-auto self-center">
@@ -145,6 +150,7 @@ window.onbeforeunload = function () {
     <p class="text-center text-6xl text-slate-950">🔒</p>
     <p class="text-center text-2xl text-slate-950">You do not have access to this document</p>
 </div>
+{/if}
 {/if}
 
 <style>
