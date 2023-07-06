@@ -87,6 +87,7 @@ Backend.appwriteDatabases.getDocument(databaseId, collectionId, pid).then((respo
                 Content: JSON.stringify(outputData),
                 Name: LoadedTitle,
                 LastUpdated: new Date().toISOString(),
+                IsPublic: docVisibility,
             }
             ).then((response) => {
                 console.log(response);
@@ -110,6 +111,7 @@ function autoSave() {
             Content: JSON.stringify(outputData),
             Name: LoadedTitle,
             LastUpdated: new Date().toISOString(),
+            IsPublic: docVisibility,
         }
         ).then((response) => {
             console.log(response);
