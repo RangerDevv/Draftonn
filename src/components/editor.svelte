@@ -147,11 +147,11 @@ window.onbeforeunload = function () {
 <label class="flex items-center">
 {#if user === AuthorUid}
 <input type="checkbox" class="form-checkbox" bind:checked={docVisibility} on:change={autoSave} />
-{/if}
 {#if docVisibility}
 <span class="ml-2">Public</span>
 {:else}
 <span class="ml-2">Private</span>
+{/if}
 {/if}
 </label>
 </div>
