@@ -62,7 +62,7 @@ function createDocument() {
   </form>
 </dialog>
 
-<style>
+<style is:global>
     /*  style the options */
     .select option {
         background-color: #fff;
