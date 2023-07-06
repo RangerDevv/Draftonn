@@ -57,7 +57,7 @@ import Create from '../components/global/create.svelte';
 		<p class="text-2xl 2xl:text-4xl text-right mr-1">⇒</p>
 		{loggedIn ? (
 			<>
-			<div class="flex flex-row justify-center text-2xl pb-4">
+			<div class="flex flex-row justify-center text-2xl pb-1">
 				<div class="tooltip" data-tip="Home">
 				<a href="/dashboard">🏠</a>
 				</div>
@@ -68,7 +68,7 @@ import Create from '../components/global/create.svelte';
 				<a id="logout">↩️</a>
 				</div>
 			</div>
-			<div class="flex justify-center pt-5">
+			<div class="flex justify-center pt-1">
 				<Create client:only="Svelte" AuthorName={Name} AuthorUid={user} />
 			</div>
 			<div class="flex flex-col p-5 gap-2">
