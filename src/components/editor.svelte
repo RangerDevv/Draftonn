@@ -145,7 +145,7 @@ window.onbeforeunload = function () {
 <!--  checkboxes for public and private -->
 <div class="flex flex-row justify-center items-center gap-2">
 <label class="flex items-center">
-<input type="checkbox" class="form-checkbox" checked={docVisibility} on:change={autoSave} />
+<input type="checkbox" class="form-checkbox" bind:checked={docVisibility} on:change={autoSave} />
 {#if docVisibility}
 <span class="ml-2">Public</span>
 {:else}
