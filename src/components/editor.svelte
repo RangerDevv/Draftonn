@@ -16,12 +16,15 @@ import Marker from '@editorjs/marker';
 import * as Backend from '../lib/backend';
 
 export let pid = "";
+export let user = "";
 let databaseId = "648bc6ddddf63e135f4d";
 let collectionId = "648bc7024074897c154d";
 
 let LoadedTitle = "";
 let loadedData = '';
 let LoadedDate = "";
+let docVisibility = false;
+let AuthorUid = "";
 
 let editor;
 
@@ -31,6 +34,8 @@ Backend.appwriteDatabases.getDocument(databaseId, collectionId, pid).then((respo
         loadedData = response.Content;
         LoadedTitle = response.Name;
         LoadedDate = response.LastUpdated;
+        docVisibility = response.IsPublic;
+        AuthorUid = response.AuthorUid;
         console.log('The document is not empty' + loadedData);
         if (loadedData === ' ') {
             loadedData = JSON.stringify(editor.save());
@@ -125,12 +130,19 @@ window.onbeforeunload = function () {
 }
 </script>
 <main>
+
+{#if docVisibility == false}
+<p class="text-center text-2xl font-bold">You do not have access to this document</p>
+{:else if docVisibility == true || user === AuthorUid}
 <div class=" flex flex-row justify-center items-center gap-8 p-2">
 <input type="text" bind:value={LoadedTitle} placeholder="Title" class="border-none text-4xl font-bold text-center bg-transparent active:border-none mx-auto self-center">
 <p class="text-center text-gray-400 text-sm pr-8">Last updated: {LoadedDate.substring(0, 10).replaceAll('-', '/') + ' ' + LoadedDate.substring(11, 16).replaceAll('-', ':')}</p>
 </div>
 <div id="editor"></div>
-<button id="save">Save</button>
+{#if user === AuthorUid}
+    <button id="save">Save</button>
+{/if}
+{/if}
 
 <style>
     .editor {
