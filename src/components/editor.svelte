@@ -140,6 +140,17 @@ window.onbeforeunload = function () {
 <div class=" flex flex-row justify-center items-center gap-8 p-2">
 <input type="text" bind:value={LoadedTitle} placeholder="Title" class="border-none text-4xl font-bold text-center bg-transparent active:border-none mx-auto self-center">
 <p class="text-center text-gray-400 text-sm pr-8">Last updated: {LoadedDate.substring(0, 10).replaceAll('-', '/') + ' ' + LoadedDate.substring(11, 16).replaceAll('-', ':')}</p>
+<!--  checkboxes for public and private -->
+<div class="flex flex-row justify-center items-center gap-2">
+<label class="flex items-center">
+<input type="checkbox" class="form-checkbox" checked={docVisibility} on:change={autoSave} />
+{#if docVisibility}
+<span class="ml-2">Public</span>
+{:else}
+<span class="ml-2">Private</span>
+{/if}
+</label>
+</div>
 </div>
 <div id="editor"></div>
 {#if user === AuthorUid}
