@@ -209,5 +209,9 @@ window.onbeforeunload = function () {
         margin: 0 auto;
         padding-top: 1rem;
     }
+    /*  make the table bolder */
+    table {
+        border: 1px solid black;
+    }
 </style>
 </main>
