@@ -151,7 +151,7 @@ window.onbeforeunload = function () {
 {:else}
 {#if docVisibility==true || user === AuthorUid}
 <div class=" flex flex-row justify-center items-center gap-8 p-2">
-<input type="text" bind:value={LoadedTitle} placeholder="Title" class="border-none text-4xl font-bold text-center bg-transparent active:border-none mx-auto self-center">
+<input type="text" bind:value={LoadedTitle} placeholder="Title" class="border-none text-4xl font-bold text-center bg-transparent active:border-none mx-auto self-center h-16">
 <p class="text-center text-gray-400 text-sm pr-8">Last updated: {LoadedDate.substring(0, 10).replaceAll('-', '/') + ' ' + LoadedDate.substring(11, 16).replaceAll('-', ':')}</p>
 <!--  checkboxes for public and private -->
 <div class="flex flex-row justify-center items-center gap-2">
