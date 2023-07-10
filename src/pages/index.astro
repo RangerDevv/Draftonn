@@ -3,7 +3,7 @@ import Layout from '../layouts/Layout.astro';
 import Editor from '../components/editor.svelte';
 ---
 
-<Layout title="Welcome to Astro.">
+<Layout title="DraftOnn">
 	<main>
 		<!--  create a landing page for the site -->
 		<h1 class="text-gradient text-center text-2xl md:text-4xl lg:text-5xl">
@@ -24,7 +24,14 @@ import Editor from '../components/editor.svelte';
 		</div>
 	</main>
 </Layout>
-
+<script>
+    // get the data from the cookie named user
+    let user = document.cookie.split(';').find((item) => item.includes('user'));
+    // if the user cookie exists then do nothing else redirect to the login page
+    if (user) {
+        window.location.href = '/dashboard';
+    }
+</script>
 <style>
 	main {
 		margin: auto;
