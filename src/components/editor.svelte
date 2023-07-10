@@ -26,8 +26,9 @@ let LoadedDate = "";
 let docVisibility = null;
 let AuthorUid = "";
 
-let editor;
+let canRead = false;
 
+let editor;
 Backend.appwriteDatabases.getDocument(databaseId, collectionId, pid).then((response) => {
     console.log(response);
     if (response.Content !== ' ' || response !== null || response !== undefined) {
@@ -39,6 +40,11 @@ Backend.appwriteDatabases.getDocument(databaseId, collectionId, pid).then((respo
         console.log('The document is not empty' + loadedData);
         if (loadedData === ' ') {
             loadedData = JSON.stringify(editor.save());
+        }
+        if (user == AuthorUid) {
+            canRead = true;
+        } else {
+            canRead = false;
         }
     } else {
         loadedData = editor.save();
@@ -132,6 +138,11 @@ window.onbeforeunload = function () {
 }
 </script>
 <main>
+{#if !canRead}
+<!--  a transparent div that covers the whole page -->
+<div id="barrier">
+</div>
+{/if}
 {#if docVisibility==null}
 <div class=" flex flex-col justify-center items-center pt-[40vh] gap-20">
 <p class="text-center text-6xl text-slate-950">🌐</p>
@@ -212,6 +223,16 @@ window.onbeforeunload = function () {
     /*  make the table bolder */
     table {
         border: 1px solid black;
+    }
+    /*  make the barriers background color transparent */
+    #barrier {
+        background-color: transparent;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 1000;
     }
 </style>
 </main>
