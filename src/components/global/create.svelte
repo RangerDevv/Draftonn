@@ -64,7 +64,7 @@ function createDocument() {
 
 <style is:global>
     /*  style the options */
-    .select option {
+    option {
         background-color: #fff;
         color: #000;
         height: 30px;
