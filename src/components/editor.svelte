@@ -29,9 +29,9 @@ let AuthorUid = "";
 let canRead = false;
 
 if (user === AuthorUid) {
-    readOnly = false;
+    canRead = false;
 } else {
-    readOnly = true;
+    canRead = true;
 }
 
 let editor;
