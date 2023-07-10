@@ -26,6 +26,14 @@ let LoadedDate = "";
 let docVisibility = null;
 let AuthorUid = "";
 
+let canRead = false;
+
+if (user === AuthorUid) {
+    readOnly = false;
+} else {
+    readOnly = true;
+}
+
 let editor;
 
 Backend.appwriteDatabases.getDocument(databaseId, collectionId, pid).then((response) => {
@@ -57,6 +65,7 @@ Backend.appwriteDatabases.getDocument(databaseId, collectionId, pid).then((respo
                 table: Table,
                 inlineCode: InlineCode,
                 warning: Warning,
+                readOnly: canRead,
                 paragraph: {
                     class: Paragraph,
                     inlineToolbar: true,
