@@ -29,13 +29,6 @@ let AuthorUid = "";
 let canRead = false;
 
 let editor;
-
-if (user == AuthorUid) {
-    canRead = true;
-} else {
-    canRead = false;
-
-}
 Backend.appwriteDatabases.getDocument(databaseId, collectionId, pid).then((response) => {
     console.log(response);
     if (response.Content !== ' ' || response !== null || response !== undefined) {
@@ -47,6 +40,11 @@ Backend.appwriteDatabases.getDocument(databaseId, collectionId, pid).then((respo
         console.log('The document is not empty' + loadedData);
         if (loadedData === ' ') {
             loadedData = JSON.stringify(editor.save());
+        }
+        if (user == AuthorUid) {
+            canRead = true;
+        } else {
+            canRead = false;
         }
     } else {
         loadedData = editor.save();
