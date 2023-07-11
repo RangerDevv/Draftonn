@@ -68,9 +68,12 @@ Backend.appwriteDatabases.getDocument(databaseId, collectionId, pid).then((respo
                     class: ImageTool,
                     config: {
                         endpoints: {
-                        byFile: 'https://cloud.appwrite.io/v1/storage/files?projectId=648bc5020fbda818412e', // Your Appwrite endpoint for uploading files
-                        byUrl: 'https://cloud.appwrite.io/v1/storage/files?projectId=648bc5020fbda818412e', // Your Appwrite endpoint for uploading images by URL
+                        byFile: 'https://cloud.appwrite.io/v1/storage/buckets/64ada07bbca91d21cdbc/files',
                         },
+                        field: 'file',
+                        types: 'image/*',
+                        captions: true,
+                        buttonText: 'Upload image',
                     },
                     },
                 paragraph: {
