@@ -69,6 +69,7 @@ Backend.appwriteDatabases.getDocument(databaseId, collectionId, pid).then((respo
                     config: {
                         endpoints: {
                         byFile: 'https://cloud.appwrite.io/v1/storage/files?projectId=648bc5020fbda818412e', // Your Appwrite endpoint for uploading files
+                        byUrl: 'https://cloud.appwrite.io/v1/storage/files?projectId=648bc5020fbda818412e', // Your Appwrite endpoint for uploading images by URL
                         },
                     },
                     },
