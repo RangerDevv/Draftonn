@@ -180,11 +180,6 @@ window.onbeforeunload = function () {
 {/if}
 
 <style>
-    .editor {
-        width: 100vw;
-        padding: 2rem;
-    }
-
     h1 {
         font-size: 2rem;
     }
