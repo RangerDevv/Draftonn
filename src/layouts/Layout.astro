@@ -54,7 +54,7 @@ import Create from '../components/global/create.svelte';
 		<meta name="generator" content={Astro.generator} />
 		<title>{title}</title>
 	</head>
-<div class="flex flex-row">
+<div class="flex flex-row w-[100vw]">
 	<!--  a nav that is a side drawer on both mobile and desktop -->
 	<nav>
 		<!--  an arrow that is on the edge of the nav -->
@@ -119,7 +119,7 @@ import Create from '../components/global/create.svelte';
 			Bitstream Vera Sans Mono, Courier New, monospace;
 	}
 	nav {
-		float: sticky;
+		position: sticky;
 		top: 0;
 		left: 0;
 		width: 18vw;

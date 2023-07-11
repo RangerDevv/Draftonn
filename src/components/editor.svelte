@@ -145,8 +145,8 @@ window.onbeforeunload = function () {
 {/if}
 {#if docVisibility==null}
 <div class=" flex flex-col justify-center items-center pt-[40vh] gap-20">
-<p class="text-center text-6xl text-slate-950">🌐</p>
-<span class="loading loading-infinity loading-lg text-black"></span>
+<p class="text-center text-6xl text-slate-950 mx-auto w-[75vw]">🌐</p>
+<span class="loading loading-infinity loading-lg text-black mx-auto"></span>
 </div>
 {:else}
 {#if docVisibility==true || user === AuthorUid}
@@ -172,9 +172,9 @@ window.onbeforeunload = function () {
     <button id="save">Save</button>
 {/if}
 {:else}
-<div class=" flex flex-col justify-center items-center pt-[40vh] gap-20">
-    <p class="text-center text-6xl text-slate-950">🔒</p>
-    <p class="text-center text-2xl text-slate-950">You do not have access to this document</p>
+<div class=" flex flex-col justify-center items-center pt-[40vh] gap-20 mx-auto">
+    <p class="text-center text-6xl text-slate-950 mx-auto w-[75vw]">🔒</p>
+    <p class="text-center text-2xl text-slate-950 mx-auto w-[75vw]">You do not have access to this document</p>
 </div>
 {/if}
 {/if}
