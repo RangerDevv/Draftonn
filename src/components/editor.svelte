@@ -100,7 +100,6 @@ Backend.appwriteDatabases.getDocument(databaseId, collectionId, pid).then((respo
 
     document.getElementById('save').onclick = function save() {
         editor.save().then((outputData) => {
-            console.log('Article data: ', outputData);
             Backend.appwriteDatabases.updateDocument(databaseId, collectionId, pid,
             {
                 Content: JSON.stringify(outputData),
@@ -123,7 +122,6 @@ Backend.appwriteDatabases.getDocument(databaseId, collectionId, pid).then((respo
 // autosave function that is called every 5 seconds or when the user leaves the page
 function autoSave() {
     editor.save().then((outputData) => {
-        console.log('Article data: ', outputData);
         Backend.appwriteDatabases.updateDocument(databaseId, collectionId, pid,
         {
             Content: JSON.stringify(outputData),
