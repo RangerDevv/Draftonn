@@ -21,6 +21,8 @@ if (loggedIn) {
 		COLLECTION.Notes, 
 		[
 			Query.search('AuthorUid', user),
+			Query.orderDesc("LastUpdated"),
+			Query.limit(10)
 		])
 		.then((response) => {
 			Docs = response.documents as any[];
