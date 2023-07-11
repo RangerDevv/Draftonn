@@ -18,7 +18,7 @@
     "@editorjs/header": "^2.7.0",
     "@editorjs/list": "^1.8.0",
     "@editorjs/paragraph": "^2.9.0",
-    "@editorjs/table": "^2.2.1",
+    "@editorjs/table": "^2.2.2",
     "appwrite": "^11.0.0",
     "astro": "^2.6.4",
     "editorjs-header-with-alignment": "^1.0.1",

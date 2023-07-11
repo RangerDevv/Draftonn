@@ -219,10 +219,6 @@ window.onbeforeunload = function () {
         margin: 0 auto;
         padding-top: 1rem;
     }
-    /*  make the table bolder */
-    table {
-        border: 1px solid black;
-    }
     /*  make the barriers background color transparent */
     #barrier {
         background-color: transparent;

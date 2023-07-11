@@ -1,5 +1,22 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import { appwriteDatabases } from "../lib/backend";
+import { Query } from "appwrite";
+import { COLLECTION, DB_ID } from "../lib/ids";
+
+let user = Astro.cookies.get('user').value as string;
+
+let Docs: any[] = [];
+
+await appwriteDatabases.listDocuments(
+		DB_ID,
+		COLLECTION.Notes, 
+		[
+			Query.search('AuthorUid', user),
+		])
+		.then((response) => {
+			Docs = response.documents as any[];
+	})
 ---
 <script>
     // get the data from the cookie named user
@@ -10,5 +27,24 @@ import Layout from "../layouts/Layout.astro";
     }
 </script>
 <Layout title="Home">
-    <h1>Amongus</h1>
+    <div class="">
+        <div class="row">
+            <div class="col-12">
+                <h1>Notes</h1>
+                <p>Here are your notes</p>
+                <ul>
+                    {Docs.map((doc) => (
+                            <a href={`/doc/${doc.$id}`}>{doc.Name}</a>
+                    ))}
+                </ul>
+            </div>
+        </div>
+    </div>
 </Layout>
+
+<style>
+    a {
+        color: #0070f3;
+        text-decoration: none;
+    }
+</style>
