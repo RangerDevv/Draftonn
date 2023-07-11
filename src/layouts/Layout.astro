@@ -7,7 +7,7 @@ const { title } = Astro.props;
 
 import { appwriteDatabases } from '../lib/backend';
 import { Query } from 'appwrite';
-import {DB_ID, COLLECTION} from "../ids"
+import {DB_ID, COLLECTION} from "../lib/ids"
 
 let user = Astro.cookies.get('user').value as string;
 let Name = Astro.cookies.get('userName').value;
