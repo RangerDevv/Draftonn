@@ -33,7 +33,7 @@ function createDocument() {
 
 </script>
 
-<button class="btn text-gray-800 bg-gray-200 items-center mx-auto" on:click={() => {
+<button class="btn text-gray-800 bg-gray-200 items-center mx-auto hover:bg-gray-300" on:click={() => {
     const modal = document.getElementById('my_modal_1');
     if (modal instanceof HTMLDialogElement && typeof modal.showModal === 'function') {
         modal.showModal();
