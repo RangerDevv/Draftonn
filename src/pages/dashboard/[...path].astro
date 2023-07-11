@@ -7,6 +7,10 @@ import { COLLECTION, DB_ID } from "../../lib/ids";
 let user = Astro.cookies.get('user').value as string;
 let { path } = Astro.params
 
+if(path == undefined || path == "") {
+    return Astro.redirect("/dashboard/~")
+}
+
 let Docs: any[] = [];
 
 await appwriteDatabases.listDocuments(
@@ -35,9 +39,12 @@ await appwriteDatabases.listDocuments(
                 <h1>Notes</h1>
                 <p>Here are your notes</p>
                 <ul>
-                    {Docs.map((doc) => (
+                    {(Docs.length > 0)
+                    ? Docs.map((doc) => (
                             <li><a href={`/doc/${doc.$id}`}>{doc.Name}</a></li>
-                    ))}
+                    ))
+                    : <h1>This folder is empty!</h1>
+                }
                 </ul>
             </div>
         </div>
