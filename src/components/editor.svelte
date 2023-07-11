@@ -13,6 +13,7 @@ import Header from 'editorjs-header-with-alignment'
 import ToggleBlock from 'editorjs-toggle-block';
 import Hyperlink from 'editorjs-hyperlink';
 import Marker from '@editorjs/marker';
+import ImageTool from '@editorjs/image';
 import * as Backend from '../lib/backend';
 
 export let pid = "";
@@ -63,6 +64,14 @@ Backend.appwriteDatabases.getDocument(databaseId, collectionId, pid).then((respo
                 table: Table,
                 inlineCode: InlineCode,
                 warning: Warning,
+                image: {
+                    class: ImageTool,
+                    config: {
+                        endpoints: {
+                        byFile: 'https://cloud.appwrite.io/v1/storage/files?projectId=648bc5020fbda818412e', // Your Appwrite endpoint for uploading files
+                        },
+                    },
+                    },
                 paragraph: {
                     class: Paragraph,
                     inlineToolbar: true,
