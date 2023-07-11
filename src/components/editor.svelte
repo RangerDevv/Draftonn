@@ -157,12 +157,26 @@ window.onbeforeunload = function () {
 <div class="flex flex-row justify-center items-center gap-2">
 <label class="flex items-center">
 {#if user === AuthorUid}
-<input type="checkbox" class="form-checkbox" bind:checked={docVisibility} on:change={autoSave} />
-{#if docVisibility}
-<span class="ml-2">Public</span>
-{:else}
-<span class="ml-2">Private</span>
-{/if}
+<!-- Open the modal using ID.showModal() method -->
+<button class="btn text-gray-800 bg-gray-200 items-center mx-auto  hover:bg-gray-300" onclick="settingModal.showModal()">Settings</button>
+<dialog id="settingModal" class="modal">
+  <form method="dialog" class="modal-box bg-gray-200 text-slate-950">
+    <div class="flex flex-row justify-center items-center gap-2 text-xl">
+        <p>Visibility</p>
+        <input type="checkbox" class="form-checkbox" bind:checked={docVisibility} on:change={autoSave} />
+        {#if docVisibility}
+        <span class="ml-2">Public</span>
+        {:else}
+        <span class="ml-2">Private</span>
+        {/if}
+    </div>
+    <div class="modal-action">
+      <!-- if there is a button in form, it will close the modal -->
+      <button class="btn btn-error">Close</button>
+    </div>
+  </form>
+</dialog>
+
 {/if}
 </label>
 </div>
