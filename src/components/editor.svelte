@@ -109,7 +109,6 @@ Backend.appwriteDatabases.getDocument(databaseId, collectionId, pid).then((respo
                 IsPublic: docVisibility,
             }
             ).then((response) => {
-                console.log(response);
             }, (error) => {
                 console.log(error);
             });
@@ -133,7 +132,6 @@ function autoSave() {
             IsPublic: docVisibility,
         }
         ).then((response) => {
-            console.log(response);
         }, (error) => {
             console.log(error);
         });
