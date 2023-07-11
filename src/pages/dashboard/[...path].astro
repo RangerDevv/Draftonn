@@ -1,10 +1,11 @@
 ---
-import Layout from "../layouts/Layout.astro";
-import { appwriteDatabases } from "../lib/backend";
+import Layout from "../../layouts/Layout.astro";
+import { appwriteDatabases } from "../../lib/backend";
 import { Query } from "appwrite";
-import { COLLECTION, DB_ID } from "../lib/ids";
+import { COLLECTION, DB_ID } from "../../lib/ids";
 
 let user = Astro.cookies.get('user').value as string;
+let { path } = Astro.params
 
 let Docs: any[] = [];
 
@@ -12,7 +13,8 @@ await appwriteDatabases.listDocuments(
 		DB_ID,
 		COLLECTION.Notes, 
 		[
-			Query.search('AuthorUid', user),
+			Query.equal('AuthorUid', user),
+            Query.equal("Location", path!)
 		])
 		.then((response) => {
 			Docs = response.documents as any[];
@@ -27,14 +29,14 @@ await appwriteDatabases.listDocuments(
     }
 </script>
 <Layout title="Home">
-    <div class="">
+    <div>
         <div class="row">
             <div class="col-12">
                 <h1>Notes</h1>
                 <p>Here are your notes</p>
                 <ul>
                     {Docs.map((doc) => (
-                            <a href={`/doc/${doc.$id}`}>{doc.Name}</a>
+                            <li><a href={`/doc/${doc.$id}`}>{doc.Name}</a></li>
                     ))}
                 </ul>
             </div>

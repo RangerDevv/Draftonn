@@ -28,7 +28,7 @@ import Layout from "../layouts/Layout.astro";
     let user = document.cookie.split(';').find((item) => item.trimStart().startsWith('user='));
     // if the user cookie exists then do nothing else redirect to the login page
 	if (user && user.length > 5) {
-        window.location.href = '/dashboard';
+        window.location.href = '/dashboard/~';
     }
 </script>
 <style>
