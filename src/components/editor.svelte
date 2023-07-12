@@ -14,6 +14,8 @@ import ToggleBlock from 'editorjs-toggle-block';
 import Hyperlink from 'editorjs-hyperlink';
 import Marker from '@editorjs/marker';
 import ImageTool from '@editorjs/image';
+import DragDrop from 'editorjs-drag-drop';
+import Undo from 'editorjs-undo';
 import * as Backend from '../lib/backend';
 import { ID } from 'appwrite';
 
@@ -104,6 +106,13 @@ Backend.appwriteDatabases.getDocument(databaseId, collectionId, pid).then((respo
             data: JSON.parse(loadedData),
         }
     );
+
+// onready function that is called when the editor is ready
+editor.isReady.then(() => {
+    console.log('Editor.js is ready to work!');
+    new Undo({ editor });
+    new DragDrop(editor);
+});
 
 function uploadByFile(file) {
  return Backend.appwriteStorage.createFile('64ada07bbca91d21cdbc', ID.unique(), file).then((res) => {

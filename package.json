@@ -35,7 +35,9 @@
     "@editorjs/quote": "^2.5.0",
     "@editorjs/warning": "^1.3.0",
     "daisyui": "^3.1.1",
+    "editorjs-drag-drop": "^1.1.13",
     "editorjs-hyperlink": "^1.0.6",
-    "editorjs-toggle-block": "^0.3.11"
+    "editorjs-toggle-block": "^0.3.11",
+    "editorjs-undo": "^2.0.22"
   }
 }
