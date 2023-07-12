@@ -110,7 +110,7 @@ function uploadByFile(file) {
    return {
     success: 1,
     file   : {
-     url: `https:/cloud.appwrite.io/v1/storage/buckets/64ada07bbca91d21cdbc/files/${res.$id}/view?project=648bc5020fbda818412e`,
+     url: `https://cloud.appwrite.io/v1/storage/buckets/64ada07bbca91d21cdbc/files/${res.$id}/view?project=648bc5020fbda818412e`,
     }
    }
   });
