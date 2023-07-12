@@ -46,7 +46,7 @@ function createDocument() {
     <input type="text" id="name" bind:value={DocumentName} class="input input-bordered bg-gray-400" placeholder="Name" />
     <label for="database" class="text-gray-800">Type Of Document</label>
     <select id="database" class="select select-bordered bg-gray-400" bind:value={collectionId}>
-        <option value="648bc7024074897c154d">Article</option>
+        <option value="648bc7024074897c154d">Notebook</option>
     </select>
     <!--  createDocument() -->
     <button class="btn btn-primary" on:click={() => {

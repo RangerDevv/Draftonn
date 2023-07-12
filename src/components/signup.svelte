@@ -21,7 +21,7 @@
     });
   }
   </script>
-  
+<div class="flex flex-col gap-5 items-center w-[60vw] mx-auto">
   <h1 class="text-center text-2xl font-bold pt-16">Welcome! We're so glad to have you!</h1>
 
   <div class="flex justify-center">
@@ -33,7 +33,7 @@
     <a href="/login" class="text-center text-gray-500 hover:text-gray-700">Already have an account? Login</a>
     </div>
   </div>
-  
+</div>
   <style>
     input {
       border: 1px solid #ababab;

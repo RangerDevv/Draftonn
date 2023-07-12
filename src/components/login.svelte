@@ -34,7 +34,7 @@
   }
   
   </script>
-  
+<div class="flex flex-col gap-5 items-center w-[60vw] mx-auto">
   <h1 class="text-center text-2xl font-bold pt-16">Welcome Back!</h1>
   <div class="flex justify-center">
     <div class="w-96 h-auto p-12 mt-12 rounded-md self-center flex flex-col gap-5">
@@ -44,7 +44,7 @@
     <a href="/signup" class="text-center text-gray-500 hover:text-gray-700">Don't have an account? Sign Up</a>
     </div>
   </div>
-  
+</div>
   <style>
     input {
     border: 1px solid #ababab;
