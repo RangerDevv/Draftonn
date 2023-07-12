@@ -4,7 +4,6 @@ import EditorJS from '@editorjs/editorjs';
 import List from '@editorjs/list';
 import Quote from '@editorjs/quote';
 import Embed from '@editorjs/embed';
-import Link from '@editorjs/link';
 import Table from '@editorjs/table';
 import InlineCode from '@editorjs/inline-code';
 import Warning from '@editorjs/warning';
@@ -16,6 +15,8 @@ import Marker from '@editorjs/marker';
 import ImageTool from '@editorjs/image';
 import DragDrop from 'editorjs-drag-drop';
 import Undo from 'editorjs-undo';
+import Underline from '@editorjs/underline';
+import ChangeCase from 'editorjs-change-case';
 import * as Backend from '../lib/backend';
 import { ID } from 'appwrite';
 
@@ -63,22 +64,11 @@ Backend.appwriteDatabases.getDocument(databaseId, collectionId, pid).then((respo
                 list: List,
                 quote: Quote,
                 embed: Embed,
-                link: Link,
                 table: Table,
                 inlineCode: InlineCode,
                 warning: Warning,
-                // image: {
-                //     class: ImageTool,
-                //     config: {
-                //         endpoints: {
-                //         byFile: 'https://cloud.appwrite.io/v1/storage/buckets/64ada07bbca91d21cdbc/files',
-                //         },
-                //         field: 'file',
-                //         types: 'image/*',
-                //         captions: true,
-                //         buttonText: 'Upload image',
-                //     },
-                //     },
+                underline: Underline,
+                changeCase: ChangeCase,
                 image: {
                     class : ImageTool,
                         config: {
