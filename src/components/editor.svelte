@@ -15,6 +15,7 @@ import Hyperlink from 'editorjs-hyperlink';
 import Marker from '@editorjs/marker';
 import ImageTool from '@editorjs/image';
 import * as Backend from '../lib/backend';
+import { ID } from 'appwrite';
 
 export let pid = "";
 export let user = "";
@@ -77,17 +78,10 @@ Backend.appwriteDatabases.getDocument(databaseId, collectionId, pid).then((respo
                 //     },
                 //     },
                 image: {
-                    class: ImageTool,
-                    config: {
-                        endpoints: {
-                        byFile: 'https://appwrite.io/v1/', // Your Appwrite endpoint for file uploads
-                        byUrl: 'https://appwrite.io/v1/', // Your Appwrite endpoint for uploading by URL
-                        },
-                        additionalRequestHeaders: {
-                        'X-Appwrite-Project': '648bc5020fbda818412e', // Your Appwrite project ID
-                        'X-Appwrite-Key': 'f3532846cc90b31dfa0d46ea92f7c5b56fab919f08e6fca87b4148a0576a5a962c1716a3dba8f140169bbddaad977c533cb58acece1380c4d4ce90eff638a037f667571af4d2f58d28ec6a033d1f8e3cb064a5a7599e6056ef1e75efe4d48e19f206a8ed925b7eca68788722dc5d7f17cc2bb129cb6ef3c73dbae96b0e02e2d3', // Your Appwrite API key
-                        },
-                    },
+                    class : ImageTool,
+                        config: {
+                            uploader: {uploadByFile}
+                        }
                 },
                 paragraph: {
                     class: Paragraph,
@@ -110,6 +104,17 @@ Backend.appwriteDatabases.getDocument(databaseId, collectionId, pid).then((respo
             data: JSON.parse(loadedData),
         }
     );
+
+function uploadByFile(file) {
+ return Backend.appwriteStorage.createFile('64ada07bbca91d21cdbc', ID.unique(), file).then((res) => {
+   return {
+    success: 1,
+    file   : {
+     url: `https:/cloud.appwrite.io/v1/storage/buckets/64ada07bbca91d21cdbc/files/${res.$id}/view?project=648bc5020fbda818412e`,
+    }
+   }
+  });
+}
 
     document.getElementById('save').onclick = function save() {
         editor.save().then((outputData) => {
