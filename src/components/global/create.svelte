@@ -22,6 +22,7 @@ function createDocument() {
             "AuthorName": AuthorName,
             "AuthorUid": AuthorUid,
             "IsPublic": false,
+            "Location": "~"
         }
     ).then((response) => {
         window.location.href = '/doc/'+response.$id;

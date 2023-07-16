@@ -11,18 +11,23 @@ if(path == undefined || path == "") {
     return Astro.redirect("/dashboard/~")
 }
 
-let Docs: any[] = [];
+let Folders = await appwriteDatabases.listDocuments(
+    DB_ID,
+    COLLECTION.Folders,
+    [
+        Query.equal("OwnerUid", user),
+        Query.equal("Location", path)
+    ]
+).then(response => response.documents)
 
-await appwriteDatabases.listDocuments(
-		DB_ID,
-		COLLECTION.Notes, 
-		[
-			Query.equal('AuthorUid', user),
-            Query.equal("Location", path!)
-		])
-		.then((response) => {
-			Docs = response.documents as any[];
-	})
+let Docs = await appwriteDatabases.listDocuments(
+	DB_ID,
+	COLLECTION.Notes, 
+	[
+		Query.equal('AuthorUid', user),
+        Query.equal("Location", path!)
+    ]
+).then(response => response.documents)
 ---
 <script>
     // get the data from the cookie named user
@@ -38,13 +43,20 @@ await appwriteDatabases.listDocuments(
             <div class="col-12">
                 <h1 class="text-2xl font-semibold text-center">Dashbaord</h1>
                 <div class="flex flex-col gap-3 justify-center p-12">
+                    <h1 class="text-xl font-semibold">Folders</h1>
+                    {(Folders.length > 0)
+                        && Folders.map((folder) => (
+                                <a class="w-96 hover:bg-gray-300 p-2 ml-4 rounded-lg" href={`/dashboard/${folder.Location}/${folder.Name}`}>📁 {folder.Name}</a>
+                        ))
+                    }
+                    
                     <h1 class="text-xl font-semibold">Notes</h1>
                     {(Docs.length > 0)
-                    ? Docs.map((doc) => (
-                            <a class="w-96 hover:bg-gray-300 p-2 ml-4 rounded-lg" href={`/doc/${doc.$id}`}>{doc.Name}</a>
-                    ))
-                    : <h1>This folder is empty!</h1>
-                }
+                        ? Docs.map((doc) => (
+                                <a class="w-96 hover:bg-gray-300 p-2 ml-4 rounded-lg" href={`/doc/${doc.$id}`}>{doc.Name}</a>
+                        ))
+                        : <h1>This folder is empty!</h1>
+                    }
                 </div>
             </div>
         </div>
