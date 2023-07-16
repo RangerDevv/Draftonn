@@ -3,8 +3,10 @@ import Layout from "../../layouts/Layout.astro";
 import { appwriteDatabases } from "../../lib/backend";
 import { Query } from "appwrite";
 import { COLLECTION, DB_ID } from "../../lib/ids";
+import CreateButtons from "../../components/global/createbuttons.svelte"
 
 let user = Astro.cookies.get('user').value as string;
+let username = Astro.cookies.get('userName').value as string;
 let { path } = Astro.params
 
 if(path == undefined || path == "") {
@@ -43,13 +45,14 @@ let Docs = await appwriteDatabases.listDocuments(
             <div class="col-12">
                 <h1 class="text-2xl font-semibold text-center">Dashbaord</h1>
                 <div class="flex flex-col gap-3 justify-center p-12">
+                    <CreateButtons client:load AuthorUid={user} AuthorName={username} path={path} />
                     <h1 class="text-xl font-semibold">Folders</h1>
                     {(Folders.length > 0)
                         && Folders.map((folder) => (
                                 <a class="w-96 hover:bg-gray-300 p-2 ml-4 rounded-lg" href={`/dashboard/${folder.Location}/${folder.Name}`}>📁 {folder.Name}</a>
                         ))
                     }
-                    
+
                     <h1 class="text-xl font-semibold">Notes</h1>
                     {(Docs.length > 0)
                         ? Docs.map((doc) => (
