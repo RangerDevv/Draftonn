@@ -155,6 +155,15 @@ function autoSave() {
     });
 }
 
+function deleteDoc() {
+    Backend.appwriteDatabases.deleteDocument(databaseId, collectionId, pid).then((response) => {
+        console.log(response);
+        window.location.href = '/dashboard';
+    }, (error) => {
+        console.log(error);
+    });
+}
+
 // call the autosave function every 5 seconds
 setInterval(autoSave, 5000);
 
@@ -196,9 +205,11 @@ window.onbeforeunload = function () {
         <span class="ml-2">Private</span>
         {/if}
     </div>
+    <!--  delete button -->
     <div class="modal-action">
       <!-- if there is a button in form, it will close the modal -->
-      <button class="btn btn-error">Close</button>
+      <button class="btn">Close</button>
+      <button class="btn text-sm btn-error text-black" on:click={deleteDoc}>Delete</button>
     </div>
   </form>
 </dialog>
