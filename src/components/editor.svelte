@@ -18,7 +18,8 @@ import Undo from 'editorjs-undo';
 import Underline from '@editorjs/underline';
 import ChangeCase from 'editorjs-change-case';
 import * as Backend from '../lib/backend';
-import { ID } from 'appwrite';
+import * as BackendID from '../lib/ids';
+import { ID,Query } from 'appwrite';
 
 export let pid = "";
 export let user = "";
@@ -28,12 +29,30 @@ let collectionId = "648bc7024074897c154d";
 let LoadedTitle = "";
 let loadedData = '';
 let LoadedDate = "";
+let docFileLocation = "";
+let folders = [];
 let docVisibility = null;
 let AuthorUid = "";
 
 let canRead = false;
 
 let editor;
+
+async function getFolders() {
+await Backend.appwriteDatabases.listDocuments(
+    BackendID.DB_ID,
+    BackendID.COLLECTION.Folders,
+    [
+        Query.equal("OwnerUid", AuthorUid),
+    ]
+).then((response) => {
+    folders = response.documents;
+    console.log(response);
+}, (error) => {
+    console.log(error);
+});
+}
+
 Backend.appwriteDatabases.getDocument(databaseId, collectionId, pid).then((response) => {
     console.log(response);
     if (response.Content !== ' ' || response !== null || response !== undefined) {
@@ -42,6 +61,8 @@ Backend.appwriteDatabases.getDocument(databaseId, collectionId, pid).then((respo
         LoadedDate = response.LastUpdated;
         docVisibility = response.IsPublic;
         AuthorUid = response.AuthorUid;
+        docFileLocation = response.Location;
+        getFolders();
         console.log('The document is not empty' + loadedData);
         if (loadedData === ' ') {
             loadedData = JSON.stringify(editor.save());
@@ -145,6 +166,7 @@ function autoSave() {
             Name: LoadedTitle,
             LastUpdated: new Date().toISOString(),
             IsPublic: docVisibility,
+            Location: docFileLocation,
         }
         ).then((response) => {
         }, (error) => {
@@ -204,6 +226,15 @@ window.onbeforeunload = function () {
         {:else}
         <span class="ml-2">Private</span>
         {/if}
+    </div>
+    <div class="flex flex-col justify-center items-center gap-2 pt-3">
+    <label for="folder" class="text-gray-800">Path Of Document</label>
+    <select id="folder" class="select select-bordered bg-gray-400" bind:value={docFileLocation} on:change={autoSave}>
+        <option value="~">📁Root</option>
+        {#each folders as folder}
+            <option value={folder.Location + "/" + folder.Name}>📁{folder.Name}</option>
+        {/each}
+    </select>
     </div>
     <!--  delete button -->
     <div class="modal-action">
