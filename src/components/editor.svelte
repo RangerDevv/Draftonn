@@ -230,7 +230,7 @@ window.onbeforeunload = function () {
     <div class="flex flex-col justify-center items-center gap-2 pt-3">
     <label for="folder" class="text-gray-800">Path Of Document</label>
     <select id="folder" class="select select-bordered bg-gray-400" bind:value={docFileLocation} on:change={autoSave}>
-        <option value="~">📁Root</option>
+        <option value="~">📁Home</option>
         {#each folders as folder}
             <option value={folder.Location + "/" + folder.Name}>📁{folder.Name}</option>
         {/each}

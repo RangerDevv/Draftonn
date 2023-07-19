@@ -71,9 +71,9 @@ function createDocument() {
     </select>
     <label for="folder" class="text-gray-800">Folder</label>
     <select id="folder" class="select select-bordered bg-gray-400" bind:value={docLocation}>
-            <option value="~">📁Root</option>
+            <option value="~">📁Home</option>
         {#each folders as folder}
-            <option value={folder.Location + "/" + folder.Name}>📁{folder.Name}</option>
+            <option value={folder.Location + "/" + folder.Name}>📁{folder.Location.substring(1) + "/" + folder.Name}</option>
         {/each}
     </select>
     <!--  createDocument() -->
