@@ -1,7 +1,10 @@
 <script lang="ts">
+  import { onMount } from "svelte";
+
 
 import { appwriteDatabases } from "../../lib/backend";
-import { ID } from "appwrite";
+import { DB_ID, COLLECTION } from "../../lib/ids"
+import { ID,Query } from "appwrite";
 
 export let AuthorName = "";
 export let AuthorUid = "";
@@ -10,6 +13,23 @@ let databaseId = "648bc6ddddf63e135f4d";
 let collectionId = "";
 
 let DocumentName = "";
+let folders = [] as any;
+export let docLocation = "";
+
+onMount(async () => {
+	await appwriteDatabases.listDocuments(
+        DB_ID,
+        COLLECTION.Folders,
+        [
+            Query.equal("OwnerUid", AuthorUid),
+        ]
+    ).then((response) => {
+        folders = response.documents as any;
+        console.log(response);
+    }, (error) => {
+        console.log(error);
+    });
+});
 
 
 function createDocument() {
@@ -22,7 +42,7 @@ function createDocument() {
             "AuthorName": AuthorName,
             "AuthorUid": AuthorUid,
             "IsPublic": false,
-            "Location": "~"
+            "Location": docLocation,
         }
     ).then((response) => {
         window.location.href = '/doc/'+response.$id;
@@ -49,6 +69,12 @@ function createDocument() {
     <select id="database" class="select select-bordered bg-gray-400" bind:value={collectionId}>
         <option value="648bc7024074897c154d">Notebook</option>
     </select>
+    <label for="folder" class="text-gray-800">Folder</label>
+    <select id="folder" class="select select-bordered bg-gray-400" bind:value={docLocation}>
+        {#each folders as folder}
+            <option value={folder.Location + "/" + folder.Name}>📁{folder.Name}</option>
+        {/each}
+    </select>
     <!--  createDocument() -->
     <button class="btn btn-primary" on:click={() => {
         createDocument();
@@ -64,5 +90,7 @@ function createDocument() {
 </dialog>
 
 <style>
-    option{zoom: 1.5}
+    option{
+        background-color: #575757;
+    }
 </style>

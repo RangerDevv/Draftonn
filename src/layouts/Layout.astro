@@ -1,9 +1,10 @@
 ---
 export interface Props {
 	title: string;
+	path?: string;
 }
 
-const { title } = Astro.props;
+const { title,path } = Astro.props;
 
 import { appwriteDatabases } from '../lib/backend';
 import { Query } from 'appwrite';
@@ -72,7 +73,7 @@ import Create from '../components/global/create.svelte';
 				</div>
 			</div>
 			<div class="flex justify-center pt-1">
-				<Create client:only="Svelte" AuthorName={Name} AuthorUid={user} />
+				<Create client:only="Svelte" AuthorName={Name} AuthorUid={user} docLocation={path} />
 			</div>
 			<h1 class="text-xl font-semibold text-center pt-5">Recents</h1>
 			<div class="collapse collapse-arrow bg-transparent w-[17vw] mx-auto rounded-lg">
