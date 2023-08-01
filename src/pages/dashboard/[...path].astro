@@ -59,7 +59,7 @@ let Docs = await appwriteDatabases.listDocuments(
                         ? Docs.map((doc) => (
                                 <a class="w-96 hover:bg-gray-300 p-2 ml-4 rounded-lg" href={`/doc/${doc.$id}`}>{doc.Name}</a>
                         ))
-                        : <h1>This folder is empty!</h1>
+                        : <h1>There are no notes!</h1>
                     }
                 </div>
             </div>
