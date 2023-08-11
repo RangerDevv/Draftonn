@@ -266,7 +266,7 @@
                     "required": false,
                     "array": false,
                     "size": 1073741824,
-                    "default": "{     \"time\": 1688495127638,     \"blocks\": [         {             \"id\": \"4UKCMGMDR4\",             \"type\": \"paragraph\",             \"data\": {                 \"text\": \"\",                 \"alignment\": \"left\"             }         }     ],     \"version\": \"2.27.0\" }"
+                    "default": "{\"time\":1691725274889,\"blocks\":[{\"id\":\"3DoiwMrvGW\",\"type\":\"checklist\",\"data\":{\"items\":[{\"text\":\"First To-Do!\",\"checked\":true}]}}],\"version\":\"2.27.2\"}"
                 }
             ],
             "indexes": [

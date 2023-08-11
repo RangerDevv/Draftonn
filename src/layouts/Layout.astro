@@ -111,9 +111,9 @@ import Create from '../components/global/create.svelte';
 				</div>
 				<div class="collapse-content"> 
 					<div class="flex flex-col pl-3 gap-1">
-						{Todo.map((doc) => (
+						{Todo.map((todo) => (
 							<div class="flex flex-row">
-								<a href={`/doc/${doc.$id}`} class="text-sm text-black rounded-md w-full mr-2">{doc.Name}</a>
+								<a href={`/todo/${todo.$id}`} class="text-sm text-black rounded-md w-full mr-2">{todo.Name}</a>
 							</div>
 						))}
 					</div>

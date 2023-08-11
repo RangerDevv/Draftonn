@@ -2,23 +2,16 @@
     import EditorJS from '@editorjs/editorjs';
     // only import the following: Embed, header, link, list, quote, table, InlineCode, warning, paragraph
     import List from '@editorjs/list';
-    import Quote from '@editorjs/quote';
-    import Embed from '@editorjs/embed';
     import Table from '@editorjs/table';
     import InlineCode from '@editorjs/inline-code';
-    import Warning from '@editorjs/warning';
     import Paragraph from 'editorjs-paragraph-with-alignment';
     import Header from 'editorjs-header-with-alignment'
-    import ToggleBlock from 'editorjs-toggle-block';
     import Hyperlink from 'editorjs-hyperlink';
-    import Marker from '@editorjs/marker';
     import ImageTool from '@editorjs/image';
     import DragDrop from 'editorjs-drag-drop';
     import Undo from 'editorjs-undo';
     import Underline from '@editorjs/underline';
-    import ChangeCase from 'editorjs-change-case';
     import Checklist from '@editorjs/checklist';
-    import editorjsCodeflask from '@calumk/editorjs-codeflask';
     import * as Backend from '../lib/backend';
     import * as BackendID from '../lib/ids';
     import { ID,Query } from 'appwrite';
@@ -85,14 +78,9 @@
                 tools: {
                     header: Header,
                     list: List,
-                    quote: Quote,
-                    embed: Embed,
                     table: Table,
                     inlineCode: InlineCode,
-                    warning: Warning,
-                    code: editorjsCodeflask,
                     underline: Underline,
-                    changeCase: ChangeCase,
                     checklist: {
                         class: Checklist,
                         inlineToolbar: true,
@@ -107,18 +95,9 @@
                         class: Paragraph,
                         inlineToolbar: true,
                     },
-                    toggleBlock: {
-                        class: ToggleBlock,
-                        inlineToolbar: true,
-                    },
                     hyperlink: {
                         class: Hyperlink,
                         inlineToolbar: true,
-                    },
-                    marker: {
-                        class: Marker,
-                        inlineToolbar: true,
-                        shortcut: 'CMD+SHIFT+M',
                     },
                 },
                 data: JSON.parse(loadedData),
