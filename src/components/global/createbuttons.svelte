@@ -4,7 +4,7 @@
     import { ID } from "appwrite";
 
     export let path = "~"
-    export let AuthorName = ""
+    export const AuthorName = ""
     export let AuthorUid = ""
     
     let folderName = ""
