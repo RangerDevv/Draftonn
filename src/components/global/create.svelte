@@ -9,7 +9,6 @@ import { ID,Query } from "appwrite";
 export let AuthorName = "";
 export let AuthorUid = "";
 
-let databaseId = "648bc6ddddf63e135f4d";
 let collectionId = "";
 
 let DocumentName = "";
@@ -34,7 +33,7 @@ onMount(async () => {
 
 function createDocument() {
     appwriteDatabases.createDocument(
-        databaseId,
+        DB_ID,
         collectionId, 
         ID.unique(), 
         {
@@ -45,7 +44,11 @@ function createDocument() {
             "Location": docLocation,
         }
     ).then((response) => {
+        if (collectionId==COLLECTION.Notes) {
         window.location.href = '/doc/'+response.$id;
+        } else if (collectionId==COLLECTION.Todo) {
+        window.location.href = '/todo/'+response.$id;
+        }
         console.log(response);
     }, (error) => {
         console.log(error);
@@ -68,6 +71,7 @@ function createDocument() {
     <label for="database" class="text-gray-800">Type Of Document</label>
     <select id="database" class="select select-bordered bg-gray-400" bind:value={collectionId}>
         <option value="648bc7024074897c154d">Notebook</option>
+        <option value="64d5a380c46a1248b02c">Todo List</option>
     </select>
     <label for="folder" class="text-gray-800">Folder</label>
     <select id="folder" class="select select-bordered bg-gray-400" bind:value={docLocation}>

@@ -17,6 +17,7 @@ import DragDrop from 'editorjs-drag-drop';
 import Undo from 'editorjs-undo';
 import Underline from '@editorjs/underline';
 import ChangeCase from 'editorjs-change-case';
+import editorjsCodeflask from '@calumk/editorjs-codeflask';
 import * as Backend from '../lib/backend';
 import * as BackendID from '../lib/ids';
 import { ID,Query } from 'appwrite';
@@ -88,6 +89,7 @@ Backend.appwriteDatabases.getDocument(databaseId, collectionId, pid).then((respo
                 table: Table,
                 inlineCode: InlineCode,
                 warning: Warning,
+                code: editorjsCodeflask,
                 underline: Underline,
                 changeCase: ChangeCase,
                 image: {

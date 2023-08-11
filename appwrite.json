@@ -1,0 +1,311 @@
+{
+    "projectId": "648bc5020fbda818412e",
+    "projectName": "Draftonn",
+    "databases": [
+        {
+            "$id": "648bc6ddddf63e135f4d",
+            "name": "Documents",
+            "$createdAt": "2023-06-16T02:20:13.909+00:00",
+            "$updatedAt": "2023-06-16T02:20:13.909+00:00"
+        }
+    ],
+    "collections": [
+        {
+            "$id": "648bc7024074897c154d",
+            "$permissions": [
+                "read(\"any\")",
+                "create(\"users\")",
+                "read(\"users\")",
+                "update(\"users\")",
+                "delete(\"users\")"
+            ],
+            "databaseId": "648bc6ddddf63e135f4d",
+            "name": "Notes",
+            "enabled": true,
+            "documentSecurity": true,
+            "attributes": [
+                {
+                    "key": "AuthorName",
+                    "type": "string",
+                    "status": "available",
+                    "required": true,
+                    "array": false,
+                    "size": 10000,
+                    "default": null
+                },
+                {
+                    "key": "IsPublic",
+                    "type": "boolean",
+                    "status": "available",
+                    "required": true,
+                    "array": false,
+                    "default": null
+                },
+                {
+                    "key": "Name",
+                    "type": "string",
+                    "status": "available",
+                    "required": false,
+                    "array": false,
+                    "size": 1000,
+                    "default": "Default Document"
+                },
+                {
+                    "key": "AuthorUid",
+                    "type": "string",
+                    "status": "available",
+                    "required": true,
+                    "array": false,
+                    "size": 100,
+                    "default": null
+                },
+                {
+                    "key": "LastUpdated",
+                    "type": "datetime",
+                    "status": "available",
+                    "required": false,
+                    "array": false,
+                    "format": "",
+                    "default": "2023-07-05T13:46:23.32"
+                },
+                {
+                    "key": "Location",
+                    "type": "string",
+                    "status": "available",
+                    "required": false,
+                    "array": false,
+                    "size": 2048,
+                    "default": "~"
+                },
+                {
+                    "key": "Content",
+                    "type": "string",
+                    "status": "available",
+                    "required": false,
+                    "array": false,
+                    "size": 1000000000,
+                    "default": "{     \"time\": 1688495127638,     \"blocks\": [         {             \"id\": \"4UKCMGMDR4\",             \"type\": \"paragraph\",             \"data\": {                 \"text\": \"\",                 \"alignment\": \"left\"             }         }     ],     \"version\": \"2.27.0\" }"
+                }
+            ],
+            "indexes": [
+                {
+                    "key": "AuthorUid",
+                    "type": "fulltext",
+                    "status": "available",
+                    "attributes": [
+                        "AuthorUid"
+                    ],
+                    "orders": [
+                        "ASC"
+                    ]
+                },
+                {
+                    "key": "LastUpdated",
+                    "type": "key",
+                    "status": "available",
+                    "attributes": [
+                        "LastUpdated"
+                    ],
+                    "orders": [
+                        "DESC"
+                    ]
+                },
+                {
+                    "key": "DashboardSearch",
+                    "type": "key",
+                    "status": "failed",
+                    "attributes": [
+                        "AuthorUid",
+                        "Location"
+                    ],
+                    "orders": [
+                        "ASC",
+                        "ASC"
+                    ]
+                }
+            ]
+        },
+        {
+            "$id": "64b43609ad46ae591774",
+            "$permissions": [
+                "create(\"any\")",
+                "read(\"any\")",
+                "update(\"any\")",
+                "delete(\"any\")"
+            ],
+            "databaseId": "648bc6ddddf63e135f4d",
+            "name": "Folders",
+            "enabled": true,
+            "documentSecurity": true,
+            "attributes": [
+                {
+                    "key": "Name",
+                    "type": "string",
+                    "status": "available",
+                    "required": true,
+                    "array": false,
+                    "size": 512,
+                    "default": null
+                },
+                {
+                    "key": "Location",
+                    "type": "string",
+                    "status": "available",
+                    "required": true,
+                    "array": false,
+                    "size": 2048,
+                    "default": null
+                },
+                {
+                    "key": "OwnerUid",
+                    "type": "string",
+                    "status": "available",
+                    "required": true,
+                    "array": false,
+                    "size": 100,
+                    "default": null
+                }
+            ],
+            "indexes": [
+                {
+                    "key": "getfolders",
+                    "type": "key",
+                    "status": "failed",
+                    "attributes": [
+                        "OwnerUid",
+                        "Location"
+                    ],
+                    "orders": [
+                        "ASC",
+                        "ASC"
+                    ]
+                },
+                {
+                    "key": "OwnerUid",
+                    "type": "key",
+                    "status": "available",
+                    "attributes": [
+                        "OwnerUid"
+                    ],
+                    "orders": [
+                        "ASC"
+                    ]
+                }
+            ]
+        },
+        {
+            "$id": "64d5a380c46a1248b02c",
+            "$permissions": [
+                "create(\"any\")",
+                "read(\"any\")",
+                "update(\"any\")",
+                "delete(\"any\")"
+            ],
+            "databaseId": "648bc6ddddf63e135f4d",
+            "name": "Todo",
+            "enabled": true,
+            "documentSecurity": true,
+            "attributes": [
+                {
+                    "key": "AuthorName",
+                    "type": "string",
+                    "status": "available",
+                    "required": true,
+                    "array": false,
+                    "size": 10000,
+                    "default": null
+                },
+                {
+                    "key": "IsPublic",
+                    "type": "boolean",
+                    "status": "available",
+                    "required": true,
+                    "array": false,
+                    "default": null
+                },
+                {
+                    "key": "Name",
+                    "type": "string",
+                    "status": "available",
+                    "required": false,
+                    "array": false,
+                    "size": 1000,
+                    "default": "Default Document"
+                },
+                {
+                    "key": "AuthorUid",
+                    "type": "string",
+                    "status": "available",
+                    "required": true,
+                    "array": false,
+                    "size": 100,
+                    "default": null
+                },
+                {
+                    "key": "LastUpdated",
+                    "type": "datetime",
+                    "status": "available",
+                    "required": false,
+                    "array": false,
+                    "format": "",
+                    "default": "2023-07-05T13:46:23.32"
+                },
+                {
+                    "key": "Location",
+                    "type": "string",
+                    "status": "available",
+                    "required": false,
+                    "array": false,
+                    "size": 2048,
+                    "default": "~"
+                },
+                {
+                    "key": "Content",
+                    "type": "string",
+                    "status": "available",
+                    "required": false,
+                    "array": false,
+                    "size": 1073741824,
+                    "default": "{     \"time\": 1688495127638,     \"blocks\": [         {             \"id\": \"4UKCMGMDR4\",             \"type\": \"paragraph\",             \"data\": {                 \"text\": \"\",                 \"alignment\": \"left\"             }         }     ],     \"version\": \"2.27.0\" }"
+                }
+            ],
+            "indexes": [
+                {
+                    "key": "AuthorUid",
+                    "type": "fulltext",
+                    "status": "available",
+                    "attributes": [
+                        "AuthorUid"
+                    ],
+                    "orders": [
+                        "ASC"
+                    ]
+                },
+                {
+                    "key": "LastUpdated",
+                    "type": "key",
+                    "status": "available",
+                    "attributes": [
+                        "LastUpdated"
+                    ],
+                    "orders": [
+                        "DESC"
+                    ]
+                },
+                {
+                    "key": "DashboardSearch",
+                    "type": "key",
+                    "status": "failed",
+                    "attributes": [
+                        "AuthorUid",
+                        "Location"
+                    ],
+                    "orders": [
+                        "ASC",
+                        "ASC"
+                    ]
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,11 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Todoeditor from "../../components/todoeditor.svelte";
+
+let pid =  Astro.params.id
+let user = Astro.cookies.get('user').value as string
+---
+
+<Layout title="Document">
+    <Todoeditor client:only="Svelte" pid={pid} user={user} />
+</Layout>
