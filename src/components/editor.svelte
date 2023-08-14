@@ -223,7 +223,7 @@ window.onbeforeunload = function () {
   <form method="dialog" class="modal-box bg-gray-200 text-slate-950">
     <div class="flex flex-row justify-center items-center gap-2 text-xl">
         <p>Visibility</p>
-        <input type="checkbox" class="form-checkbox" bind:checked={docVisibility} on:change={autoSave} />
+        <input type="checkbox" class="checkbox checkbox-primary bg-gray-800"  bind:checked={docVisibility} on:change={autoSave} />
         {#if docVisibility}
         <span class="ml-2">Public</span>
         {:else}
@@ -239,11 +239,11 @@ window.onbeforeunload = function () {
         {/each}
     </select>
     </div>
-    <!--  delete button -->
-    <div class="modal-action">
-      <!-- if there is a button in form, it will close the modal -->
+    <div class="modal-action flex justify-around">
       <button class="btn">Close</button>
       <button class="btn text-sm btn-error text-black" on:click={deleteDoc}>Delete</button>
+      <button class="btn btn-success" on:click={() => {navigator.clipboard.writeText(window.location.href)}}>Copy Share Link</button>
+
     </div>
   </form>
 </dialog>
@@ -253,9 +253,6 @@ window.onbeforeunload = function () {
 </div>
 </div>
 <div id="editor"></div>
-{#if user === AuthorUid}
-    <button id="save">Save</button>
-{/if}
 {:else}
 <div class=" flex flex-col justify-center items-center pt-[40vh] gap-20 mx-auto">
     <p class="text-center text-6xl text-slate-950 mx-auto w-[75vw]">🔒</p>
