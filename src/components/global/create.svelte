@@ -95,7 +95,4 @@ function createDocument() {
 </dialog>
 
 <style>
-    option{
-        background-color: #575757;
-    }
 </style>
