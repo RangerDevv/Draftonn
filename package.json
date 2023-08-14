@@ -1,7 +1,7 @@
 {
   "name": "Draftonn",
   "type": "module",
-  "version": "0.0.1",
+  "version": "0.0.10",
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
@@ -22,7 +22,7 @@
     "@editorjs/table": "^2.2.2",
     "@editorjs/underline": "^1.1.0",
     "appwrite": "^11.0.0",
-    "astro": "^2.6.4",
+    "astro": "^2.9.0",
     "editorjs-header-with-alignment": "^1.0.1",
     "editorjs-paragraph-with-alignment": "^3.0.0",
     "svelte": "^3.59.1",

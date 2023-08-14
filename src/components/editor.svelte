@@ -77,6 +77,7 @@ Backend.appwriteDatabases.getDocument(databaseId, collectionId, pid).then((respo
         loadedData = editor.save();
         console.log('The document is empty' + loadedData);
     }
+
     editor = new EditorJS(
         {
             holder: 'editor',
