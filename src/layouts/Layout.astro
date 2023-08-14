@@ -9,7 +9,6 @@ const { title,path } = Astro.props;
 import { appwriteDatabases } from '../lib/backend';
 import { Query } from 'appwrite';
 import {DB_ID, COLLECTION} from "../lib/ids"
-import { ViewTransitions } from 'astro:transitions';
 
 let user = Astro.cookies.get('user').value as string;
 let Name = Astro.cookies.get('userName').value;
@@ -68,7 +67,6 @@ import Create from '../components/global/create.svelte';
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
 		<title>{title}</title>
-		<ViewTransitions />
 	</head>
 <div class="flex flex-row w-[100vw]">
 	<!--  a nav that is a side drawer on both mobile and desktop -->
