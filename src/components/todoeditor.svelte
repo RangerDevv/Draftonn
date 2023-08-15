@@ -238,7 +238,7 @@
     </div>
     <div id="editor"></div>
     {#if user === AuthorUid}
-        <button id="save">Save</button>
+        <!--<button id="save">Save</button>-->
     {/if}
     {:else}
     <div class=" flex flex-col justify-center items-center pt-[40vh] gap-20 mx-auto">
