@@ -27,7 +27,7 @@
         ).then(_ => window.location.href = `${path}/${folderName}`)
     }
 </script>
-<div class="flex flex-row gap-2">
+<div class="flex flex-row gap-2 w-6">
     <button on:click={newFolder} class="btn text-gray-800 bg-gray-200 items-center hover:bg-gray-300">
         New Folder
     </button>
