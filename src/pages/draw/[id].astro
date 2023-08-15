@@ -1,0 +1,11 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Draw from "../../components/draw.svelte";
+
+let pid =  Astro.params.id
+let user = Astro.cookies.get('user').value as string
+---
+
+<Layout title="Drawing Board">
+    <Draw client:only="Svelte" pid={pid} user={user}/>
+</Layout>

@@ -6,7 +6,7 @@
             "$id": "648bc6ddddf63e135f4d",
             "name": "Documents",
             "$createdAt": "2023-06-16T02:20:13.909+00:00",
-            "$updatedAt": "2023-06-16T02:20:13.909+00:00"
+            "$updatedAt": "2023-08-11T14:52:18.907+00:00"
         }
     ],
     "collections": [
@@ -207,13 +207,22 @@
             "documentSecurity": true,
             "attributes": [
                 {
-                    "key": "AuthorName",
+                    "key": "LastUpdated",
+                    "type": "datetime",
+                    "status": "available",
+                    "required": false,
+                    "array": false,
+                    "format": "",
+                    "default": "2023-07-05T13:46:23.32"
+                },
+                {
+                    "key": "Location",
                     "type": "string",
                     "status": "available",
-                    "required": true,
+                    "required": false,
                     "array": false,
-                    "size": 10000,
-                    "default": null
+                    "size": 2048,
+                    "default": "~"
                 },
                 {
                     "key": "IsPublic",
@@ -233,6 +242,15 @@
                     "default": "Default Document"
                 },
                 {
+                    "key": "AuthorName",
+                    "type": "string",
+                    "status": "available",
+                    "required": true,
+                    "array": false,
+                    "size": 10000,
+                    "default": null
+                },
+                {
                     "key": "AuthorUid",
                     "type": "string",
                     "status": "available",
@@ -241,6 +259,67 @@
                     "size": 100,
                     "default": null
                 },
+                {
+                    "key": "Content",
+                    "type": "string",
+                    "status": "available",
+                    "required": false,
+                    "array": false,
+                    "size": 1073741824,
+                    "default": "{\"time\":1691725274889,\"blocks\":[{\"id\":\"3DoiwMrvGW\",\"type\":\"checklist\",\"data\":{\"items\":[{\"text\":\"First To-Do!\",\"checked\":true}]}}],\"version\":\"2.27.2\"}"
+                }
+            ],
+            "indexes": [
+                {
+                    "key": "AuthorUid",
+                    "type": "fulltext",
+                    "status": "available",
+                    "attributes": [
+                        "AuthorUid"
+                    ],
+                    "orders": [
+                        "ASC"
+                    ]
+                },
+                {
+                    "key": "LastUpdated",
+                    "type": "key",
+                    "status": "available",
+                    "attributes": [
+                        "LastUpdated"
+                    ],
+                    "orders": [
+                        "DESC"
+                    ]
+                },
+                {
+                    "key": "DashboardSearch",
+                    "type": "key",
+                    "status": "failed",
+                    "attributes": [
+                        "AuthorUid",
+                        "Location"
+                    ],
+                    "orders": [
+                        "ASC",
+                        "ASC"
+                    ]
+                }
+            ]
+        },
+        {
+            "$id": "64dab46d57d73632fba5",
+            "$permissions": [
+                "create(\"any\")",
+                "read(\"any\")",
+                "update(\"any\")",
+                "delete(\"any\")"
+            ],
+            "databaseId": "648bc6ddddf63e135f4d",
+            "name": "Draw",
+            "enabled": true,
+            "documentSecurity": true,
+            "attributes": [
                 {
                     "key": "LastUpdated",
                     "type": "datetime",
@@ -260,13 +339,48 @@
                     "default": "~"
                 },
                 {
+                    "key": "IsPublic",
+                    "type": "boolean",
+                    "status": "available",
+                    "required": true,
+                    "array": false,
+                    "default": null
+                },
+                {
+                    "key": "Name",
+                    "type": "string",
+                    "status": "available",
+                    "required": false,
+                    "array": false,
+                    "size": 1000,
+                    "default": "Default Document"
+                },
+                {
+                    "key": "AuthorName",
+                    "type": "string",
+                    "status": "available",
+                    "required": true,
+                    "array": false,
+                    "size": 10000,
+                    "default": null
+                },
+                {
+                    "key": "AuthorUid",
+                    "type": "string",
+                    "status": "available",
+                    "required": true,
+                    "array": false,
+                    "size": 100,
+                    "default": null
+                },
+                {
                     "key": "Content",
                     "type": "string",
                     "status": "available",
                     "required": false,
                     "array": false,
                     "size": 1073741824,
-                    "default": "{\"time\":1691725274889,\"blocks\":[{\"id\":\"3DoiwMrvGW\",\"type\":\"checklist\",\"data\":{\"items\":[{\"text\":\"First To-Do!\",\"checked\":true}]}}],\"version\":\"2.27.2\"}"
+                    "default": ""
                 }
             ],
             "indexes": [
