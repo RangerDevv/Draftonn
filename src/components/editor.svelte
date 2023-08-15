@@ -218,7 +218,7 @@ window.onbeforeunload = function () {
 <label class="flex items-center">
 {#if user === AuthorUid}
 <!-- Open the modal using ID.showModal() method -->
-<button class="btn text-gray-800 bg-gray-200 items-center mx-auto  hover:bg-gray-300" onclick="settingModal.showModal()">Settings</button>
+<button class="btn text-gray-800 bg-gray-200 gap-2 mx-auto  hover:bg-gray-300" onclick="settingModal.showModal()">Settings</button>
 <dialog id="settingModal" class="modal">
   <form method="dialog" class="modal-box bg-gray-200 text-slate-950">
     <div class="flex flex-row justify-center items-center gap-2 text-xl">
