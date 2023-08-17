@@ -25,6 +25,7 @@
 
     export let pid = "";
     export const user = ""; // unused
+    let savedEditor = "";
 
     // load the document
     onMount(async () => {
@@ -33,8 +34,10 @@
             BackendIds.COLLECTION.Drawing,
             pid
         ).then((response) => {
-            console.log(response);
-            editor.loadFromSVG(response.document.Content);
+            console.log(response.Content);
+            savedEditor = response['Content'];
+            console.log(savedEditor);
+            editor.loadFromSVG(savedEditor);
         }, (error) => {
             console.log(error);
         });
@@ -42,12 +45,13 @@
 
     // a function to save the document that is called every second
     async function saveDocument() {
+        savedEditor = editor.toSVG().outerHTML;
         await Backend.appwriteDatabases.updateDocument(
             BackendIds.DB_ID,
             BackendIds.COLLECTION.Drawing,
             pid,
             {
-                "Content": svgElem.outerHTML,
+                "Content": savedEditor
             }
         ).then((response) => {
             console.log(response);
@@ -56,7 +60,10 @@
         });
     }
 
-    setInterval(saveDocument, 1000);
+    // call the save function every 5 seconds after the document is loaded
+    setTimeout(() => {
+        setInterval(saveDocument, 5000);
+    }, 5000);
 
 </script>
 
