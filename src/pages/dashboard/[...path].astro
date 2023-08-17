@@ -39,6 +39,15 @@ let Todos = await appwriteDatabases.listDocuments(
         Query.equal("Location", path!)
     ]
 ).then(response => response.documents)
+
+let Drawings = await appwriteDatabases.listDocuments(
+    DB_ID,
+    COLLECTION.Drawing, 
+    [
+        Query.equal('AuthorUid', user),
+        Query.equal("Location", path!)
+    ]
+).then(response => response.documents)
 ---
 <script>
     // get the data from the cookie named user
@@ -77,6 +86,14 @@ let Todos = await appwriteDatabases.listDocuments(
                                 <a class="w-96 hover:bg-gray-300 p-2 ml-4 rounded-lg" href={`/todo/${todo.$id}`}>✅ {todo.Name}</a>
                         ))
                         : <h1>There are no Todo Lists!</h1>
+                    }
+                    
+                    <h1 class="text-xl font-semibold">Scrrible Board</h1>
+                    {(Drawings.length > 0)
+                        ? Drawings.map((draw) => (
+                                <a class="w-96 hover:bg-gray-300 p-2 ml-4 rounded-lg" href={`/draw/${draw.$id}`}>🎨 {draw.Name}</a>
+                        ))
+                        : <h1>There are no Scribble Boards!</h1>
                     }
                 </div>
             </div>
