@@ -65,6 +65,11 @@
         setInterval(saveDocument, 5000);
     }, 5000);
 
+    window.onbeforeunload = function() {
+        saveDocument();
+        return "Are you sure you want to leave?";
+    };
+
 </script>
 
 <main class="editorHolder">
