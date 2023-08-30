@@ -24,8 +24,13 @@
     toolbar;
 
     export let pid = "";
-    export const user = ""; // unused
+    export let AuthorUid = ""; 
     let savedEditor = "";
+    let BoardTitle = "";
+    let docVisibility = null;
+    let docFileLocation = "";
+    let DocUser = "";
+    let folders = [];
 
     // load the document
     onMount(async () => {
@@ -38,6 +43,22 @@
             savedEditor = response['Content'];
             console.log(savedEditor);
             editor.loadFromSVG(savedEditor);
+            BoardTitle = response.Name;
+            docVisibility = response.IsPublic;
+            docFileLocation = response.Location;
+            DocUser = response.AuthorUid;
+        }, (error) => {
+            console.log(error);
+        });
+        Backend.appwriteDatabases.listDocuments(
+            BackendIds.DB_ID,
+            BackendIds.COLLECTION.Folders,
+            [
+                Query.equal("OwnerUid", AuthorUid),
+            ]
+        ).then((response) => {
+            folders = response.documents;
+            console.log(response);
         }, (error) => {
             console.log(error);
         });
@@ -51,13 +72,25 @@
             BackendIds.COLLECTION.Drawing,
             pid,
             {
-                "Content": savedEditor
+                "Name": BoardTitle,
+                "Content": savedEditor,
+                "IsPublic": docVisibility,
+                "Location": docFileLocation,
             }
         ).then((response) => {
             console.log(response);
         }, (error) => {
             console.log(error);
         });
+    }
+
+    function deleteDoc() {
+    Backend.appwriteDatabases.deleteDocument(BackendIds.DB_ID, BackendIds.COLLECTION.Drawing, pid).then((response) => {
+        console.log(response);
+        window.location.href = '/dashboard';
+    }, (error) => {
+        console.log(error);
+    });
     }
 
     // call the save function every 5 seconds after the document is loaded
@@ -72,22 +105,64 @@
 
 </script>
 
-<main class="editorHolder">
+<main>
+{#if docVisibility==null}
+<div class=" flex flex-col justify-center items-center pt-[40vh] gap-20">
+<p class="text-center text-6xl text-slate-950 mx-auto w-[75vw]">🌐</p>
+<span class="loading loading-infinity loading-lg text-black mx-auto"></span>
+</div>
+{:else}
+{#if docVisibility==true || DocUser === AuthorUid}
+<div class=" flex flex-row justify-center items-center gap-8 p-2">
+<!--  checkboxes for public and private -->
+<div class="flex flex-row justify-center items-center gap-2">
+<label class="flex items-center">
+{#if DocUser === AuthorUid}
+<!-- Open the modal using ID.showModal() method -->
+<button class="btn text-gray-800 bg-gray-200 gap-2 mx-auto  hover:bg-gray-300" onclick="settingModal.showModal()">Settings</button>
+<dialog id="settingModal" class="modal">
+  <form method="dialog" class="modal-box bg-gray-200 text-slate-950">
+    <div class="flex flex-row justify-center items-center gap-2 text-xl">
+        <p>Visibility</p>
+        <input type="checkbox" class="checkbox checkbox-primary bg-gray-800"  bind:checked={docVisibility} on:change={saveDocument} />
+        {#if docVisibility}
+        <span class="ml-2">Public</span>
+        {:else}
+        <span class="ml-2">Private</span>
+        {/if}
+    </div>
+    <div class="flex flex-col justify-center items-center gap-2 pt-3">
+    <label for="folder" class="text-gray-800">Path Of Document</label>
+    <select id="folder" class="select select-bordered bg-gray-400" bind:value={docFileLocation} on:change={saveDocument}>
+        <option value="~">📁Home</option>
+        {#each folders as folder}
+            <option value={folder.Location + "/" + folder.Name}>📁{folder.Name}</option>
+        {/each}
+    </select>
+    </div>
+    <div class="modal-action flex justify-around">
+      <button class="btn">Close</button>
+      <button class="btn text-sm btn-error text-black" on:click={deleteDoc}>Delete</button>
+      <button class="btn btn-success" on:click={() => {navigator.clipboard.writeText(window.location.href)}}>Copy Share Link</button>
+    </div>
+  </form>
+</dialog>
 
+{/if}
+</label>
+</div>
+</div>
+<div class="flex flex-row justify-center items-center gap-8 p-2 w-full">
+<input type="text" bind:value={BoardTitle} placeholder="Title" class="border-none text-4xl font-bold text-center bg-transparent active:border-none mx-auto self-center items-center h-16" on:change={saveDocument} />
+</div>
+{:else}
+<div class=" flex flex-col justify-center items-center pt-[40vh] gap-20 mx-auto">
+    <p class="text-center text-6xl text-slate-950 mx-auto w-[75vw]">🔒</p>
+    <p class="text-center text-2xl text-slate-950 mx-auto w-[75vw]">You do not have access to this document</p>
+</div>
+{/if}
+{/if}
 </main>
 
 <style>
-.editorHolder {
-  background-color: #f5f5f5;
-  height: 100vh;
-}
-
-.toolbar-root {
-}
-
-.toolbar-root {
-  background-color: #fff;
-  border-bottom: 1px solid #ccc;
-  padding: 10px;
-}
 </style>
