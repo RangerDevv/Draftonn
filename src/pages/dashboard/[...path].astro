@@ -8,27 +8,16 @@ import CreateButtons from "../../components/global/createbuttons.svelte"
 let user = Astro.cookies.get('user').value as string;
 let username = Astro.cookies.get('userName').value as string;
 let { path } = Astro.params
-let ownerUser = ""
 
 if(path == undefined || path == "") {
     return Astro.redirect("/dashboard/~")
 }
 
-ownerUser = await appwriteDatabases.listDocuments(
-    DB_ID,
-    COLLECTION.Folders,
-    [
-        Query.equal("OwnerUid", user),
-    ]
-).then(ownerUser => ownerUser.documents[0].OwnerUid) as string
-
-console.log(ownerUser)
-
 let Folders = await appwriteDatabases.listDocuments(
     DB_ID,
     COLLECTION.Folders,
     [
-        Query.equal("OwnerUid", ownerUser),
+        Query.equal("OwnerUid", user),
         Query.equal("Location", path)
     ]
 ).then(response => response.documents)
@@ -37,7 +26,7 @@ let Docs = await appwriteDatabases.listDocuments(
 	DB_ID,
 	COLLECTION.Notes, 
 	[
-		Query.equal('AuthorUid', ownerUser),
+		Query.equal('AuthorUid', user),
         Query.equal("Location", path!)
     ]
 ).then(response => response.documents)
@@ -46,7 +35,7 @@ let Todos = await appwriteDatabases.listDocuments(
     DB_ID,
     COLLECTION.Todo, 
     [
-        Query.equal('AuthorUid', ownerUser),
+        Query.equal('AuthorUid', user),
         Query.equal("Location", path!)
     ]
 ).then(response => response.documents)
