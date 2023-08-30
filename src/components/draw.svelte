@@ -3,6 +3,7 @@
     import 'js-draw/styles';
     import * as BackendIds from "../lib/ids";
     import * as Backend from "../lib/backend";
+    import { Query } from 'appwrite';
     import { onMount } from 'svelte';
 
     const editor = new Editor(document.body);
@@ -152,8 +153,10 @@
 </label>
 </div>
 </div>
-<div class="flex flex-row justify-center items-center gap-8 p-2 w-full">
+<div class="flex flex-col justify-center items-center gap-8 p-2 w-full">
 <input type="text" bind:value={BoardTitle} placeholder="Title" class="border-none text-4xl font-bold text-center bg-transparent active:border-none mx-auto self-center items-center h-16" on:change={saveDocument} />
+
+<p class="text-center text-2xl text-slate-950 mx-auto w-[75vw]"><span class="text-blue-500">Scroll Down</span> to start getting creative👇</p>
 </div>
 {:else}
 <div class=" flex flex-col justify-center items-center pt-[40vh] gap-20 mx-auto">
@@ -163,6 +166,3 @@
 {/if}
 {/if}
 </main>
-
-<style>
-</style>
