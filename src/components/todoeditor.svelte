@@ -18,6 +18,7 @@
     
     export let pid = "";
     export let user = "";
+    export let name = "";
     let databaseId = "648bc6ddddf63e135f4d";
     let collectionId = "64d5a380c46a1248b02c";
     
