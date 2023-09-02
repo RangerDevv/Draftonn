@@ -76,15 +76,15 @@
                 holder: 'editor',
                 placeholder: 'Start writing your article... Press tab to see the toolbar',
                 tools: {
+                    checklist: {
+                        class: Checklist,
+                        inlineToolbar: true,
+                    },
                     header: Header,
                     list: List,
                     table: Table,
                     inlineCode: InlineCode,
                     underline: Underline,
-                    checklist: {
-                        class: Checklist,
-                        inlineToolbar: true,
-                        },
                     image: {
                         class : ImageTool,
                             config: {
