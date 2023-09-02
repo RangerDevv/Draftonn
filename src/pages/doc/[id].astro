@@ -4,8 +4,9 @@ import Editor from "../../components/editor.svelte";
 
 let pid =  Astro.params.id
 let user = Astro.cookies.get('user').value as string
+let userName = Astro.cookies.get('userName').value as string
 ---
 
 <Layout title="Document">
-    <Editor client:only="Svelte" pid={pid} user={user}/>
+    <Editor client:only="Svelte" pid={pid} user={user} name={userName} />
 </Layout>

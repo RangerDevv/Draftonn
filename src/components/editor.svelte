@@ -24,6 +24,7 @@ import { ID,Query } from 'appwrite';
 
 export let pid = "";
 export let user = "";
+export let name = "";
 let databaseId = "648bc6ddddf63e135f4d";
 let collectionId = "648bc7024074897c154d";
 
@@ -196,6 +197,27 @@ setInterval(autoSave, 5000);
 window.onbeforeunload = function () {
     autoSave();
 }
+
+// a function to make a clone of the document
+function clone() {
+    Backend.appwriteDatabases.createDocument(
+        BackendID.DB_ID,
+        BackendID.COLLECTION.Notes,
+        ID.unique(),
+        {
+            Content: loadedData,
+            Name: LoadedTitle,
+            AuthorName: name,
+            AuthorUid: user,
+            IsPublic: docVisibility,
+        }
+    ).then((response) => {
+        console.log(response);
+        window.location.href = '/doc/'+response.$id;
+    }, (error) => {
+        console.log(error);
+    });
+}
 </script>
 <main>
 {#if !canRead}
@@ -248,6 +270,8 @@ window.onbeforeunload = function () {
   </form>
 </dialog>
 
+{:else}
+<button class="btn text-gray-800 bg-gray-200 gap-2 mx-auto z-[100001]  hover:bg-gray-300" on:click={clone}>Clone</button>
 {/if}
 </label>
 </div>
