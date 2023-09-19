@@ -9,6 +9,8 @@ import { ID,Query } from "appwrite";
 export let AuthorName = "";
 export let AuthorUid = "";
 
+let SearchAuid = AuthorUid;
+
 let collectionId = "";
 
 let DocumentName = "";
@@ -57,14 +59,81 @@ function createDocument() {
     });
 }
 
-</script>
+let seachWord = "";
+let DocsearchResults = [] as any;
+let TodosearchResults = [] as any;
+let DrawsearchResults = [] as any;
 
+function search() {
+    appwriteDatabases.listDocuments(
+        DB_ID,
+        COLLECTION.Notes,
+        [
+            Query.search("Name", seachWord),
+        ]
+    ).then((response) => {
+        DocsearchResults = response.documents as any;
+        // remove all the that do not have the same author
+        DocsearchResults = DocsearchResults.filter((result: any) => {
+            return result.AuthorUid == SearchAuid;
+        });
+    }, (error) => {
+        console.log(error);
+    });
+    appwriteDatabases.listDocuments(
+        DB_ID,
+        COLLECTION.Todo,
+        [
+            Query.search("Name", seachWord),
+        ]
+    ).then((response) => {
+        TodosearchResults = response.documents as any;
+        // remove all the that do not have the same author
+        TodosearchResults = TodosearchResults.filter((result: any) => {
+            return result.AuthorUid == SearchAuid;
+        });
+    }, (error) => {
+        console.log(error);
+    });
+    appwriteDatabases.listDocuments(
+        DB_ID,
+        COLLECTION.Drawing,
+        [
+            Query.search("Name", seachWord),
+        ]
+    ).then((response) => {
+        DrawsearchResults = response.documents as any;
+        // remove all the that do not have the same author
+        DrawsearchResults = DrawsearchResults.filter((result: any) => {
+            return result.AuthorUid == SearchAuid;
+        });
+    }, (error) => {
+        console.log(error);
+    });
+}
+</script>
+<div class="flex flex-wrap gap-2">
 <button class="btn text-gray-800 bg-gray-200 items-center mx-auto hover:bg-gray-300" on:click={() => {
     const modal = document.getElementById('my_modal_1');
     if (modal instanceof HTMLDialogElement && typeof modal.showModal === 'function') {
         modal.showModal();
     }
 }}>Create</button>
+<button class="btn text-gray-800 bg-gray-200 items-center mx-auto hover:bg-gray-300" on:click={() => {
+    const modal = document.getElementById('searchModal');
+    // if the key combination of ctrl+q is pressed then open the search modal
+    if (onkeydown = (e) => {
+        if (e.ctrlKey && e.key == "q") {
+            if (modal instanceof HTMLDialogElement && typeof modal.showModal === 'function') {
+                modal.showModal();
+            }
+        }
+    }) 
+    if (modal instanceof HTMLDialogElement && typeof modal.showModal === 'function') {
+        modal.showModal();
+    }
+}}>Search 🔍</button>
+</div>
 <dialog id="my_modal_1" class="modal">
   <form method="dialog" class="modal-box bg-gray-200 flex flex-col gap-4">
     <h3 class="font-bold text-2xl text-gray-900 text-center">Create Document</h3>
@@ -96,6 +165,28 @@ function createDocument() {
     </div>
   </form>
 </dialog>
-
+<!-- Search Modal -->
+<dialog id="searchModal" class="modal">
+	<div class="modal-box bg-gray-300 text-black h-96">
+        <h3 class="font-bold text-2xl text-gray-900 text-center">Search</h3>
+        <div class="flex flex-row items-center gap-2 mx-auto">
+        <input type="text" bind:value={seachWord} class="input input-bordered bg-gray-400 w-full mt-5" placeholder="Search" on:input={search} />
+        </div>
+        {#each DocsearchResults as result}
+            <a href={"/doc/"+result.$id} class="w-full btn btn-ghost mt-1">📄:{result.Name}</a>
+        {/each}
+        {#each TodosearchResults as result}
+            <a href={"/todo/"+result.$id} class="w-full btn btn-ghost mt-1">✅:{result.Name}</a>
+        {/each}
+        {#each DrawsearchResults as result}
+            <a href={"/draw/"+result.$id} class="w-full btn btn-ghost mt-1">🎨:{result.Name}</a>
+        {/each}
+		<div class="modal-action">
+		<form method="dialog">
+			<button class="btn btn-error">Close</button>
+		</form>
+		</div>
+	</div>
+</dialog>
 <style>
 </style>
