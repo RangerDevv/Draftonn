@@ -101,7 +101,6 @@
 
     window.onbeforeunload = function() {
         saveDocument();
-        return "Are you sure you want to leave?";
     };
 
 </script>
