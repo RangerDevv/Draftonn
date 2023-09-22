@@ -100,6 +100,11 @@ Backend.appwriteDatabases.getDocument(databaseId, collectionId, pid).then((respo
                             uploader: {uploadByFile}
                         }
                 },
+                marker: {
+                    class: Marker,
+                    inlineToolbar: true,
+                    shortcut: 'CMD+SHIFT+M',
+                },
                 paragraph: {
                     class: Paragraph,
                     inlineToolbar: true,
@@ -111,11 +116,6 @@ Backend.appwriteDatabases.getDocument(databaseId, collectionId, pid).then((respo
                 hyperlink: {
                     class: Hyperlink,
                     inlineToolbar: true,
-                },
-                marker: {
-                    class: Marker,
-                    inlineToolbar: true,
-                    shortcut: 'CMD+SHIFT+M',
                 },
             },
             data: JSON.parse(loadedData),
