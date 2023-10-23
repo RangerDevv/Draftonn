@@ -6,6 +6,7 @@
     let email = '';
     let password = '';
     let userName = '';
+    let errorMessage = '';
 
     $: disabled = !email || !password || !userName;
 
@@ -18,6 +19,7 @@
       window.location.href = '/login';
     }, (error) => {
       console.log(error);
+      errorMessage = error.message;
     });
   }
   </script>
@@ -30,6 +32,7 @@
     <input type="email" bind:value={email} placeholder="Email" />
     <input type="password" bind:value={password} placeholder="Password" />
     <button on:click={SignUp} class=" bg-gray-600 disabled:hover:bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded h-10 disabled:opacity-50" disabled={disabled}>Sign Up</button>
+    <p class="text-center text-red-500">{errorMessage}</p>
     <a href="/login" class="text-center text-gray-500 hover:text-gray-700">Already have an account? Login</a>
     </div>
   </div>

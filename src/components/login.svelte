@@ -5,6 +5,7 @@
   
     export let email = '';
     let password = '';
+    let errorMessage = '';
   
     $: disabled = email === '' || password === '';
   
@@ -27,9 +28,11 @@
       window.location.href = '/dashboard/~';
       }, (error) => {
         console.log(error);
+        errorMessage = error.message;
       });
     }, (error) => {
       console.log(error);
+      errorMessage = error.message;
     });
   }
   
@@ -41,6 +44,7 @@
     <input type="email" bind:value={email} placeholder="Email" />
     <input type="password" bind:value={password} placeholder="Password" />
     <button on:click={login} class="bg-gray-600 disabled:hover:bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded h-10 disabled:opacity-50" disabled={disabled}>Login</button>
+    <p class="text-center text-red-500">{errorMessage}</p>
     <a href="/signup" class="text-center text-gray-500 hover:text-gray-700">Don't have an account? Sign Up</a>
     </div>
   </div>
