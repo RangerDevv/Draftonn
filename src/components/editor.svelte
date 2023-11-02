@@ -271,7 +271,9 @@ function clone() {
 </dialog>
 
 {:else}
-<button class="btn text-gray-800 bg-gray-200 gap-2 mx-auto z-[100001]  hover:bg-gray-300" on:click={clone}>Clone</button>
+{#if pid!=""}
+    <button class="btn text-gray-800 bg-gray-200 gap-2 mx-auto z-[100001]  hover:bg-gray-300" on:click={clone}>Clone</button>
+{/if}
 {/if}
 </label>
 </div>
