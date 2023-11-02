@@ -17,6 +17,7 @@ import DragDrop from 'editorjs-drag-drop';
 import Undo from 'editorjs-undo';
 import Underline from '@editorjs/underline';
 import ChangeCase from 'editorjs-change-case';
+import Strikethrough from '@sotaproject/strikethrough';
 import editorjsCodeflask from '@calumk/editorjs-codeflask';
 import * as Backend from '../lib/backend';
 import * as BackendID from '../lib/ids';
@@ -94,6 +95,7 @@ Backend.appwriteDatabases.getDocument(databaseId, collectionId, pid).then((respo
                 code: editorjsCodeflask,
                 underline: Underline,
                 changeCase: ChangeCase,
+                strikethrough: Strikethrough,
                 image: {
                     class : ImageTool,
                         config: {

@@ -21,6 +21,7 @@
     "@editorjs/paragraph": "^2.9.0",
     "@editorjs/table": "^2.2.2",
     "@editorjs/underline": "^1.1.0",
+    "@sotaproject/strikethrough": "^1.0.1",
     "appwrite": "^11.0.0",
     "astro": "^2.9.0",
     "editorjs-header-with-alignment": "^1.0.1",

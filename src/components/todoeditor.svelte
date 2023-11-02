@@ -12,6 +12,7 @@
     import Undo from 'editorjs-undo';
     import Underline from '@editorjs/underline';
     import Checklist from '@editorjs/checklist';
+    import Strikethrough from '@sotaproject/strikethrough';
     import * as Backend from '../lib/backend';
     import * as BackendID from '../lib/ids';
     import { ID,Query } from 'appwrite';
@@ -86,6 +87,7 @@
                     table: Table,
                     inlineCode: InlineCode,
                     underline: Underline,
+                    strikethrough: Strikethrough,
                     image: {
                         class : ImageTool,
                             config: {
