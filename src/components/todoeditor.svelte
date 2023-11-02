@@ -13,6 +13,7 @@
     import Underline from '@editorjs/underline';
     import Checklist from '@editorjs/checklist';
     import Strikethrough from '@sotaproject/strikethrough';
+    import editorjsNestedChecklist from '@calumk/editorjs-nested-checklist';
     import * as Backend from '../lib/backend';
     import * as BackendID from '../lib/ids';
     import { ID,Query } from 'appwrite';
@@ -88,6 +89,7 @@
                     inlineCode: InlineCode,
                     underline: Underline,
                     strikethrough: Strikethrough,
+                    nestedChecklist: editorjsNestedChecklist,
                     image: {
                         class : ImageTool,
                             config: {
