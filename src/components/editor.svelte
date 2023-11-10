@@ -3,7 +3,6 @@ import EditorJS from '@editorjs/editorjs';
 // only import the following: Embed, header, link, list, quote, table, InlineCode, warning, paragraph
 import List from '@editorjs/list';
 import Quote from '@editorjs/quote';
-import Embed from '@editorjs/embed';
 import Table from '@editorjs/table';
 import InlineCode from '@editorjs/inline-code';
 import Warning from '@editorjs/warning';
@@ -88,7 +87,6 @@ Backend.appwriteDatabases.getDocument(databaseId, collectionId, pid).then((respo
                 header: Header,
                 list: List,
                 quote: Quote,
-                embed: Embed,
                 table: Table,
                 inlineCode: InlineCode,
                 warning: Warning,
