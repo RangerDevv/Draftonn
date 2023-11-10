@@ -15,6 +15,7 @@ import ImageTool from '@editorjs/image';
 import DragDrop from 'editorjs-drag-drop';
 import Undo from 'editorjs-undo';
 import Underline from '@editorjs/underline';
+import NestedList from '@editorjs/nested-list';
 import ChangeCase from 'editorjs-change-case';
 import Strikethrough from '@sotaproject/strikethrough';
 import editorjsCodeflask from '@calumk/editorjs-codeflask';
@@ -85,7 +86,13 @@ Backend.appwriteDatabases.getDocument(databaseId, collectionId, pid).then((respo
             placeholder: 'Start writing your article... Press tab to see the toolbar',
             tools: {
                 header: Header,
-                list: List,
+                list: {
+                    class: NestedList,
+                    inlineToolbar: true,
+                    config: {
+                        defaultStyle: 'unordered'
+                    },
+                },
                 quote: Quote,
                 table: Table,
                 inlineCode: InlineCode,
