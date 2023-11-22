@@ -83,7 +83,11 @@ let Drawings = await appwriteDatabases.listDocuments(
                 <h1 class="text-2xl font-semibold text-center">Dashboard</h1>
                 <h2 class="text-xl font-semibold text-center">{path}</h2>
                 <div class="flex flex-col gap-3 justify-center p-12">
+                    <div class="flex flex-row gap-2 w-6">
+                    <!-- go back button -->
+                    {path!="~" && <a class="btn text-gray-800 bg-gray-200 items-center mx-auto hover:bg-gray-300" href={`/dashboard/${path.split("/").slice(0, -1).join("/")}`}>⇽</a>}
                     <CreateButtons client:load currFolderID={currFolderID} AuthorUid={user} AuthorName={username} path={path} />
+                    </div>
                     {(Folders.length > 0) && <h1 class="text-xl font-semibold">Folders</h1>}
                     {(Folders.length > 0)
                         && Folders.map((folder) => (
