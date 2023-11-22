@@ -173,13 +173,13 @@ function search() {
         <input type="text" bind:value={seachWord} class="input input-bordered bg-gray-400 w-full mt-5" placeholder="Search" on:input={search} />
         </div>
         {#each DocsearchResults as result}
-            <a href={"/doc/"+result.$id} class="w-full btn btn-ghost mt-1">📄:{result.Name}</a>
+            <a href={"/doc/"+result.$id} class="w-full btn btn-ghost mt-1 text-left">📄:{result.Name}</a>
         {/each}
         {#each TodosearchResults as result}
-            <a href={"/todo/"+result.$id} class="w-full btn btn-ghost mt-1">✅:{result.Name}</a>
+            <a href={"/todo/"+result.$id} class="w-full btn btn-ghost mt-1 text-left">✅:{result.Name}</a>
         {/each}
         {#each DrawsearchResults as result}
-            <a href={"/draw/"+result.$id} class="w-full btn btn-ghost mt-1">🎨:{result.Name}</a>
+            <a href={"/draw/"+result.$id} class="w-full btn btn-ghost mt-1 text-left">🎨:{result.Name}</a>
         {/each}
 		<div class="modal-action">
 		<form method="dialog">
