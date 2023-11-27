@@ -1,19 +1,29 @@
-<script>
-    import {appwriteUser} from '../lib/backend';
-    
-    import { ID } from 'appwrite';
+<script lang="ts">
+  import {appwriteUser} from '../lib/backend';
+  import { appwriteDatabases } from "../lib/backend";
+  import { Query } from "appwrite";
+  import { COLLECTION, DB_ID } from "../lib/ids";
+  import { ID } from 'appwrite';
   
-    let email = '';
-    let password = '';
-    let confirmPassword = '';
-    let userName = '';
-    let errorMessage = '';
+  let email = '';
+  let password = '';
+  let confirmPassword = '';
+  let userName = '';
+  let errorMessage = '';
+  let school = '';
 
-    $: disabled = !email || !password || !userName || !confirmPassword;
+  $: disabled = !email || !password || !userName || !confirmPassword;
 
-    $: emailDomain = email.split("@")[1]
+  $: emailDomain = email.split("@")[1]
 
-  
+  let schools: Promise<any> | null = null
+
+  function updateSchools() {
+    schools = appwriteDatabases.listDocuments(DB_ID, COLLECTION.Schools, [
+      Query.equal("Domain", emailDomain)
+    ]).then(res => res.documents)
+  }
+
   function SignUp() {
     if(emailDomain == "gmail.com" || emailDomain == "outlook.com" || emailDomain == "hotmail.com") {
       errorMessage = "You must use your school email, not a personal one."
@@ -42,7 +52,14 @@
     <input type="text" bind:value={userName} placeholder="Username" />
     <input type="email" bind:value={email} placeholder="School Email" />
     <input type="password" bind:value={password} placeholder="Password" />
-    <input type="password" bind:value={confirmPassword} placeholder="Confirm Password" /> 
+    <input type="password" bind:value={confirmPassword} placeholder="Confirm Password" />
+    <select class="select select-bordered" on:click={updateSchools} bind:value={school} disabled={!emailDomain}>
+      <option value="">Select school...</option>
+      {#await schools then schoolList}
+      {schoolList}
+      {/await}
+      <option value="newschool">Add new school</option>
+    </select>
     <button on:click={SignUp} class=" bg-gray-600 disabled:hover:bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded h-10 disabled:opacity-50" disabled={disabled}>Sign Up</button>
     <p class="text-center text-red-500">{errorMessage}</p>
     <a href="/login" class="text-center text-gray-500 hover:text-gray-700">Already have an account? Login</a>
