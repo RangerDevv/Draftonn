@@ -5,70 +5,20 @@ export interface Props {
 }
 
 const { title,path } = Astro.props;
-
-import { appwriteDatabases } from '../lib/backend';
-import { Query } from 'appwrite';
-import {DB_ID, COLLECTION} from "../lib/ids"
-
-let user = Astro.cookies.get('user').value as string;
-let Name = Astro.cookies.get('userName').value;
-let loggedIn = user && user !== 'undefined';
-
-let Docs = [] as any[]
-let Todo = [] as any[]
-let Drawings = [] as any[]
-
-if (loggedIn) {
-	await appwriteDatabases.listDocuments(
-		DB_ID,
-		COLLECTION.Notes, 
-		[
-			Query.search('AuthorUid', user),
-			Query.orderDesc("LastUpdated"),
-			Query.limit(10)
-		])
-		.then((response) => {
-			Docs = response.documents as any[];
-		})
-
-	await appwriteDatabases.listDocuments(
-		DB_ID,
-		COLLECTION.Todo, 
-		[
-			Query.search('AuthorUid', user),
-			Query.orderDesc("LastUpdated"),
-			Query.limit(10)
-		])
-		.then((response) => {
-			Todo = response.documents as any[];
-		})
-
-	await appwriteDatabases.listDocuments(
-		DB_ID,
-		COLLECTION.Drawing, 
-		[
-			Query.search('AuthorUid', user),
-			Query.limit(10)
-		])
-		.then((response) => {
-			Drawings = response.documents as any[];
-		})
-}
-import Create from '../components/global/create.svelte';
 ---
 <script>
 	import { appwriteUser } from "../lib/backend";
 
-	let LogOutBtn = document.getElementById('logout') as HTMLAnchorElement;
+	// let LogOutBtn = document.getElementById('logout') as HTMLAnchorElement;
 
-	LogOutBtn.onclick = function logOut() {
-		appwriteUser.deleteSession('current').then(() => {
-			document.cookie = `user=; expires=${new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toUTCString()}; path=/`;
-			document.cookie = `userName=; expires=${new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toUTCString()}; path=/`;
-			document.cookie = `session=; expires=${new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toUTCString()}; path=/`;
-			window.location.href = '/';
-		});
-	}
+	// LogOutBtn.onclick = function logOut() {
+	// 	appwriteUser.deleteSession('current').then(() => {
+	// 		document.cookie = `user=; expires=${new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toUTCString()}; path=/`;
+	// 		document.cookie = `userName=; expires=${new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toUTCString()}; path=/`;
+	// 		document.cookie = `session=; expires=${new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toUTCString()}; path=/`;
+	// 		window.location.href = '/';
+	// 	});
+	// }
 </script>
 <!DOCTYPE html>
 <html lang="en" class="bg-gray-200 text-gray-900">
@@ -80,88 +30,7 @@ import Create from '../components/global/create.svelte';
 		<meta name="generator" content={Astro.generator} />
 		<title>{title}</title>
 	</head>
-<div class="flex flex-row w-[100vw]">
-	<nav>
-		<!--  an arrow that is on the edge of the nav -->
-		{loggedIn ? (
-			<>
-			<div class="flex flex-row justify-center text-2xl pb-1">
-				<div class="tooltip" data-tip="Home">
-				<a href="/dashboard/~">🏠</a>
-				</div>
-				<div class="tooltip" data-tip="Profile">
-				<a href="/profile">📌</a>
-				</div>
-				<div class="tooltip" data-tip="Logout">
-				<a id="logout">↩️</a>
-				</div>
-			</div>
-			<div class="flex justify-center pt-1">
-				<Create client:only="Svelte" AuthorName={Name} AuthorUid={user} docLocation={path} />
-			</div>
-			<h1 class="text-xl font-semibold text-center pt-5">Recents</h1>
-			<div class="collapse collapse-arrow bg-transparent w-[17vw] mx-auto rounded-lg">
-				<input type="radio" name="my-accordion-1" checked="checked" /> 
-				<div class="collapse-title text-md font-medium">
-					Notes
-				</div>
-				<div class="collapse-content"> 
-					<div class="flex flex-col pl-3 gap-1">
-						{Docs.map((doc) => (
-							<div class="flex flex-row">
-								<a href={`/doc/${doc.$id}`} class="text-sm text-black rounded-md w-full mr-2">{doc.Name}</a>
-							</div>
-						))}
-					</div>
-				</div>
-			</div>
-			<div class="collapse collapse-arrow bg-transparent w-[17vw] mx-auto rounded-lg">
-				<input type="radio" name="my-accordion-1"/> 
-				<div class="collapse-title text-md font-medium">
-					Todo
-				</div>
-				<div class="collapse-content"> 
-					<div class="flex flex-col pl-3 gap-1">
-						{Todo.map((todo) => (
-							<div class="flex flex-row">
-								<a href={`/todo/${todo.$id}`} class="text-sm text-black rounded-md w-full mr-2">{todo.Name}</a>
-							</div>
-						))}
-					</div>
-				</div>
-			</div>
-			<div class="collapse collapse-arrow bg-transparent w-[17vw] mx-auto rounded-lg">
-				<input type="radio" name="my-accordion-1"/> 
-				<div class="collapse-title text-md font-medium">
-					Drawings
-				</div>
-				<div class="collapse-content"> 
-					<div class="flex flex-col pl-3 gap-1">
-						{Drawings.map((drawing) => (
-							<div class="flex flex-row">
-								<a href={`/draw/${drawing.$id}`} class="text-sm text-black rounded-md w-full mr-2">{drawing.Name}</a>
-							</div>
-						))}
-					</div>
-				</div>
-			</div>
-			</>
-		) : (
-			<>
-			<div class="flex flex-row justify-center text-2xl">
-				<div class="tooltip" data-tip="Home">
-				<a href="/">🏠</a>
-				</div>
-				<div class="tooltip" data-tip="Login">
-				<a href="/login">🔑</a>
-				</div>
-				<div class="tooltip" data-tip="Signup">
-				<a href="/signup">📝</a>
-				</div>
-			</div>
-			</>
-		)}
-	</nav>
+<div class="flex flex-col m-5">
 	<body>
 		<slot />
 	</body>
