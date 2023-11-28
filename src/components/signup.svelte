@@ -4,6 +4,7 @@
   import { Query } from "appwrite";
   import { COLLECTION, DB_ID } from "../lib/ids";
   import { ID } from 'appwrite';
+  import type { Models } from "appwrite/types"
   
   let email = '';
   let password = '';
@@ -16,12 +17,14 @@
 
   $: emailDomain = email.split("@")[1]
 
-  let schools: Promise<any> | null = null
+  let schools: Models.Document[] = []
 
   function updateSchools() {
-    schools = appwriteDatabases.listDocuments(DB_ID, COLLECTION.Schools, [
+    school = ''
+    appwriteDatabases.listDocuments(DB_ID, COLLECTION.Schools, [
       Query.equal("Domain", emailDomain)
-    ]).then(res => res.documents)
+    ]).then(res => {schools = res.documents})
+    
   }
 
   function SignUp() {
@@ -50,14 +53,16 @@
   <div class="flex justify-center">
     <div class="w-96 h-auto p-12 mt-12 rounded-md self-center flex flex-col gap-5">
     <input type="text" bind:value={userName} placeholder="Username" />
-    <input type="email" bind:value={email} placeholder="School Email" />
+    <input type="email" bind:value={email} on:change={updateSchools} placeholder="School Email" />
     <input type="password" bind:value={password} placeholder="Password" />
     <input type="password" bind:value={confirmPassword} placeholder="Confirm Password" />
-    <select class="select select-bordered" on:click={updateSchools} bind:value={school} disabled={!emailDomain}>
+    <select class="select select-bordered" bind:value={school} disabled={!emailDomain || schools.length == 0}>
       <option value="">Select school...</option>
-      {#await schools then schoolList}
-      {schoolList}
-      {/await}
+      {#if schools.length}
+        {#each schools as school}
+          <option value={school.$id}>{school.Name}</option>
+        {/each}
+      {/if}
       <option value="newschool">Add new school</option>
     </select>
     <button on:click={SignUp} class=" bg-gray-600 disabled:hover:bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded h-10 disabled:opacity-50" disabled={disabled}>Sign Up</button>
