@@ -27,6 +27,13 @@
     
   }
 
+  function checkForNew() {
+    if(school !== "newschool") return;
+    school = ""
+    //Ask for new school name
+    const newSchoolName = prompt("Enter the name of the new school:")
+  }
+
   function SignUp() {
     if(emailDomain == "gmail.com" || emailDomain == "outlook.com" || emailDomain == "hotmail.com") {
       errorMessage = "You must use your school email, not a personal one."
@@ -56,7 +63,7 @@
     <input type="email" bind:value={email} on:change={updateSchools} placeholder="School Email" />
     <input type="password" bind:value={password} placeholder="Password" />
     <input type="password" bind:value={confirmPassword} placeholder="Confirm Password" />
-    <select class="select select-bordered" bind:value={school} disabled={!emailDomain || schools.length == 0}>
+    <select class="select select-bordered" bind:value={school} on:change={checkForNew} disabled={!(email.split("@")[0] && emailDomain)}>
       <option value="">Select school...</option>
       {#if schools.length}
         {#each schools as school}
