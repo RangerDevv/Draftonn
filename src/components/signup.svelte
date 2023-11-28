@@ -53,6 +53,7 @@
     const promise = appwriteUser.create( ID.unique() , email, password, userName);
   
     promise.then((response) => {
+      
       console.log(response);
       window.location.href = '/login';
     }, (error) => {

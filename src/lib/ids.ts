@@ -4,5 +4,6 @@ export const COLLECTION = {
     Folders: "64b43609ad46ae591774",
     Todo: "64d5a380c46a1248b02c",
     Drawing: "64dab46d57d73632fba5",
-    Schools: "6564e25da3c12066d80e"
+    Schools: "6564e25da3c12066d80e",
+    User_School: "6566256e1589df22e392"
 }
