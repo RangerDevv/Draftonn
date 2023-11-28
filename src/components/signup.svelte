@@ -32,6 +32,13 @@
     school = ""
     //Ask for new school name
     const newSchoolName = prompt("Enter the name of the new school:")
+    appwriteDatabases.createDocument(DB_ID, COLLECTION.Schools, ID.unique(), {
+      "Name": newSchoolName,
+      "Domain": emailDomain
+    }).then(res => {
+      updateSchools()
+      school = res.$id
+    })
   }
 
   function SignUp() {
