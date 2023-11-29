@@ -53,9 +53,10 @@
     const promise = appwriteUser.create( ID.unique() , email, password, userName);
   
     promise.then((response) => {
-      
-      console.log(response);
-      window.location.href = '/login';
+      appwriteDatabases.createDocument(DB_ID, COLLECTION.User_School, ID.unique(), {
+        User: response.$id,
+        School: school
+      }).then(() => window.location.href = '/login')
     }, (error) => {
       console.log(error);
       errorMessage = error.message;

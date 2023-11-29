@@ -1,0 +1,18 @@
+---
+import Layout from "../layouts/Layout.astro";
+import SelectclassesC from "../components/selectclasses.svelte";
+
+let user = Astro.cookies.get('user').value as string;
+let username = Astro.cookies.get('userName').value as string;
+---
+<script>
+    // get the data from the cookie named user
+    let user = document.cookie.split(';').find((item) => item.includes('user'));
+    // if the user cookie exists then do nothing else redirect to the login page
+    if (!user) {
+        window.location.href = '/login';
+    }
+</script>
+<Layout title="Class Selection">
+    <SelectclassesC {user} {username} client:only />
+</Layout>
