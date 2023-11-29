@@ -3,7 +3,6 @@ import Layout from "../layouts/Layout.astro";
 import SelectclassesC from "../components/selectclasses.svelte";
 
 let user = Astro.cookies.get('user').value as string;
-let username = Astro.cookies.get('userName').value as string;
 ---
 <script>
     // get the data from the cookie named user
@@ -14,5 +13,5 @@ let username = Astro.cookies.get('userName').value as string;
     }
 </script>
 <Layout title="Class Selection">
-    <SelectclassesC {user} {username} client:only />
+    <SelectclassesC {user} client:only />
 </Layout>
