@@ -71,7 +71,7 @@
     <input type="email" bind:value={email} on:change={updateSchools} placeholder="School Email" />
     <input type="password" bind:value={password} placeholder="Password" />
     <input type="password" bind:value={confirmPassword} placeholder="Confirm Password" />
-    <select class="select select-bordered" bind:value={school} on:change={checkForNew} disabled={!(email.split("@")[0] && emailDomain)}>
+    <select class="select select-bordered bg-gray-400" bind:value={school} on:change={checkForNew} disabled={!(email.split("@")[0] && emailDomain)}>
       <option value="">Select school...</option>
       {#if schools.length}
         {#each schools as school}
