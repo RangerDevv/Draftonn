@@ -45,7 +45,12 @@
 </script>
 <div class="flex flex-col items-center 2xl:scale-125 pt-10 gap-4">
     <p class="text-3xl text-center font-bold">Select your classes</p>
-    <button class="h-12 bg-blue-500 rounded-md w-44">+ New Class</button>
+    <button class="h-12 bg-blue-500 rounded-md w-44" on:click={() => {
+        const modal = document.getElementById('my_modal_1');
+        if (modal instanceof HTMLDialogElement && typeof modal.showModal === 'function') {
+            modal.showModal();
+        }
+    }}>+ New Class</button>
     <div>
         {#each classes as c}
             <label class="cursor-pointer label">
