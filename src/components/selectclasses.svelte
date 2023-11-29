@@ -11,12 +11,14 @@
 
     let selectedClasses: string[] = []
 
+    let school = ""
+
     appwriteDatabases.listDocuments(DB_ID, COLLECTION.User_School, [
         Query.equal("User", user)
     ])
     .then(res => res.documents[0])
     .then(doc => {
-        let school = doc.School
+        school = doc.School
         return appwriteDatabases.listDocuments(DB_ID, COLLECTION.Classes, [
             Query.equal("School", school)
         ])
@@ -26,11 +28,25 @@
         classes = res.documents
     })
 
+    function createClass() {
+        let id = ID.unique()
+        let name = `${acceleration} ${className} w/ ${teacherName}`
+        appwriteDatabases.createDocument(DB_ID, COLLECTION.Classes, id, {
+            Name: name,
+            School: school
+        }).then(() => {
+            classes = [...classes, ({
+                $id: id,
+                Name: name 
+            } as unknown as Models.Document)]
+        })
+    }
+
     function updateClasses() {
         appwriteDatabases.listDocuments(DB_ID, COLLECTION.Class_User, [
             Query.equal("User", user)
         ]).then(res => {
-            Promise.all(
+            return Promise.all(
                 res.documents.map(
                     doc => appwriteDatabases.deleteDocument(DB_ID, COLLECTION.Class_User, doc.$id)
                 )
@@ -57,7 +73,7 @@
         {#each classes as c}
             <label class="cursor-pointer label">
                 <input value={c.$id} bind:group={selectedClasses} type="checkbox" class="checkbox checkbox-info checkbox-lg" />
-                <span class="label-text ml-2 text-lg">{c.Name}</span>
+                <span class="label-text ml-2 mr-auto text-lg text-left">{c.Name}</span>
             </label>
         {/each}
         
@@ -81,6 +97,7 @@
           <option value="IB-HL">IB-HL</option>
       </select>
       <button class="btn btn-primary" disabled={!teacherName || !acceleration || !className} on:click={() => {
+          createClass()
           const modal = document.getElementById('newclassmodal');
           if (modal instanceof HTMLDialogElement && typeof modal.close === 'function') {
               modal.close();
