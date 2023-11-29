@@ -13,6 +13,12 @@
 
     let school = ""
 
+    appwriteDatabases.listDocuments(DB_ID, COLLECTION.Class_User, [
+        Query.equal("User", user)
+    ]).then(res => res.documents.forEach(doc => {
+        selectedClasses = [...selectedClasses, doc.Class]
+    }))
+
     appwriteDatabases.listDocuments(DB_ID, COLLECTION.User_School, [
         Query.equal("User", user)
     ])
