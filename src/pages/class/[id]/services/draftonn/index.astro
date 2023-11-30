@@ -1,19 +1,16 @@
 ---
 //TODO: Make this page just show units
-import Layout from "../../../../layouts/Layout.astro";
-import { appwriteDatabases } from "../../lib/backend";
+import Layout from "../../../../../layouts/Layout.svelte";
+import { appwriteDatabases } from "../../../../../lib/backend";
 import { Query } from "appwrite";
-import { COLLECTION, DB_ID } from "../../lib/ids";
-import CreateButtons from "../../components/global/createbuttons.svelte"
+import { COLLECTION, DB_ID } from "../../../../../lib/ids";
+import CreateButtons from "../../../../../components/global/createbuttons.svelte"
 
 let user = Astro.cookies.get('user').value as string;
 let username = Astro.cookies.get('userName').value as string;
-let { path } = Astro.params as { path: string };
+let classId = Astro.params.id as string;
 let currFolderID = '' as string;
 
-if(path == undefined || path == "") {
-    return Astro.redirect("/dashboard/~")
-}
 
 let Folders = await appwriteDatabases.listDocuments(
     DB_ID,
