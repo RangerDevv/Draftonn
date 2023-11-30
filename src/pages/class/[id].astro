@@ -1,0 +1,5 @@
+---
+let classId = Astro.params.id as string
+//Class dashboard is not yet implemented since only the draftonn service is offered. Redirect directly to draftonn.
+return Astro.redirect(`/class/${classId}/services/draftonn`)
+---

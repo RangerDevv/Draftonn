@@ -1,0 +1,129 @@
+---
+//TODO: Make this page just show units
+import Layout from "../../../../layouts/Layout.astro";
+import { appwriteDatabases } from "../../lib/backend";
+import { Query } from "appwrite";
+import { COLLECTION, DB_ID } from "../../lib/ids";
+import CreateButtons from "../../components/global/createbuttons.svelte"
+
+let user = Astro.cookies.get('user').value as string;
+let username = Astro.cookies.get('userName').value as string;
+let { path } = Astro.params as { path: string };
+let currFolderID = '' as string;
+
+if(path == undefined || path == "") {
+    return Astro.redirect("/dashboard/~")
+}
+
+let Folders = await appwriteDatabases.listDocuments(
+    DB_ID,
+    COLLECTION.Folders,
+    [
+        Query.equal("OwnerUid", user),
+        Query.equal("Location", path)
+    ]
+).then(response => response.documents)
+
+// get the current folder id if the user is in a folder
+console.log(path)
+if(path != "~") {
+    currFolderID = await appwriteDatabases.listDocuments(
+        DB_ID,
+        COLLECTION.Folders,
+        [
+            Query.equal("OwnerUid", user),
+            // the Name is the last part of the path after the final "/"
+            Query.equal("Name", path.split("/")[path.split("/").length - 1])
+        ]
+    ).then(response => response.documents[0].$id)
+    // log the response
+    console.log(currFolderID)
+}
+
+let Docs = await appwriteDatabases.listDocuments(
+	DB_ID,
+	COLLECTION.Notes, 
+	[
+		Query.equal('AuthorUid', user),
+        Query.equal("Location", path!)
+    ]
+).then(response => response.documents)
+
+let Todos = await appwriteDatabases.listDocuments(
+    DB_ID,
+    COLLECTION.Todo, 
+    [
+        Query.equal('AuthorUid', user),
+        Query.equal("Location", path!)
+    ]
+).then(response => response.documents)
+
+let Drawings = await appwriteDatabases.listDocuments(
+    DB_ID,
+    COLLECTION.Drawing, 
+    [
+        Query.equal('AuthorUid', user),
+        Query.equal("Location", path!)
+    ]
+).then(response => response.documents)
+
+
+---
+<script>
+    // get the data from the cookie named user
+    let user = document.cookie.split(';').find((item) => item.includes('user'));
+    // if the user cookie exists then do nothing else redirect to the login page
+    if (!user) {
+        window.location.href = '/login';
+    }
+</script>
+<Layout title="Home" path={path}>
+    <div class="flex flex-col pt-5 min-h-screen w-[100%]">
+        <div class="row">
+            <div class="col-12">
+                <h1 class="text-2xl font-semibold text-center">Dashboard</h1>
+                <h2 class="text-xl font-semibold text-center">{path}</h2>
+                <div class="flex flex-col gap-3 justify-center p-12">
+                    <div class="flex flex-row gap-2 w-6">
+                    <!-- go back button -->
+                    {path!="~" && <a class="btn text-gray-800 bg-gray-200 items-center mx-auto hover:bg-gray-300" href={`/dashboard/${path.split("/").slice(0, -1).join("/")}`}>⇽</a>}
+                    <CreateButtons client:load currFolderID={currFolderID} AuthorUid={user} AuthorName={username} path={path} />
+                    </div>
+                    {(Folders.length > 0) && <h1 class="text-xl font-semibold">Folders</h1>}
+                    {(Folders.length > 0)
+                        && Folders.map((folder) => (
+                                <a class="w-96 hover:bg-gray-300 p-2 ml-4 rounded-lg" href={`/dashboard/${folder.Location}/${folder.Name}`}>📁 {folder.Name}</a>
+                        ))
+                    }
+
+                    <h1 class="text-xl font-semibold">Notes</h1>
+                    {(Docs.length > 0)
+                        ? Docs.map((doc) => (
+                                <a class="w-96 hover:bg-gray-300 p-2 ml-4 rounded-lg" href={`/doc/${doc.$id}`}>📄 {doc.Name}</a>
+                        ))
+                        : <h1>There are no notes!</h1>
+                    }
+
+                    <h1 class="text-xl font-semibold">Todo Lists</h1>
+                    {(Todos.length > 0)
+                        ? Todos.map((todo) => (
+                                <a class="w-96 hover:bg-gray-300 p-2 ml-4 rounded-lg" href={`/todo/${todo.$id}`}>✅ {todo.Name}</a>
+                        ))
+                        : <h1>There are no Todo Lists!</h1>
+                    }
+                    
+                    <h1 class="text-xl font-semibold">Scribble Board</h1>
+                    {(Drawings.length > 0)
+                        ? Drawings.map((draw) => (
+                                <a class="w-96 hover:bg-gray-300 p-2 ml-4 rounded-lg" href={`/draw/${draw.$id}`}>🎨 {draw.Name}</a>
+                        ))
+                        : <h1>There are no Scribble Boards!</h1>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</Layout>
+
+<style>
+</style>
