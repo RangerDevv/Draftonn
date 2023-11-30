@@ -41,10 +41,13 @@
             Name: name,
             School: school
         }).then(() => {
+            console.log(id)
             classes = [...classes, ({
                 $id: id,
                 Name: name 
             } as unknown as Models.Document)]
+            console.log(id)
+            selectedClasses = [...selectedClasses, id]
         })
     }
 
