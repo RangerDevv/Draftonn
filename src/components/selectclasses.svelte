@@ -30,7 +30,6 @@
         ])
     })
     .then(res => {
-        console.log(res)
         classes = res.documents
     })
 
@@ -40,14 +39,12 @@
         appwriteDatabases.createDocument(DB_ID, COLLECTION.Classes, id, {
             Name: name,
             School: school
-        }).then(() => {
-            console.log(id)
+        }).then(d => {
             classes = [...classes, ({
-                $id: id,
+                $id: d.$id,
                 Name: name 
             } as unknown as Models.Document)]
-            console.log(id)
-            selectedClasses = [...selectedClasses, id]
+            selectedClasses = [...selectedClasses, d.$id]
         })
     }
 
