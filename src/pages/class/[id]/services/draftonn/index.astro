@@ -12,59 +12,13 @@ let classId = Astro.params.id as string;
 let currFolderID = '' as string;
 
 
-let Folders = await appwriteDatabases.listDocuments(
+let Units = await appwriteDatabases.listDocuments(
     DB_ID,
-    COLLECTION.Folders,
+    COLLECTION.Units,
     [
-        Query.equal("OwnerUid", user),
-        Query.equal("Location", path)
+        Query.equal("Class", classId)
     ]
 ).then(response => response.documents)
-
-// get the current folder id if the user is in a folder
-console.log(path)
-if(path != "~") {
-    currFolderID = await appwriteDatabases.listDocuments(
-        DB_ID,
-        COLLECTION.Folders,
-        [
-            Query.equal("OwnerUid", user),
-            // the Name is the last part of the path after the final "/"
-            Query.equal("Name", path.split("/")[path.split("/").length - 1])
-        ]
-    ).then(response => response.documents[0].$id)
-    // log the response
-    console.log(currFolderID)
-}
-
-let Docs = await appwriteDatabases.listDocuments(
-	DB_ID,
-	COLLECTION.Notes, 
-	[
-		Query.equal('AuthorUid', user),
-        Query.equal("Location", path!)
-    ]
-).then(response => response.documents)
-
-let Todos = await appwriteDatabases.listDocuments(
-    DB_ID,
-    COLLECTION.Todo, 
-    [
-        Query.equal('AuthorUid', user),
-        Query.equal("Location", path!)
-    ]
-).then(response => response.documents)
-
-let Drawings = await appwriteDatabases.listDocuments(
-    DB_ID,
-    COLLECTION.Drawing, 
-    [
-        Query.equal('AuthorUid', user),
-        Query.equal("Location", path!)
-    ]
-).then(response => response.documents)
-
-
 ---
 <script>
     // get the data from the cookie named user
