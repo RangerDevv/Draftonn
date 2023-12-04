@@ -4,6 +4,7 @@ import Layout from "../../../../../layouts/Layout.astro"
 import { appwriteDatabases } from "../../../../../lib/backend";
 import { Query } from "appwrite";
 import { COLLECTION, DB_ID } from "../../../../../lib/ids";
+import Createunit from "../../../../../components/global/createunit.svelte";
 import CreateButtons from "../../../../../components/global/createbuttons.svelte"
 
 let user = Astro.cookies.get('user').value as string;
@@ -32,44 +33,17 @@ let Units = await appwriteDatabases.listDocuments(
     <div class="flex flex-col pt-5 min-h-screen w-[100%]">
         <div class="row">
             <div class="col-12">
-                <h1 class="text-2xl font-semibold text-center">Dashboard</h1>
-                <h2 class="text-xl font-semibold text-center"></h2>
+                <h1 class="text-4xl font-semibold text-center">Dashboard</h1>
                 <div class="flex flex-col gap-3 justify-center p-12">
                     <div class="flex flex-row gap-2 w-6">
-                    <!-- go back button
-                    {path!="~" && <a class="btn text-gray-800 bg-gray-200 items-center mx-auto hover:bg-gray-300" href={`/dashboard/${path.split("/").slice(0, -1).join("/")}`}>⇽</a>}
-                    <CreateButtons client:load currFolderID={currFolderID} AuthorUid={user} AuthorName={username} path={path} />
+                        <Createunit id={classId} />
                     </div>
-                    {(Folders.length > 0) && <h1 class="text-xl font-semibold">Folders</h1>}
-                    {(Folders.length > 0)
-                        && Folders.map((folder) => (
-                                <a class="w-96 hover:bg-gray-300 p-2 ml-4 rounded-lg" href={`/dashboard/${folder.Location}/${folder.Name}`}>📁 {folder.Name}</a>
+                    {(Units.length > 0) && <h1 class="text-xl font-semibold">Folders</h1>}
+                    {(Units.length > 0)
+                        && Units.map((unit) => (
+                                <a class="w-96 hover:bg-gray-300 p-2 ml-4 rounded-lg">📁 {unit.Name}</a>
                         ))
                     }
-
-                    <h1 class="text-xl font-semibold">Notes</h1>
-                    {(Docs.length > 0)
-                        ? Docs.map((doc) => (
-                                <a class="w-96 hover:bg-gray-300 p-2 ml-4 rounded-lg" href={`/doc/${doc.$id}`}>📄 {doc.Name}</a>
-                        ))
-                        : <h1>There are no notes!</h1>
-                    }
-
-                    <h1 class="text-xl font-semibold">Todo Lists</h1>
-                    {(Todos.length > 0)
-                        ? Todos.map((todo) => (
-                                <a class="w-96 hover:bg-gray-300 p-2 ml-4 rounded-lg" href={`/todo/${todo.$id}`}>✅ {todo.Name}</a>
-                        ))
-                        : <h1>There are no Todo Lists!</h1>
-                    }
-                    
-                    <h1 class="text-xl font-semibold">Scribble Board</h1>
-                    {(Drawings.length > 0)
-                        ? Drawings.map((draw) => (
-                                <a class="w-96 hover:bg-gray-300 p-2 ml-4 rounded-lg" href={`/draw/${draw.$id}`}>🎨 {draw.Name}</a>
-                        ))
-                        : <h1>There are no Scribble Boards!</h1>
-                    } -->
                 </div>
             </div>
         </div>

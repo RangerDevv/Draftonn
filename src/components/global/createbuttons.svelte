@@ -114,12 +114,7 @@ function deleteFolder() {
         deleteFolder()
     }}>Delete</button> -->
     <!--  create a button that opens a modal that asks the user if they are sure they want to delete the folder -->
-    <button class="btn text-gray-800 bg-gray-200 items-center mx-auto hover:bg-gray-300" on:click={() => {
-        const modal = document.getElementById('my_modal_3');
-        if (modal instanceof HTMLDialogElement && typeof modal.showModal === 'function') {
-            modal.showModal();
-        }
-    }}>Delete</button>
+    
     {/if}
 </div>
 

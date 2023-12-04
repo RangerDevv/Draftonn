@@ -1,14 +1,15 @@
 ---
 import Layout from "../layouts/Layout.astro"
+
+let username = Astro.cookies.get('userName').value as string;
 ---
-<script>
-    // get the data from the cookie named user
+{username && <script>
     let user = document.cookie.split(';').find((item) => item.includes('user'));
     // if the user cookie exists then do nothing else redirect to the login page
     if (user) {
         window.location.href = '/dashboard';
     }
-</script>
+</script>}
 <Layout title="ClassComrade">
     <div class="flex flex-col gap-3">
         <h1 class="text-center text-5xl text-gradient font-bold">ClassComrade</h1>
