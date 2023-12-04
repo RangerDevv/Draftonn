@@ -22,6 +22,7 @@ let classes = await appwriteDatabases.listDocuments(DB_ID, COLLECTION.Class_User
         window.location.href = '/login';
     }
 </script>
+{!user && <script>window.location.href = 'login'</script>}
 <Layout title="Dashboard">
     <div class="flex justify-center h-56 sm:pt-10 2xl:scale-125 pt-12">
         <p class="text-4xl text-center h-44 font-bold pt-16">Welcome, {username}!</p>
