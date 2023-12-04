@@ -8,5 +8,6 @@ export const COLLECTION = {
     User_School: "6566256e1589df22e392",
     Classes: "65677095b9a64d794924",
     Class_User: "656771844e22e5b07165",
-    Units: "6568c90f49dc101362da"
+    Units: "6568c90f49dc101362da",
+    CCNote: "656e3d0f7cc87c926386"
 }

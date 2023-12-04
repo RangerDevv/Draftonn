@@ -14,16 +14,7 @@ let classes = await appwriteDatabases.listDocuments(DB_ID, COLLECTION.Class_User
     return Promise.all(docs.map(doc => appwriteDatabases.getDocument(DB_ID, COLLECTION.Classes, doc.Class)))
 })
 ---
-<script>
-    // get the data from the cookie named user
-    let user = document.cookie.split(';').find((item) => item.includes('user'));
-    // if the user cookie exists then do nothing else redirect to the login page
-    if (!user) {
-        window.location.href = '/login';
-    }
-</script>
-{!user && <script>window.location.href = 'login'</script>}
-<Layout title="Dashboard">
+<Layout title="Dashboard" login={true}>
     <div class="flex justify-center h-56 sm:pt-10 2xl:scale-125 pt-12">
         <p class="text-4xl text-center h-44 font-bold pt-16">Welcome, {username}!</p>
     </div>

@@ -2,15 +2,14 @@
 import LoginComponent from "../components/login.svelte";
 import Layout from "../layouts/Layout.astro";
 
-let username = Astro.cookies.get('userName').value as string;
 ---
-{username && <script>
-  let user = document.cookie.split(';').find((item) => item.includes('user'));
+<script>
+  let user = document.cookie.split(';').find((item) => item.includes('userName'));
   // if the user cookie exists then do nothing else redirect to the login page
   if (user) {
       window.location.href = '/dashboard';
   }
-</script>}
+</script>
 <Layout title="Login">
   <LoginComponent client:only />
 </Layout>

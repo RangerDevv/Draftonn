@@ -12,6 +12,6 @@ let user = Astro.cookies.get('user').value as string;
         window.location.href = '/login';
     }
 </script>
-<Layout title="Class Selection">
+<Layout title="Class Selection" login={true}>
     <SelectclassesC {user} client:only />
 </Layout>

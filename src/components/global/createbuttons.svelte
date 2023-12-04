@@ -95,28 +95,12 @@ function deleteFolder() {
     }, 2000)
 }
 </script>
-<div class="flex flex-row gap-2 w-6">
-    <button class="btn text-gray-800 bg-gray-200 items-center mx-auto hover:bg-gray-300" on:click={() => {
-        const modal = document.getElementById('my_modal_2');
-        if (modal instanceof HTMLDialogElement && typeof modal.showModal === 'function') {
-            modal.showModal();
-        }
-    }}>New Folder</button>
-    <button class="btn text-gray-800 bg-gray-200 items-center mx-auto hover:bg-gray-300" on:click={() => {
-        const modal = document.getElementById('my_modal_1');
-        if (modal instanceof HTMLDialogElement && typeof modal.showModal === 'function') {
-            modal.showModal();
-        }
-    }}>Create</button>
-    <!-- deleteFolder() -->
-    {#if path != "~"}
-    <!-- <button class="btn text-gray-800 bg-gray-200 items-center mx-auto hover:bg-gray-300" on:click={() => {
-        deleteFolder()
-    }}>Delete</button> -->
-    <!--  create a button that opens a modal that asks the user if they are sure they want to delete the folder -->
-    
-    {/if}
-</div>
+<button class="btn text-gray-800 bg-gray-200 items-center mx-auto hover:bg-gray-300" on:click={() => {
+    const modal = document.getElementById('my_modal_1');
+    if (modal instanceof HTMLDialogElement && typeof modal.showModal === 'function') {
+        modal.showModal();
+    }
+}}>Create</button>
 
 
 <dialog id="my_modal_2" class="modal">

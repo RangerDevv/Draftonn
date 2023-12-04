@@ -1,11 +1,27 @@
 ---
 export interface Props {
 	title: string;
-	path?: string;
+	login?: boolean;
 }
 
-const { title,path } = Astro.props;
+const { title, login} = Astro.props;
 ---
+{login ? <script>
+    // get the data from the cookie named user
+    let user = document.cookie.split(';').find((item) => item.includes('userName'));
+    // if the user cookie exists then do nothing else redirect to the login page
+    if (!user) {
+        window.location.href = '/login';
+    }
+</script>
+: <script>
+    // get the data from the cookie named user
+    let user = document.cookie.split(';').find((item) => item.includes('userName'));
+    // if the user cookie exists then do nothing else redirect to the login page
+    if (user) {
+        window.location.href = '/login';
+    }
+</script>}
 <script>
 	import { appwriteUser } from "../lib/backend";
 
