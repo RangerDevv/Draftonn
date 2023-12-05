@@ -137,7 +137,7 @@ function uploadByFile(file) {
                 Content: JSON.stringify(outputData),
                 Name: LoadedTitle,
                 LastUpdated: new Date().toISOString()
-            }
+            } //TODO: UPDATE title & descrition odel
             ).then((response) => {
             }, (error) => {
                 console.log(error);
