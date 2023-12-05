@@ -35,9 +35,13 @@ function createDocument() {
 
 <dialog id="my_modal_1" class="modal">
   <form method="dialog" class="modal-box bg-gray-200 flex flex-col gap-4">
-    <h3 class="font-bold text-2xl text-gray-900 text-center">Create Document</h3>
-    <label for="name" class="text-gray-800">Name</label>
-    <input type="text" id="name" bind:value={DocumentName} class="input input-bordered bg-gray-400" placeholder="Name" />
+    <h3 class="font-bold text-2xl text-gray-900 text-center">Create Note</h3>
+    <label for="name" class="text-gray-800">Lesson Name</label>
+    <select>
+      
+    </select>
+    <label for="name" class="text-gray-800">Description</label>
+    <textarea id="name" bind:value={DocumentName} class="input input-bordered bg-gray-400 h-28" placeholder="Name" />
     <button class="btn btn-primary" on:click={() => {
         createDocument();
         const modal = document.getElementById('my_modal_1');
