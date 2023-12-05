@@ -22,7 +22,7 @@ function createDocument() {
      Name: DocumentName,
      LastUpdated: new Date().toISOString(),
      Unit: unitID
-   }).then(res => location.href = `../doc/${res.$id}`)
+   }).then(res => location.href = `./doc/${res.$id}`)
 }
 </script>
 <div class="flex flex-wrap gap-2">

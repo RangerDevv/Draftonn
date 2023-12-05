@@ -26,14 +26,13 @@ import { ID,Query } from 'appwrite';
 export let pid = "";
 export let user = "";
 export let name = "";
-let databaseId = "648bc6ddddf63e135f4d";
-let collectionId = "648bc7024074897c154d";
+let databaseId = BackendID.DB_ID;
+let collectionId = BackendID.COLLECTION.CCNote;
 
 let LoadedTitle = "";
 let loadedData = '';
 let LoadedDate = "";
 let docFileLocation = "";
-let folders = [];
 let docVisibility = null;
 let AuthorUid = "";
 
@@ -41,20 +40,6 @@ let canRead = false;
 
 let editor;
 
-async function getFolders() {
-await Backend.appwriteDatabases.listDocuments(
-    BackendID.DB_ID,
-    BackendID.COLLECTION.Folders,
-    [
-        Query.equal("OwnerUid", AuthorUid),
-    ]
-).then((response) => {
-    folders = response.documents;
-    console.log(response);
-}, (error) => {
-    console.log(error);
-});
-}
 
 Backend.appwriteDatabases.getDocument(databaseId, collectionId, pid).then((response) => {
     console.log(response);
@@ -62,10 +47,8 @@ Backend.appwriteDatabases.getDocument(databaseId, collectionId, pid).then((respo
         loadedData = response.Content;
         LoadedTitle = response.Name;
         LoadedDate = response.LastUpdated;
-        docVisibility = response.IsPublic;
+        docVisibility = true;
         AuthorUid = response.AuthorUid;
-        docFileLocation = response.Location;
-        getFolders();
         console.log('The document is not empty' + loadedData);
         if (loadedData === ' ') {
             loadedData = JSON.stringify(editor.save());
@@ -153,8 +136,7 @@ function uploadByFile(file) {
             {
                 Content: JSON.stringify(outputData),
                 Name: LoadedTitle,
-                LastUpdated: new Date().toISOString(),
-                IsPublic: docVisibility,
+                LastUpdated: new Date().toISOString()
             }
             ).then((response) => {
             }, (error) => {
@@ -176,8 +158,6 @@ function autoSave() {
             Content: JSON.stringify(outputData),
             Name: LoadedTitle,
             LastUpdated: new Date().toISOString(),
-            IsPublic: docVisibility,
-            Location: docFileLocation,
         }
         ).then((response) => {
         }, (error) => {
@@ -206,25 +186,25 @@ window.onbeforeunload = function () {
 }
 
 // a function to make a clone of the document
-function clone() {
-    Backend.appwriteDatabases.createDocument(
-        BackendID.DB_ID,
-        BackendID.COLLECTION.Notes,
-        ID.unique(),
-        {
-            Content: loadedData,
-            Name: LoadedTitle,
-            AuthorName: name,
-            AuthorUid: user,
-            IsPublic: docVisibility,
-        }
-    ).then((response) => {
-        console.log(response);
-        window.location.href = '/doc/'+response.$id;
-    }, (error) => {
-        console.log(error);
-    });
-}
+// function clone() {
+//     Backend.appwriteDatabases.createDocument(
+//         BackendID.DB_ID,
+//         BackendID.COLLECTION.Notes,
+//         ID.unique(),
+//         {
+//             Content: loadedData,
+//             Name: LoadedTitle,
+//             AuthorName: name,
+//             AuthorUid: user,
+//             IsPublic: docVisibility,
+//         }
+//     ).then((response) => {
+//         console.log(response);
+//         window.location.href = '/doc/'+response.$id;
+//     }, (error) => {
+//         console.log(error);
+//     });
+// }
 </script>
 <main>
 {#if !canRead}
@@ -250,37 +230,18 @@ function clone() {
 <button class="btn text-gray-800 bg-gray-200 gap-2 mx-auto  hover:bg-gray-300" onclick="settingModal.showModal()">Settings</button>
 <dialog id="settingModal" class="modal">
   <form method="dialog" class="modal-box bg-gray-200 text-slate-950">
-    <div class="flex flex-row justify-center items-center gap-2 text-xl">
-        <p>Visibility</p>
-        <input type="checkbox" class="checkbox checkbox-primary bg-gray-800"  bind:checked={docVisibility} on:change={autoSave} />
-        {#if docVisibility}
-        <span class="ml-2">Public</span>
-        {:else}
-        <span class="ml-2">Private</span>
-        {/if}
-    </div>
-    <div class="flex flex-col justify-center items-center gap-2 pt-3">
-    <label for="folder" class="text-gray-800">Path Of Document</label>
-    <select id="folder" class="select select-bordered bg-gray-400" bind:value={docFileLocation} on:change={autoSave}>
-        <option value="~">📁Home</option>
-        {#each folders as folder}
-            <option value={folder.Location + "/" + folder.Name}>📁{folder.Name}</option>
-        {/each}
-    </select>
-    </div>
     <div class="modal-action flex justify-around">
       <button class="btn">Close</button>
       <button class="btn text-sm btn-error text-black" on:click={deleteDoc}>Delete</button>
       <button class="btn btn-success" on:click={() => {navigator.clipboard.writeText(window.location.href)}}>Copy Share Link</button>
-
     </div>
   </form>
 </dialog>
 
 {:else}
-{#if pid!=""}
+<!-- {#if pid!=""}
     <button class="btn text-gray-800 bg-gray-200 gap-2 mx-auto z-[100001]  hover:bg-gray-300" on:click={clone}>Clone</button>
-{/if}
+{/if} -->
 {/if}
 </label>
 </div>
