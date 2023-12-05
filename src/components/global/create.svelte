@@ -5,6 +5,7 @@ import { ID,Query } from "appwrite";
 
 export let AuthorName = "";
 export let AuthorUid = "";
+export let unitID = ""
 
 let SearchAuid = AuthorUid;
 
@@ -19,8 +20,9 @@ function createDocument() {
      AuthorName,
      AuthorUid,
      Name: DocumentName,
-     //TODO: Make new document creation button work correctly
-   })
+     LastUpdated: new Date().toISOString(),
+     Unit: unitID
+   }).then(res => location.href = `../doc/${res.$id}`)
 }
 </script>
 <div class="flex flex-wrap gap-2">

@@ -4,7 +4,7 @@ export interface Props {
 	login?: boolean;
 }
 
-const { title, login} = Astro.props;
+const { title, login } = Astro.props;
 ---
 {login ? <script>
     // get the data from the cookie named user
@@ -19,7 +19,7 @@ const { title, login} = Astro.props;
     let user = document.cookie.split(';').find((item) => item.includes('userName'));
     // if the user cookie exists then do nothing else redirect to the login page
     if (user) {
-        window.location.href = '/login';
+        window.location.href = '/dashboard';
     }
 </script>}
 <script>
