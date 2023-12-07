@@ -45,7 +45,7 @@ Backend.appwriteDatabases.getDocument(databaseId, collectionId, pid).then((respo
     console.log(response);
     if (response.Content !== ' ' || response !== null || response !== undefined) {
         loadedData = response.Content;
-        LoadedTitle = response.Name;
+        LoadedTitle = response.Description;
         LoadedDate = response.LastUpdated;
         docVisibility = true;
         AuthorUid = response.AuthorUid;
@@ -137,7 +137,7 @@ function uploadByFile(file) {
                 Content: JSON.stringify(outputData),
                 Name: LoadedTitle,
                 LastUpdated: new Date().toISOString()
-            } //TODO: UPDATE title & descrition odel
+            }
             ).then((response) => {
             }, (error) => {
                 console.log(error);
@@ -230,7 +230,7 @@ window.onbeforeunload = function () {
 <button class="btn text-gray-800 bg-gray-200 gap-2 mx-auto  hover:bg-gray-300" onclick="settingModal.showModal()">Settings</button>
 <dialog id="settingModal" class="modal">
   <form method="dialog" class="modal-box bg-gray-200 text-slate-950">
-    <div class="modal-action flex justify-around">
+    <div class="modal-action flex justify-center items-center flex-row">
       <button class="btn">Close</button>
       <button class="btn text-sm btn-error text-black" on:click={deleteDoc}>Delete</button>
       <button class="btn btn-success" on:click={() => {navigator.clipboard.writeText(window.location.href)}}>Copy Share Link</button>

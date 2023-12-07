@@ -11,9 +11,11 @@ let SearchAuid = AuthorUid;
 
 let collectionId = "";
 
-let DocumentName = "";
+let DocumentDesc = "";
 
 let lessons: string[] = []
+
+let lessonName = ""
 
 appwriteDatabases.listDocuments(DB_ID, COLLECTION.CCNote, [
   Query.equal("Unit", unitID),
@@ -26,10 +28,24 @@ function createDocument() {
    appwriteDatabases.createDocument(DB_ID, COLLECTION.CCNote, ID.unique(), {
      AuthorName,
      AuthorUid,
-     Name: DocumentName,
+     Name: lessonName,
+     Description: DocumentDesc,
      LastUpdated: new Date().toISOString(),
      Unit: unitID
    }).then(res => location.href = `./doc/${res.$id}`)
+}
+
+function chooseLesson() {
+  if(lessonName == "newlesson") {
+    lessonName = ""
+    let newName = prompt("Enter lesson name:")
+    if(newName && !lessons.map(x => x.toLowerCase()).includes(newName.toLowerCase())) {
+      lessons = [...lessons, newName]
+      lessonName = newName
+    } else {
+      alert("Invalid lesson name.")
+    }
+  }
 }
 </script>
 <div class="flex flex-wrap gap-2">
@@ -45,16 +61,16 @@ function createDocument() {
     <h3 class="font-bold text-2xl text-gray-900 text-center">Create Note</h3>
     <label for="name" class="text-gray-800">Lesson Name</label>
     <!--TODO: New lesson-->
-    <select class="select select-bordered bg-gray-400">
+    <select class="select select-bordered bg-gray-400" bind:value={lessonName} on:change={chooseLesson}>
       <option value="">Select Lesson...</option>
       <option value="newlesson">Create New Lesson</option>
       {#each lessons as lesson}
         <option value={lesson}>{lesson}</option>
       {/each}
     </select>
-    <label for="name" class="text-gray-800">Description</label>
-    <textarea id="name" bind:value={DocumentName} class="input input-bordered bg-gray-400 h-28" placeholder="Name" />
-    <button class="btn btn-primary" on:click={() => {
+    <label for="name" class="text-gray-800">Notes Title</label>
+    <input id="name" bind:value={DocumentDesc} class="input input-bordered bg-gray-400" placeholder="Name" />
+    <button class="btn btn-primary" disabled={!(lessonName && DocumentDesc)} on:click={() => {
         createDocument();
         const modal = document.getElementById('my_modal_1');
         if (modal instanceof HTMLDialogElement && typeof modal.close === 'function') {
