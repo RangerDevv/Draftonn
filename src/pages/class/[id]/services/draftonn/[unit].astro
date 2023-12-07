@@ -1,4 +1,5 @@
 ---
+import { Query } from "appwrite";
 import Create from "../../../../../components/global/create.svelte";
 import Layout from "../../../../../layouts/Layout.astro";
 import { appwriteDatabases } from "../../../../../lib/backend";
@@ -12,7 +13,12 @@ let username = Astro.cookies.get('userName').value as string;
 
 let unitName = (await appwriteDatabases.getDocument(DB_ID, COLLECTION.Units, unitID)).Name
 
-
+let lessons = await appwriteDatabases.listDocuments(DB_ID, COLLECTION.CCNote, [
+    Query.equal("Unit", unitID),
+    Query.orderAsc("Name"),
+    Query.orderDesc("LastUpdated")
+]).then(x => x.documents) //TODO: Group this into a 2D array or dictionary grouped by lesson name, 
+//with the groups in the order of the most recent lesson names
 ---
 <Layout title="Unit Page" login={true}>
     <div class="flex flex-col pt-5 min-h-screen w-[100%]">
