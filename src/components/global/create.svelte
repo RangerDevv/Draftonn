@@ -1,7 +1,7 @@
 <script lang="ts">
 import { appwriteDatabases } from "../../lib/backend";
 import { DB_ID, COLLECTION } from "../../lib/ids"
-import { ID,Query } from "appwrite";
+import { ID, type Models, Query } from "appwrite";
 
 export let AuthorName = "";
 export let AuthorUid = "";
@@ -12,6 +12,13 @@ let SearchAuid = AuthorUid;
 let collectionId = "";
 
 let DocumentName = "";
+
+let lessons: string[] = []
+
+appwriteDatabases.listDocuments(DB_ID, COLLECTION.CCNote, [
+  Query.equal("Unit", unitID),
+  Query.orderAsc("Name")
+]).then(res => lessons=res.documents.map(x => x.Name))
 
 
 
@@ -37,8 +44,9 @@ function createDocument() {
   <form method="dialog" class="modal-box bg-gray-200 flex flex-col gap-4">
     <h3 class="font-bold text-2xl text-gray-900 text-center">Create Note</h3>
     <label for="name" class="text-gray-800">Lesson Name</label>
-    <select>
-      
+    <select class="select select-bordered bg-gray-400">
+      <option value="">Select Lesson...</option>
+      <option value="newlesson">Create New Lesson</option>
     </select>
     <label for="name" class="text-gray-800">Description</label>
     <textarea id="name" bind:value={DocumentName} class="input input-bordered bg-gray-400 h-28" placeholder="Name" />
