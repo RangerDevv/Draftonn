@@ -44,9 +44,13 @@ function createDocument() {
   <form method="dialog" class="modal-box bg-gray-200 flex flex-col gap-4">
     <h3 class="font-bold text-2xl text-gray-900 text-center">Create Note</h3>
     <label for="name" class="text-gray-800">Lesson Name</label>
+    <!--TODO: New lesson-->
     <select class="select select-bordered bg-gray-400">
       <option value="">Select Lesson...</option>
       <option value="newlesson">Create New Lesson</option>
+      {#each lessons as lesson}
+        <option value={lesson}>{lesson}</option>
+      {/each}
     </select>
     <label for="name" class="text-gray-800">Description</label>
     <textarea id="name" bind:value={DocumentName} class="input input-bordered bg-gray-400 h-28" placeholder="Name" />
