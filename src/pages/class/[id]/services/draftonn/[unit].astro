@@ -1,5 +1,5 @@
 ---
-import { Models, Query } from "appwrite";
+import { Databases, Models, Query } from "appwrite";
 import Create from "../../../../../components/global/create.svelte";
 import Layout from "../../../../../layouts/Layout.astro";
 import { appwriteDatabases } from "../../../../../lib/backend";
@@ -29,6 +29,7 @@ let lessons: Models.Document[][] = await appwriteDatabases.listDocuments(DB_ID, 
     let newdict = groupBy(docs, "Name")
     let newarr = []
     for(let [key, val] of Object.entries(newdict)) newarr.push(val);
+    newarr.sort((a: any, b: any) =>  Date.parse(b[0].$createdAt) - Date.parse(a[0].$createdAt))
     return newarr as Models.Document[][]
 }) //TODO: Group this into a 2D array or dictionary grouped by lesson name, 
 //with the groups in the order of the most recent lesson names
@@ -41,12 +42,12 @@ let lessons: Models.Document[][] = await appwriteDatabases.listDocuments(DB_ID, 
                 <div class="flex flex-col gap-5 items-center p-12">
                     <Create AuthorName={username} AuthorUid={user} {unitID} client:only />
                     {lessons.map(lesson =>
-                        <div class="w-full items-center flex flex-col">
-                            <h1>Something</h1>
+                        <div class="w-full items-center flex flex-col gap-3">
+                            <h1 class="text-2xl">{lesson[0].Name}</h1>
                             {lesson.map(note => 
                             <div style="cursor: pointer;" class="card w-[26rem] sm:w-7/12 h-24 sm:h-20 bg-slate-400">
                                 <div class="text-xl items-center justify-center">
-                                    <h1 class="text-xl pt-[5%] sm:pt-5 text-center">{note.Name}</h1>
+                                    <h1 class="text-xl pt-[5%] sm:pt-5 text-center">{note.Description} by {note.AuthorName}</h1>
                                 </div>
                             </div>)}
                         </div>

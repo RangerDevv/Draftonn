@@ -20,7 +20,8 @@ let lessonName = ""
 appwriteDatabases.listDocuments(DB_ID, COLLECTION.CCNote, [
   Query.equal("Unit", unitID),
   Query.orderAsc("Name")
-]).then(res => lessons=res.documents.map(x => x.Name))
+]).then(res => 
+  lessons=[...new Set(res.documents.map(x => x.Name))])
 
 
 
