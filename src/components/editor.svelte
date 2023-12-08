@@ -135,7 +135,7 @@ function uploadByFile(file) {
             Backend.appwriteDatabases.updateDocument(databaseId, collectionId, pid,
             {
                 Content: JSON.stringify(outputData),
-                Name: LoadedTitle,
+                Description: LoadedTitle,
                 LastUpdated: new Date().toISOString()
             }
             ).then((response) => {
@@ -156,7 +156,7 @@ function autoSave() {
         Backend.appwriteDatabases.updateDocument(databaseId, collectionId, pid,
         {
             Content: JSON.stringify(outputData),
-            Name: LoadedTitle,
+            Description: LoadedTitle,
             LastUpdated: new Date().toISOString(),
         }
         ).then((response) => {

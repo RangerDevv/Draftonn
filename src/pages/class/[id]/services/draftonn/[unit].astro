@@ -1,5 +1,5 @@
 ---
-import { Query } from "appwrite";
+import { Models, Query } from "appwrite";
 import Create from "../../../../../components/global/create.svelte";
 import Layout from "../../../../../layouts/Layout.astro";
 import { appwriteDatabases } from "../../../../../lib/backend";
@@ -21,7 +21,7 @@ var groupBy = function(xs: Array<any>, key: any) {
 };
 
 
-let lessons = await appwriteDatabases.listDocuments(DB_ID, COLLECTION.CCNote, [
+let lessons: Models.Document[][] = await appwriteDatabases.listDocuments(DB_ID, COLLECTION.CCNote, [
     Query.equal("Unit", unitID),
     Query.orderAsc("Name"),
     Query.orderDesc("LastUpdated")
@@ -29,7 +29,7 @@ let lessons = await appwriteDatabases.listDocuments(DB_ID, COLLECTION.CCNote, [
     let newdict = groupBy(docs, "Name")
     let newarr = []
     for(let [key, val] of Object.entries(newdict)) newarr.push(val);
-    return newarr
+    return newarr as Models.Document[][]
 }) //TODO: Group this into a 2D array or dictionary grouped by lesson name, 
 //with the groups in the order of the most recent lesson names
 ---
@@ -40,7 +40,17 @@ let lessons = await appwriteDatabases.listDocuments(DB_ID, COLLECTION.CCNote, [
                 <h1 class="text-4xl font-semibold text-center">{unitName}</h1>
                 <div class="flex flex-col gap-5 items-center p-12">
                     <Create AuthorName={username} AuthorUid={user} {unitID} client:only />
-                    {lessons.map(lesson => <h1>{JSON.stringify(lesson)}</h1>)}
+                    {lessons.map(lesson =>
+                        <div class="w-full items-center flex flex-col">
+                            <h1>Something</h1>
+                            {lesson.map(note => 
+                            <div style="cursor: pointer;" class="card w-[26rem] sm:w-7/12 h-24 sm:h-20 bg-slate-400">
+                                <div class="text-xl items-center justify-center">
+                                    <h1 class="text-xl pt-[5%] sm:pt-5 text-center">{note.Name}</h1>
+                                </div>
+                            </div>)}
+                        </div>
+                    )}
                     <!-- 
                     {(Units.length > 0) && <h1 class="text-xl font-semibold">Units</h1>}
                     {(Units.length > 0)

@@ -68,8 +68,8 @@ function chooseLesson() {
         <option value={lesson}>{lesson}</option>
       {/each}
     </select>
-    <label for="name" class="text-gray-800">Notes Title</label>
-    <input id="name" bind:value={DocumentDesc} class="input input-bordered bg-gray-400" placeholder="Name" />
+    <label for="description" class="text-gray-800">Notes Title</label>
+    <input id="description" bind:value={DocumentDesc} class="input input-bordered bg-gray-400" placeholder="Description" />
     <button class="btn btn-primary" disabled={!(lessonName && DocumentDesc)} on:click={() => {
         createDocument();
         const modal = document.getElementById('my_modal_1');
