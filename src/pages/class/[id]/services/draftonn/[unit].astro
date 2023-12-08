@@ -13,11 +13,24 @@ let username = Astro.cookies.get('userName').value as string;
 
 let unitName = (await appwriteDatabases.getDocument(DB_ID, COLLECTION.Units, unitID)).Name
 
+var groupBy = function(xs: Array<any>, key: any) {
+  return xs.reduce(function(rv, x) {
+    (rv[x[key]] = rv[x[key]] || []).push(x);
+    return rv;
+  }, {});
+};
+
+
 let lessons = await appwriteDatabases.listDocuments(DB_ID, COLLECTION.CCNote, [
     Query.equal("Unit", unitID),
     Query.orderAsc("Name"),
     Query.orderDesc("LastUpdated")
-]).then(x => x.documents) //TODO: Group this into a 2D array or dictionary grouped by lesson name, 
+]).then(x => x.documents).then(docs => {
+    let newdict = groupBy(docs, "Name")
+    let newarr = []
+    for(let [key, val] of Object.entries(newdict)) newarr.push(val);
+    return newarr
+}) //TODO: Group this into a 2D array or dictionary grouped by lesson name, 
 //with the groups in the order of the most recent lesson names
 ---
 <Layout title="Unit Page" login={true}>
@@ -27,6 +40,7 @@ let lessons = await appwriteDatabases.listDocuments(DB_ID, COLLECTION.CCNote, [
                 <h1 class="text-4xl font-semibold text-center">{unitName}</h1>
                 <div class="flex flex-col gap-5 items-center p-12">
                     <Create AuthorName={username} AuthorUid={user} {unitID} client:only />
+                    {lessons.map(lesson => <h1>{JSON.stringify(lesson)}</h1>)}
                     <!-- 
                     {(Units.length > 0) && <h1 class="text-xl font-semibold">Units</h1>}
                     {(Units.length > 0)
