@@ -31,8 +31,7 @@ let lessons: Models.Document[][] = await appwriteDatabases.listDocuments(DB_ID, 
     for(let [key, val] of Object.entries(newdict)) newarr.push(val);
     newarr.sort((a: any, b: any) =>  Date.parse(b[0].$createdAt) - Date.parse(a[0].$createdAt))
     return newarr as Models.Document[][]
-}) //TODO: Group this into a 2D array or dictionary grouped by lesson name, 
-//with the groups in the order of the most recent lesson names
+})
 ---
 <Layout title="Unit Page" login={true}>
     <div class="flex flex-col pt-5 min-h-screen w-[100%]">
@@ -46,23 +45,12 @@ let lessons: Models.Document[][] = await appwriteDatabases.listDocuments(DB_ID, 
                             <h1 class="text-2xl">{lesson[0].Name}</h1>
                             {lesson.map(note => 
                             <div style="cursor: pointer;" class="card w-[26rem] sm:w-7/12 h-24 sm:h-20 bg-slate-400">
-                                <div class="text-xl items-center justify-center">
+                                <div onclick={`window.location = "/class/${classID}/services/draftonn/doc/${note.$id}"`} style="cursor: pointer;" class="text-xl items-center justify-center">
                                     <h1 class="text-xl pt-[5%] sm:pt-5 text-center">{note.Description} by {note.AuthorName}</h1>
                                 </div>
                             </div>)}
                         </div>
                     )}
-                    <!-- 
-                    {(Units.length > 0) && <h1 class="text-xl font-semibold">Units</h1>}
-                    {(Units.length > 0)
-                        && Units.map((unit) => (
-                        <div onclick={`window.location = "/class/${classId}/services/draftonn/${unit.$id}"`} style="cursor: pointer;" class="card w-[26rem] sm:w-7/12 h-24 sm:h-20 bg-slate-400">
-                            <div class="text-xl items-center justify-center">
-                                <h1 class="text-xl pt-[5%] sm:pt-5 text-center">{unit.Name}</h1>
-                            </div>
-                        </div>
-                        ))
-                    } -->
                 </div>
             </div>
         </div>
