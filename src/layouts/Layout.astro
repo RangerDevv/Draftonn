@@ -6,6 +6,8 @@ export interface Props {
 
 const { title,path } = Astro.props;
 
+
+import DraftOnn from '../components/images/DraftOnn.png';
 import { appwriteDatabases } from '../lib/backend';
 import { Query } from 'appwrite';
 import {DB_ID, COLLECTION} from "../lib/ids"
@@ -55,9 +57,11 @@ if (loggedIn) {
 		})
 }
 import Create from '../components/global/create.svelte';
+import Feedback from '../components/global/feedback.svelte';
 ---
 <script>
 	import { appwriteUser } from "../lib/backend";
+
 
 	let LogOutBtn = document.getElementById('logout') as HTMLAnchorElement;
 
@@ -85,16 +89,8 @@ import Create from '../components/global/create.svelte';
 		<!--  an arrow that is on the edge of the nav -->
 		{loggedIn ? (
 			<>
-			<div class="flex flex-row justify-center text-2xl pb-1">
-				<div class="tooltip" data-tip="Home">
-				<a href="/dashboard/~">🏠</a>
-				</div>
-				<div class="tooltip" data-tip="Profile">
-				<a href="/profile">📌</a>
-				</div>
-				<div class="tooltip" data-tip="Logout">
-				<a id="logout">↩️</a>
-				</div>
+			<div class="flex flex-row justify-center">
+			<a class="btn btn-ghost w-auto h-auto" href="/dashboard/~"><img src={DraftOnn.src} class="h-16 w-16"></a>
 			</div>
 			<div class="flex justify-center pt-1">
 				<Create client:only="Svelte" AuthorName={Name} AuthorUid={user} docLocation={path} />
@@ -145,18 +141,24 @@ import Create from '../components/global/create.svelte';
 					</div>
 				</div>
 			</div>
+			<div class="text-2xl pb-1 bottom-0 absolute w-full">
+				<button class="btn btn-ghost w-full" onclick="Feedback.showModal()">Give Feedback!</button>
+				<Feedback client:only="Svelte" Name={Name} />
+				<a class="btn btn-ghost w-full" id="logout">Logout→</a>
+			</div>
+			
 			</>
 		) : (
 			<>
 			<div class="flex flex-row justify-center text-2xl">
 				<div class="tooltip" data-tip="Home">
-				<a href="/">🏠</a>
+				<a class="btn btn-ghost" href="/">🏠</a>
 				</div>
 				<div class="tooltip" data-tip="Login">
-				<a href="/login">🔑</a>
+				<a class="btn btn-ghost" href="/login">🔑</a>
 				</div>
 				<div class="tooltip" data-tip="Signup">
-				<a href="/signup">📝</a>
+				<a class="btn btn-ghost" href="/signup">📝</a>
 				</div>
 			</div>
 			</>
