@@ -19,6 +19,7 @@ import NestedList from '@editorjs/nested-list';
 import ChangeCase from 'editorjs-change-case';
 import Strikethrough from '@sotaproject/strikethrough';
 import editorjsCodeflask from '@calumk/editorjs-codeflask';
+import edjsHTML from 'editorjs-html';
 import * as Backend from '../lib/backend';
 import * as BackendID from '../lib/ids';
 import { ID,Query } from 'appwrite';
@@ -31,6 +32,7 @@ let collectionId = BackendID.COLLECTION.CCNote;
 
 let LoadedTitle = "";
 let loadedData = '';
+let EdJsCleanData = "";
 let LoadedDate = "";
 let docFileLocation = "";
 let docVisibility = null;
@@ -50,6 +52,7 @@ Backend.appwriteDatabases.getDocument(databaseId, collectionId, pid).then((respo
         docVisibility = true;
         AuthorUid = response.AuthorUid;
         console.log('The document is not empty' + loadedData);
+        EdJsCleanData = response
         if (loadedData === ' ') {
             loadedData = JSON.stringify(editor.save());
         }
@@ -117,6 +120,10 @@ editor.isReady.then(() => {
     console.log('Editor.js is ready to work!');
     new Undo({ editor });
     new DragDrop(editor);
+    const edjsParser = edjsHTML();
+    const ParsedHTML = edjsParser.parse(loadedData);
+    // returns array of ParsedHTML strings per block
+    console.log(ParsedHTML);
 });
 
 function uploadByFile(file) {
@@ -205,13 +212,10 @@ window.onbeforeunload = function () {
 //         console.log(error);
 //     });
 // }
+
 </script>
 <main>
-{#if !canRead}
-<!--  a transparent div that covers the whole page -->
-<div id="barrier">
-</div>
-{/if}
+{#if canRead}
 {#if docVisibility==null}
 <div class=" flex flex-col justify-center items-center pt-[40vh] gap-20">
 <p class="text-center text-6xl text-slate-950 mx-auto w-[75vw]">🌐</p>
@@ -246,7 +250,9 @@ window.onbeforeunload = function () {
 </label>
 </div>
 </div>
+<div>
 <div id="editor"></div>
+</div>
 {:else}
 <div class=" flex flex-col justify-center items-center pt-[40vh] gap-20 mx-auto">
     <p class="text-center text-6xl text-slate-950 mx-auto w-[75vw]">🔒</p>
@@ -254,7 +260,7 @@ window.onbeforeunload = function () {
 </div>
 {/if}
 {/if}
-
+{/if}
 <style>
     h1 {
         font-size: 2rem;
