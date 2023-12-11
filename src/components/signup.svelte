@@ -59,7 +59,24 @@
       }).then(() => window.location.href = '/login')
     }, (error) => {
       console.log(error);
-      errorMessage = error.message;
+      if(error.message == "A user with the same id, email, or phone already exists in this project.") {
+        appwriteUser.createEmailSession(email, password).then(res => {
+          appwriteDatabases.listDocuments(DB_ID, COLLECTION.User_School, [Query.equal("User", res.$id)])
+          .then(r => r.documents)
+          .then(x => {
+            if(x.length > 0) {
+              errorMessage = error.message;
+            } else {
+              appwriteDatabases.createDocument(DB_ID, COLLECTION.User_School, ID.unique(), {
+                User: res.$id,
+                School: school
+              }).then(() => window.location.href = '/login')
+            }
+          })
+        })
+      } else {
+        errorMessage = error.message;
+      }
     });
   }
   </script>
