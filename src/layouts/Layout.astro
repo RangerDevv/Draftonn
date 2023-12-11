@@ -46,9 +46,10 @@ const { title, login } = Astro.props;
 		<meta name="generator" content={Astro.generator} />
 		<title>{title}</title>
 	</head>
-<nav class="flex flex-row items-center p-3 gap-4">
+<nav class="flex flex-row items-center p-3 gap-10">
 	<h1 class="font-bold text-xl">ClassComrade</h1>
 	{login &&
+	<h1 class="text-xl">Logged in as {Astro.cookies.get("userName").value}</h1>
 	<button id="logoutbtn" class="btn btn-gray" onclick="location.href = '/logout'">Logout</button>}
 </nav>
 <div class="flex flex-col m-5">

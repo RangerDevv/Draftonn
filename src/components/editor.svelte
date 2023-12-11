@@ -72,6 +72,7 @@ Backend.appwriteDatabases.getDocument(databaseId, collectionId, pid).then((respo
         {
             holder: 'editor',
             placeholder: 'Start writing your article... Press tab to see the toolbar',
+            readOnly: !canRead,
             tools: {
                 header: Header,
                 list: {
@@ -270,15 +271,15 @@ window.onbeforeunload = function () {
         <p class="text-center text-gray-400 text-sm pr-8">Last updated: {LoadedDate.substring(0, 10).replaceAll('-', '/') + ' ' + LoadedDate.substring(11, 16).replaceAll('-', ':')}</p>
         <!--  checkboxes for public and private -->
     </div>
-    <div class="flex flex-col items-center p-2">
+    <!-- <div class="flex flex-col items-center p-2">
         <div class="w-full px-80">
             {#each ParsedHTML as line}
                 {@html line}
             {/each}
         </div>
-    </div>
+    </div> -->
 
-    <div id="editor" style="display: none;"></div>
+    <div id="editor"></div>
 {/if}
 <style>
     h1 {
