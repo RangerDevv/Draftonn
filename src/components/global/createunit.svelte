@@ -6,7 +6,7 @@
     export let id: string;
 
     function create() {
-        let attempt = prompt("Enter the folder name:")
+        let attempt = prompt("Enter the unit name:")
         appwriteDatabases.listDocuments(DB_ID, COLLECTION.Units, [
             Query.equal("Class", id)
         ]).then(x => x.documents)

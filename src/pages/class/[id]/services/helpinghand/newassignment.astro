@@ -1,0 +1,7 @@
+---
+import Layout from "../../../../../layouts/Layout.astro";
+import NewAssignment from "../../../../../components/newassignment.svelte"
+---
+<Layout login={true} title="New Assignment">
+    <NewAssignment client:only />
+</Layout>
