@@ -23,6 +23,7 @@ import edjsHTML from 'editorjs-html';
 import * as Backend from '../lib/backend';
 import * as BackendID from '../lib/ids';
 import { ID,Query } from 'appwrite';
+    import { not_equal } from 'svelte/internal';
 
 export let pid = "";
 export let user = "";
@@ -41,6 +42,7 @@ let AuthorUid = "";
 let canRead = false;
 
 let editor;
+let ParsedHTML = []
 
 
 Backend.appwriteDatabases.getDocument(databaseId, collectionId, pid).then((response) => {
@@ -115,13 +117,15 @@ Backend.appwriteDatabases.getDocument(databaseId, collectionId, pid).then((respo
         }
     );
 
+
+
 // onready function that is called when the editor is ready
 editor.isReady.then(() => {
     console.log('Editor.js is ready to work!');
     new Undo({ editor });
     new DragDrop(editor);
     const edjsParser = edjsHTML();
-    const ParsedHTML = edjsParser.parse(loadedData);
+    ParsedHTML = edjsParser.parse(JSON.parse(loadedData));
     // returns array of ParsedHTML strings per block
     console.log(ParsedHTML);
 });
@@ -216,50 +220,65 @@ window.onbeforeunload = function () {
 </script>
 <main>
 {#if canRead}
-{#if docVisibility==null}
-<div class=" flex flex-col justify-center items-center pt-[40vh] gap-20">
-<p class="text-center text-6xl text-slate-950 mx-auto w-[75vw]">🌐</p>
-<span class="loading loading-infinity loading-lg text-black mx-auto"></span>
-</div>
-{:else}
-{#if docVisibility==true || user === AuthorUid}
-<div class=" flex flex-row justify-center items-center gap-8 p-2">
-<input type="text" bind:value={LoadedTitle} placeholder="Title" class="border-none text-4xl font-bold text-center bg-transparent active:border-none mx-auto self-center h-16">
-<p class="text-center text-gray-400 text-sm pr-8">Last updated: {LoadedDate.substring(0, 10).replaceAll('-', '/') + ' ' + LoadedDate.substring(11, 16).replaceAll('-', ':')}</p>
-<!--  checkboxes for public and private -->
-<div class="flex flex-row justify-center items-center gap-2">
-<label class="flex items-center">
-{#if user === AuthorUid}
-<!-- Open the modal using ID.showModal() method -->
-<button class="btn text-gray-800 bg-gray-200 gap-2 mx-auto  hover:bg-gray-300" onclick="settingModal.showModal()">Settings</button>
-<dialog id="settingModal" class="modal">
-  <form method="dialog" class="modal-box bg-gray-200 text-slate-950">
-    <div class="modal-action flex justify-center items-center flex-row">
-      <button class="btn">Close</button>
-      <button class="btn text-sm btn-error text-black" on:click={deleteDoc}>Delete</button>
-      <button class="btn btn-success" on:click={() => {navigator.clipboard.writeText(window.location.href)}}>Copy Share Link</button>
-    </div>
-  </form>
-</dialog>
+    {#if docVisibility==null}
+        <div class=" flex flex-col justify-center items-center pt-[40vh] gap-20">
+        <p class="text-center text-6xl text-slate-950 mx-auto w-[75vw]">🌐</p>
+        <span class="loading loading-infinity loading-lg text-black mx-auto"></span>
+        </div>
+        {:else}
+        {#if docVisibility==true || user === AuthorUid}
+        <div class=" flex flex-row justify-center items-center gap-8 p-2">
+        <input type="text" bind:value={LoadedTitle} placeholder="Title" class="border-none text-4xl font-bold text-center bg-transparent active:border-none mx-auto self-center h-16">
+        <p class="text-center text-gray-400 text-sm pr-8">Last updated: {LoadedDate.substring(0, 10).replaceAll('-', '/') + ' ' + LoadedDate.substring(11, 16).replaceAll('-', ':')}</p>
+        <!--  checkboxes for public and private -->
+        <div class="flex flex-row justify-center items-center gap-2">
+        <label class="flex items-center">
+        {#if user === AuthorUid}
+            <!-- Open the modal using ID.showModal() method -->
+            <button class="btn text-gray-800 bg-gray-200 gap-2 mx-auto  hover:bg-gray-300" onclick="settingModal.showModal()">Settings</button>
+            <dialog id="settingModal" class="modal">
+            <form method="dialog" class="modal-box bg-gray-200 text-slate-950">
+                <div class="modal-action flex justify-center items-center flex-row">
+                <button class="btn">Close</button>
+                <button class="btn text-sm btn-error text-black" on:click={deleteDoc}>Delete</button>
+                <button class="btn btn-success" on:click={() => {navigator.clipboard.writeText(window.location.href)}}>Copy Share Link</button>
+                </div>
+            </form>
+            </dialog>
 
+            {:else}
+            <!-- {#if pid!=""}
+                <button class="btn text-gray-800 bg-gray-200 gap-2 mx-auto z-[100001]  hover:bg-gray-300" on:click={clone}>Clone</button>
+            {/if} -->
+        {/if}
+        </label>
+        </div>
+        </div>
+        <div>
+        <div id="editor"></div>
+        </div>
+        {:else}
+            <div class=" flex flex-col justify-center items-center pt-[40vh] gap-20 mx-auto">
+                <p class="text-center text-6xl text-slate-950 mx-auto w-[75vw]">🔒</p>
+                <p class="text-center text-2xl text-slate-950 mx-auto w-[75vw]">You do not have access to this document</p>
+            </div>
+        {/if}
+    {/if}
 {:else}
-<!-- {#if pid!=""}
-    <button class="btn text-gray-800 bg-gray-200 gap-2 mx-auto z-[100001]  hover:bg-gray-300" on:click={clone}>Clone</button>
-{/if} -->
-{/if}
-</label>
-</div>
-</div>
-<div>
-<div id="editor"></div>
-</div>
-{:else}
-<div class=" flex flex-col justify-center items-center pt-[40vh] gap-20 mx-auto">
-    <p class="text-center text-6xl text-slate-950 mx-auto w-[75vw]">🔒</p>
-    <p class="text-center text-2xl text-slate-950 mx-auto w-[75vw]">You do not have access to this document</p>
-</div>
-{/if}
-{/if}
+    <div class=" flex flex-row justify-center items-center gap-8 p-2">
+        <input type="text" bind:value={LoadedTitle} placeholder="Title" class="border-none text-4xl font-bold text-center bg-transparent active:border-none mx-auto self-center h-16">
+        <p class="text-center text-gray-400 text-sm pr-8">Last updated: {LoadedDate.substring(0, 10).replaceAll('-', '/') + ' ' + LoadedDate.substring(11, 16).replaceAll('-', ':')}</p>
+        <!--  checkboxes for public and private -->
+    </div>
+    <div class="flex flex-col items-center p-2">
+        <div class="w-full px-80">
+            {#each ParsedHTML as line}
+                {@html line}
+            {/each}
+        </div>
+    </div>
+
+    <div id="editor" style="display: none;"></div>
 {/if}
 <style>
     h1 {
@@ -282,7 +301,7 @@ window.onbeforeunload = function () {
     }
 
     /* center the button */
-    button {
+    button:not(#logoutbtn) {
         display: block;
         margin: 0 auto;
     }
