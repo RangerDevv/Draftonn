@@ -16,8 +16,11 @@ let classes = await appwriteDatabases.listDocuments(DB_ID, COLLECTION.Class_User
 ---
 {!classes.length && <script>location.href="/selectclasses"</script>}
 <Layout title="Dashboard" login={true}>
-    <div class="flex justify-center h-56 sm:pt-10 2xl:scale-125 pt-12">
+    <div class="flex flex-col items-center justify-center h-56 sm:pt-10 2xl:scale-125 pt-12 mb-5">
         <p class="text-4xl text-center h-44 font-bold pt-16">Welcome, {username}!</p>
+        <button onclick="location.href = '/selectclasses'" style="cursor: pointer;" class="bg-gray-400 rounded-md w-48 h-28">
+            Select Classes
+        </button>
     </div>
     <div class="flex flex-row flex-wrap gap-10 items-center justify-center">
         {classes?.map(c => (
