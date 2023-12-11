@@ -5,6 +5,8 @@
 
     export let user: string
 
+    console.log(user)
+
     let className = "", teacherName = "", acceleration = ""
 
     let classes: Models.Document[] = []

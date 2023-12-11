@@ -68,7 +68,7 @@
               errorMessage = error.message;
             } else {
               appwriteDatabases.createDocument(DB_ID, COLLECTION.User_School, ID.unique(), {
-                User: res.$id,
+                User: res.userId,
                 School: school
               }).then(() => window.location.href = '/login')
             }
