@@ -36,6 +36,9 @@
     function createClass() {
         let id = ID.unique()
         let name = `${acceleration} ${className} w/ ${teacherName}`
+        acceleration = ""
+        className = ""
+        teacherName = ""
         appwriteDatabases.createDocument(DB_ID, COLLECTION.Classes, id, {
             Name: name,
             School: school
@@ -45,6 +48,7 @@
                 Name: name 
             } as unknown as Models.Document)]
             selectedClasses = [...selectedClasses, d.$id]
+
         })
     }
 
