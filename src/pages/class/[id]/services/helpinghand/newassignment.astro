@@ -1,7 +1,10 @@
 ---
 import Layout from "../../../../../layouts/Layout.astro";
 import NewAssignment from "../../../../../components/newassignment.svelte"
+
+let user = Astro.cookies.get("user").value!
+let classId = Astro.params.id as string
 ---
 <Layout login={true} title="New Assignment">
-    <NewAssignment client:only />
+    <NewAssignment client:only {user} {classId} />
 </Layout>

@@ -1,7 +1,11 @@
 <script lang="ts">
     import { each } from "svelte/internal";
+    import { appwriteDatabases, appwriteStorage } from "../lib/backend";
+    import { ID } from "appwrite";
+    import { COLLECTION, DB_ID } from "../lib/ids";
     
-
+    export let user: string;
+    export let classId: string;
 
     interface Question {
         question: string
@@ -22,15 +26,14 @@
     const addFree = () => questions = [...questions, {question: "", answer: "", is_file: false}]
     const addFile = () => questions = [...questions, {question: "", answer: "", is_file: true}]
 
-    // async function uploadFiles() {
-    //     for(let question of questions) {
-    //         if(question.is_file) {
-    //             const file = question.files!.item(0)!
-    //             let { error } = await supabase.storage.from("answers").upload(question.answer, file)
-    //             if(error) throw error
-    //         }
-    //     } 
-    // }
+    async function uploadFiles() {
+        for(let question of questions) {
+            if(question.is_file) {
+                const file = question.files!.item(0)!
+                appwriteStorage.createFile('64ada07bbca91d21cdbc', question.answer, file)
+            }
+        } 
+    }
 
     // async function addQuestions(assignmentId: number) {
     //     await Promise.all(questions.map((question, idx) => {
@@ -44,31 +47,23 @@
     //     }))
     // }
 
-    // function submit() {
-    //     disabled = true
-    //     let classId = (new URL(window.location.href)).searchParams
-    //     if (!classId.has("class")) {
-    //         return alert("Error occured: Assignment must be bound to a class")
-    //     }
-    //     let id: number = -1
-    //     uploadFiles()
-    //     .then(() => {
-    //         return supabase.from("Assignment").insert<Assignment>({
-    //             name: assignmentname,
-    //             class_id: parseInt(classId.get("class")!)
-    //         }).select()
-    //     })
-    //     .then(({data, error}) => {
-    //         if (error) throw error
-    //         id = data![0].id
-    //         return addQuestions(id)
-    //     })
-    //     .then(() => document.location.href = `/assignment/${id}`)
-    //     .catch(e => {
-    //         disabled = false
-    //         alert(e.message)
-    //     })
-    // }
+    function submit() {
+        disabled = true
+        uploadFiles()
+        .then(() => {
+            return appwriteDatabases.createDocument(DB_ID, COLLECTION.Assignment, ID.unique(), {
+                Name: assignmentname,
+                User: user,
+                Class: classId,
+                Questions: JSON.stringify(questions.map(({ question, answer, is_file}) => ({question, answer, is_file})))
+            })
+        })
+        .then(doc => document.location.href = `./assignment/${doc.$id}`)
+        .catch(e => {
+            disabled = false
+            alert(e.message)
+        })
+    }
 </script>
 <div class=" w-screen h-screen">
 <h1 class="text-center text-5xl pt-16">Make a New Assignment</h1>
@@ -131,6 +126,6 @@
           <li><a on:click={addFile}>File Upload</a></li>
         </ul>
     </div>
-    <button on:click={submit} class="btn btn-success" class:btn-disabled={disabled}>Create Assignment</button>
+    <button on:click={submit} class="btn btn-info" class:btn-disabled={disabled}>Create Assignment</button>
 </div>
 </div>
