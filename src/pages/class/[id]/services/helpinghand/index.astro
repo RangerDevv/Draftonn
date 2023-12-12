@@ -4,19 +4,19 @@ import { appwriteDatabases } from "../../../../../lib/backend";
 import { Query } from "appwrite";
 import { COLLECTION, DB_ID } from "../../../../../lib/ids";
 import Createassignment from "../../../../../components/global/createassignment.svelte";
+import _ from "lodash"
+import Assignmentlist from "../../../../../components/assignmentlist.astro";
 
 let classId = Astro.params.id as string;
 
 let Class = await appwriteDatabases.getDocument(DB_ID, COLLECTION.Classes, classId)
 
+let alist = await appwriteDatabases.listDocuments(DB_ID, COLLECTION.Assignment, [
+    Query.equal("Class", classId),
+    Query.orderDesc("$createdAt")
+]).then(x => x.documents)
 
-let Units = await appwriteDatabases.listDocuments(
-    DB_ID,
-    COLLECTION.Units,
-    [
-        Query.equal("Class", classId)
-    ]
-).then(response => response.documents)
+let assignments = _.sortBy(_.groupBy(alist, x => new Date(x.created_at!).toDateString()), (x,y) => y)
 ---
 
 <Layout title="HelpingHand" login={true}>
@@ -30,16 +30,9 @@ let Units = await appwriteDatabases.listDocuments(
                 <h2 class="text-2xl font-semibold text-center">{Class.Name}</h2>
                 <div class="flex flex-col gap-5 items-center p-12">
                     <Createassignment client:only />
-                    {(Units.length > 0) && <h1 class="text-xl font-semibold">Units</h1>}
-                    {(Units.length > 0)
-                        && Units.map((unit) => (
-                        <div onclick={`window.location = "/class/${classId}/services/draftonn/${unit.$id}"`} style="cursor: pointer;" class="card w-[26rem] sm:w-7/12 h-24 sm:h-20 bg-slate-400">
-                            <div class="text-xl items-center justify-center">
-                                <h1 class="text-xl pt-[5%] sm:pt-5 text-center">{unit.Name}</h1>
-                            </div>
-                        </div>
-                        ))
-                    }
+                    {assignments.map((day:any) => (
+                        <Assignmentlist day={day} />
+                    ))}
                 </div>
             </div>
         </div>
