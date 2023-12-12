@@ -1,0 +1,19 @@
+---
+import { appwriteDatabases } from "../../../../../../../lib/backend"
+import { DB_ID, COLLECTION } from "../../../../../../../lib/ids"
+
+let user = Astro.cookies.get("user").value
+
+if(!user) return Astro.redirect("/")
+else {
+    let assignment = Astro.params.assignment
+    if(!assignment) return Astro.redirect("/")
+    else {
+        let obj = await appwriteDatabases.getDocument(DB_ID, COLLECTION.Assignment, assignment)
+        if(obj.User == user) {
+            await appwriteDatabases.deleteDocument(DB_ID, COLLECTION.Assignment, assignment)
+            return Astro.redirect("../..")
+        } else return Astro.redirect("/")
+    }
+}
+---

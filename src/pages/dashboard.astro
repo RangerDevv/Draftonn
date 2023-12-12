@@ -22,7 +22,7 @@ let classes = await appwriteDatabases.listDocuments(DB_ID, COLLECTION.Class_User
             Select Classes
         </button>
     </div>
-    <div class="flex flex-row flex-wrap gap-10 items-center justify-center">
+    <div class="flex flex-row flex-wrap gap-10 items-center justify-center mt-10">
         {classes?.map(c => (
             <div onclick={`window.location = "/class/${c.$id}"`} style="cursor: pointer;" class="card w-96 h-20 2xl:h-36 2xl:w-[32rem] sm:h-32 bg-gray-500">
                 <div class="card-body items-center justify-center">
