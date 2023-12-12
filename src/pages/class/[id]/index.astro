@@ -1,5 +1,23 @@
 ---
-let classId = Astro.params.id as string
-//Class dashboard is not yet implemented since only the draftonn service is offered. Redirect directly to draftonn.
-return Astro.redirect(`/class/${classId}/services/draftonn`)
+import Layout from "../../../layouts/Layout.astro";
+import { appwriteDatabases } from "../../../lib/backend";
+import { COLLECTION, DB_ID } from "../../../lib/ids";
+let classId = Astro.params.id as string;
+let Class = await appwriteDatabases.getDocument(DB_ID, COLLECTION.Classes, classId)
 ---
+<Layout title="Class" login={true}>
+    <h1 class="text-4xl font-semibold text-center">{Class.Name}</h1>
+    <h2 class="text-4xl text-center">Available Services</h2>
+    <div style="cursor: pointer;" class="flex flex-row gap-10 mt-5 items-center justify-center w-full">
+        <div onclick="window.location = './services/draftonn'" class="w-72 h-72 bg-slate-300 rounded-lg flex flex-col items-center justify-center">
+            <img src="/DraftOnn.png" class="h-28">
+            <h1 class="text-3xl">DraftOnn</h1>
+            <h2 class="text-lg">The collaborative note-taking app</h2>
+        </div>
+        <div onclick="window.location = './services/helpinghand'" style="cursor: pointer;" class="w-72 h-72 bg-slate-300 rounded-lg flex flex-col items-center justify-center">
+            <img src="/HelpingHand.png" class="h-28">
+            <h1 class="text-3xl">HelpingHand</h1>
+            <h2 class="text-lg">The easiest way to share answers</h2>
+        </div>
+    </div>
+</Layout>
