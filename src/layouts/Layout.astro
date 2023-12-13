@@ -84,13 +84,13 @@ import Feedback from '../components/global/feedback.svelte';
 		<meta name="generator" content={Astro.generator} />
 		<title>{title}</title>
 	</head>
-<div class="flex flex-row w-[100vw]">
+<div class="grid">
 	<nav>
 		<!--  an arrow that is on the edge of the nav -->
 		{loggedIn ? (
-			<>
+			<div>
 			<div class="flex flex-row justify-center">
-			<a class="btn btn-ghost w-auto h-auto" href="/dashboard/~"><img src={DraftOnn.src} class="h-16 w-16"></a>
+			<a class="btn btn-ghost w-auto h-auto" href="/dashboard/~"><img src={DraftOnn.src} class="h-16 w-16"/></a>
 			</div>
 			<div class="flex justify-center pt-1">
 				<Create client:only="Svelte" AuthorName={Name} AuthorUid={user} docLocation={path} />
@@ -146,10 +146,9 @@ import Feedback from '../components/global/feedback.svelte';
 				<Feedback client:only="Svelte" Name={Name} />
 				<a class="btn btn-ghost w-full" id="logout">Logout→</a>
 			</div>
-			
-			</>
+			</div>
 		) : (
-			<>
+			<div>
 			<div class="flex flex-row justify-center text-2xl">
 				<div class="tooltip" data-tip="Home">
 				<a class="btn btn-ghost" href="/">🏠</a>
@@ -161,7 +160,7 @@ import Feedback from '../components/global/feedback.svelte';
 				<a class="btn btn-ghost" href="/signup">📝</a>
 				</div>
 			</div>
-			</>
+			</div>
 		)}
 	</nav>
 	<body>
@@ -185,14 +184,21 @@ import Feedback from '../components/global/feedback.svelte';
 			Bitstream Vera Sans Mono, Courier New, monospace;
 	}
 	nav {
-		position: sticky;
+		position: fixed;
 		top: 0;
 		left: 0;
 		width: 18vw;
 		height: 100vh;
+		transform: translateX(-90%);
+		transition: transform 0.3s ease-in-out;
 		background-color: white;
 		box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 		z-index: 2000;
+	}
+
+	/*  when the nav is open, move it to the left */
+	nav:hover {
+		transform: translateX(0);
 	}
 
 	/*  make the scroll bar rounded with a very light grey color */
