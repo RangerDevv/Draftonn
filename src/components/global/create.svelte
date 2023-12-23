@@ -143,7 +143,7 @@ function search() {
     <select id="database" class="select select-bordered bg-gray-400" bind:value={collectionId}>
         <option value="648bc7024074897c154d">Notebook</option>
         <option value="64d5a380c46a1248b02c">Todo List</option>
-        <option value="64dab46d57d73632fba5">Drawing</option>
+        <option value="64dab46d57d73632fba5">Scribble Board</option>
     </select>
     <label for="folder" class="text-gray-800">Folder</label>
     <select id="folder" class="select select-bordered bg-gray-400" bind:value={docLocation}>
