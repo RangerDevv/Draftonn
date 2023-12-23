@@ -91,12 +91,15 @@ import Feedback from '../components/global/feedback.svelte';
 			<div>
 			<div class="flex flex-row justify-center">
 			<a class="btn btn-ghost w-auto h-auto" href="/dashboard/~"><img src={DraftOnn.src} class="h-16 w-16"/></a>
+			<button class="btn btn-ghost block sm:hidden" id="navCloseBtn">
+				⨯
+			</button>
 			</div>
 			<div class="flex justify-center pt-1">
 				<Create client:only="Svelte" AuthorName={Name} AuthorUid={user} docLocation={path} />
 			</div>
 			<h1 class="text-xl font-semibold text-center pt-5">Recents</h1>
-			<div class="collapse collapse-arrow bg-transparent w-[17vw] mx-auto rounded-lg">
+			<div class="collapse collapse-arrow bg-transparent w-1/2 sm:w-[17vw] mx-auto rounded-lg">
 				<input type="radio" name="my-accordion-1" checked="checked" /> 
 				<div class="collapse-title text-md font-medium">
 					Notes
@@ -111,7 +114,7 @@ import Feedback from '../components/global/feedback.svelte';
 					</div>
 				</div>
 			</div>
-			<div class="collapse collapse-arrow bg-transparent w-[17vw] mx-auto rounded-lg">
+			<div class="collapse collapse-arrow bg-transparent w-1/2 sm:w-[17vw] mx-auto rounded-lg">
 				<input type="radio" name="my-accordion-1"/> 
 				<div class="collapse-title text-md font-medium">
 					Todo
@@ -126,7 +129,7 @@ import Feedback from '../components/global/feedback.svelte';
 					</div>
 				</div>
 			</div>
-			<div class="collapse collapse-arrow bg-transparent w-[17vw] mx-auto rounded-lg">
+			<div class="collapse collapse-arrow bg-transparent w-1/2 sm:w-[17vw] mx-auto rounded-lg">
 				<input type="radio" name="my-accordion-1"/> 
 				<div class="collapse-title text-md font-medium">
 					Drawings
@@ -163,6 +166,7 @@ import Feedback from '../components/global/feedback.svelte';
 			</div>
 		)}
 	</nav>
+	
 	<body>
 		<slot />
 	</body>
@@ -198,7 +202,6 @@ import Feedback from '../components/global/feedback.svelte';
 	nav:hover {
 		transform: translateX(0);
 	}
-
 	/*  make the scroll bar rounded with a very light grey color */
 	html::-webkit-scrollbar {
 		width: 0.5rem;
@@ -224,6 +227,7 @@ import Feedback from '../components/global/feedback.svelte';
 	@media (max-width: 600px) {
 		nav {
 			width: 100vw;
+			transform: translateX(-95%);
 		}
 	}
 	nav a {
@@ -240,5 +244,41 @@ import Feedback from '../components/global/feedback.svelte';
 	}
 	nav a:focus {
 		outline: 2px solid #f1f1f1;
+	}
+
+	/* nromally make the nav close button pop out of the edge of screen
+	#navOpenBtn {
+		position: absolute;
+		top: 0;
+		right: -2rem;
+		width: 2rem;
+		height: 2rem;
+		font-size: 1.5rem;
+		font-weight: bold;
+		border-radius: 0 0.5rem 0.5rem 0;
+		background-color: #f1f1f1;
+		color: #444;
+		border: none;
+		box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+	} */
+	#navCloseBtn {
+		position: absolute;
+		top: 0;
+		right: 0;
+		width: 2rem;
+		height: 2rem;
+		font-size: 1.5rem;
+		font-weight: bold;
+		border-radius: 0 0.5rem 0.5rem 0;
+		background-color: #f1f1f1;
+		color: #444;
+		border: none;
+		box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+		z-index: 2000;
+	}
+
+	/*  when the navCloseBtn is hovered, make it slide the nav back to the left */
+	#navCloseBtn:hover nav{
+		transform: translateX(-100%);
 	}
 </style>
