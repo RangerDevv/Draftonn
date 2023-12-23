@@ -166,7 +166,6 @@ import Feedback from '../components/global/feedback.svelte';
 			</div>
 		)}
 	</nav>
-	
 	<body>
 		<slot />
 	</body>
@@ -181,10 +180,7 @@ import Feedback from '../components/global/feedback.svelte';
 		font-family: system-ui, sans-serif;
 		background-color: #e9edf0;
 	}
-	code {
-		font-family: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono,
-			Bitstream Vera Sans Mono, Courier New, monospace;
-	}
+
 	nav {
 		position: fixed;
 		top: 0;
@@ -230,6 +226,7 @@ import Feedback from '../components/global/feedback.svelte';
 			transform: translateX(-95%);
 		}
 	}
+
 	nav a {
 		display: block;
 		padding: 0.5rem;
@@ -246,21 +243,6 @@ import Feedback from '../components/global/feedback.svelte';
 		outline: 2px solid #f1f1f1;
 	}
 
-	/* nromally make the nav close button pop out of the edge of screen
-	#navOpenBtn {
-		position: absolute;
-		top: 0;
-		right: -2rem;
-		width: 2rem;
-		height: 2rem;
-		font-size: 1.5rem;
-		font-weight: bold;
-		border-radius: 0 0.5rem 0.5rem 0;
-		background-color: #f1f1f1;
-		color: #444;
-		border: none;
-		box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-	} */
 	#navCloseBtn {
 		position: absolute;
 		top: 0;

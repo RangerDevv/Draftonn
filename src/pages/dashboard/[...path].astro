@@ -14,18 +14,33 @@ if(path == undefined || path == "") {
     return Astro.redirect("/dashboard/~")
 }
 
-let Folders = await appwriteDatabases.listDocuments(
-    DB_ID,
-    COLLECTION.Folders,
-    [
+let [foldersResponse, docsResponse, todosResponse, drawingsResponse] = await Promise.all([
+    appwriteDatabases.listDocuments(DB_ID, COLLECTION.Folders, [
         Query.equal("OwnerUid", user),
         Query.equal("Location", path)
-    ]
-).then(response => response.documents)
+    ]).then(response => response.documents),
+    appwriteDatabases.listDocuments(DB_ID, COLLECTION.Notes, [
+        Query.equal('AuthorUid', user),
+        Query.equal("Location", path)
+    ]).then(response => response.documents),
+    appwriteDatabases.listDocuments(DB_ID, COLLECTION.Todo, [
+        Query.equal('AuthorUid', user),
+        Query.equal("Location", path)
+    ]).then(response => response.documents),
+    appwriteDatabases.listDocuments(DB_ID, COLLECTION.Drawing, [
+        Query.equal('AuthorUid', user),
+        Query.equal("Location", path)
+    ]).then(response => response.documents)
+]);
+
+let Folders = foldersResponse;
+let Docs = docsResponse;
+let Todos = todosResponse;
+let Drawings = drawingsResponse;
 
 // get the current folder id if the user is in a folder
-console.log(path)
-if(path != "~") {
+console.log(path);
+if (path != "~") {
     currFolderID = await appwriteDatabases.listDocuments(
         DB_ID,
         COLLECTION.Folders,
@@ -34,37 +49,10 @@ if(path != "~") {
             // the Name is the last part of the path after the final "/"
             Query.equal("Name", path.split("/")[path.split("/").length - 1])
         ]
-    ).then(response => response.documents[0].$id)
+    ).then(response => response.documents[0].$id);
     // log the response
-    console.log(currFolderID)
+    console.log(currFolderID);
 }
-
-let Docs = await appwriteDatabases.listDocuments(
-	DB_ID,
-	COLLECTION.Notes, 
-	[
-		Query.equal('AuthorUid', user),
-        Query.equal("Location", path!)
-    ]
-).then(response => response.documents)
-
-let Todos = await appwriteDatabases.listDocuments(
-    DB_ID,
-    COLLECTION.Todo, 
-    [
-        Query.equal('AuthorUid', user),
-        Query.equal("Location", path!)
-    ]
-).then(response => response.documents)
-
-let Drawings = await appwriteDatabases.listDocuments(
-    DB_ID,
-    COLLECTION.Drawing, 
-    [
-        Query.equal('AuthorUid', user),
-        Query.equal("Location", path!)
-    ]
-).then(response => response.documents)
 
 
 ---
