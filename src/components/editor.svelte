@@ -57,7 +57,6 @@ await Backend.appwriteDatabases.listDocuments(
 }
 
 Backend.appwriteDatabases.getDocument(databaseId, collectionId, pid).then((response) => {
-    console.log(response);
     if (response.Content !== ' ' || response !== null || response !== undefined) {
         loadedData = response.Content;
         LoadedTitle = response.Name;
@@ -66,10 +65,6 @@ Backend.appwriteDatabases.getDocument(databaseId, collectionId, pid).then((respo
         AuthorUid = response.AuthorUid;
         docFileLocation = response.Location;
         getFolders();
-        console.log('The document is not empty' + loadedData);
-        if (loadedData === ' ') {
-            loadedData = JSON.stringify(editor.save());
-        }
         if (user == AuthorUid) {
             canRead = true;
         } else {
