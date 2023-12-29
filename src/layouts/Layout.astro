@@ -96,7 +96,9 @@ import Feedback from '../components/global/feedback.svelte';
 			<a class="btn btn-ghost w-auto h-auto" href="/dashboard/~"><img src={DraftOnn.src} class="h-16 w-16"/></a>
 			</div>
 			<div class="flex justify-center pt-1">
-				<a class=" block sm:hidden btn text-gray-800 bg-gray-200 items-center hover:bg-gray-300 mr-2" href="/dashboard">Home</a>
+				<div class="block sm:hidden">
+				<a class=" btn text-gray-800 bg-gray-200 items-center hover:bg-gray-300 mr-2" href="/dashboard">Home</a>
+				</div>
 				<Create client:only="Svelte" AuthorName={Name} AuthorUid={user} docLocation={path} />
 			</div>
 			<h1 class="text-xl font-semibold text-center pt-5">Recents</h1>

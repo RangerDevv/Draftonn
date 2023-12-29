@@ -79,14 +79,14 @@ if (path != "~") {
                     {(Folders.length > 0) && <h1 class="text-xl font-semibold">Folders</h1>}
                     {(Folders.length > 0)
                         && Folders.map((folder) => (
-                                <a class="w-96 hover:bg-gray-300 p-2 ml-4 rounded-lg" href={`/dashboard/${folder.Location}/${folder.Name}`}>📁 {folder.Name}</a>
+                                <a class="w-80 hover:bg-gray-300 p-2 ml-4 rounded-lg" href={`/dashboard/${folder.Location}/${folder.Name}`}>📁 {folder.Name}</a>
                         ))
                     }
 
                     <h1 class="text-xl font-semibold">Notes</h1>
                     {(Docs.length > 0)
                         ? Docs.map((doc) => (
-                                <a class="w-96 hover:bg-gray-300 p-2 ml-4 rounded-lg" href={`/doc/${doc.$id}`}>📄 {doc.Name}</a>
+                                <a class="w-80 hover:bg-gray-300 p-2 ml-4 rounded-lg" href={`/doc/${doc.$id}`}>📄 {doc.Name}</a>
                         ))
                         : <h1>There are no notes!</h1>
                     }
@@ -94,7 +94,7 @@ if (path != "~") {
                     <h1 class="text-xl font-semibold">Todo Lists</h1>
                     {(Todos.length > 0)
                         ? Todos.map((todo) => (
-                                <a class="w-96 hover:bg-gray-300 p-2 ml-4 rounded-lg" href={`/todo/${todo.$id}`}>✅ {todo.Name}</a>
+                                <a class="w-80 hover:bg-gray-300 p-2 ml-4 rounded-lg" href={`/todo/${todo.$id}`}>✅ {todo.Name}</a>
                         ))
                         : <h1>There are no Todo Lists!</h1>
                     }
@@ -102,7 +102,7 @@ if (path != "~") {
                     <h1 class="text-xl font-semibold">Scribble Board</h1>
                     {(Drawings.length > 0)
                         ? Drawings.map((draw) => (
-                                <a class="w-96 hover:bg-gray-300 p-2 ml-4 rounded-lg" href={`/draw/${draw.$id}`}>🎨 {draw.Name}</a>
+                                <a class="w-80 hover:bg-gray-300 p-2 ml-4 rounded-lg" href={`/draw/${draw.$id}`}>🎨 {draw.Name}</a>
                         ))
                         : <h1>There are no Scribble Boards!</h1>
                     }
