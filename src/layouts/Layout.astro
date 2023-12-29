@@ -96,6 +96,7 @@ import Feedback from '../components/global/feedback.svelte';
 			<a class="btn btn-ghost w-auto h-auto" href="/dashboard/~"><img src={DraftOnn.src} class="h-16 w-16"/></a>
 			</div>
 			<div class="flex justify-center pt-1">
+				<a class="btn text-gray-800 bg-gray-200 items-center hover:bg-gray-300 mr-2" href="/dashboard">Home</a>
 				<Create client:only="Svelte" AuthorName={Name} AuthorUid={user} docLocation={path} />
 			</div>
 			<h1 class="text-xl font-semibold text-center pt-5">Recents</h1>
@@ -148,7 +149,7 @@ import Feedback from '../components/global/feedback.svelte';
 				<button class="btn btn-ghost w-full" onclick="Feedback.showModal()">Give Feedback!</button>
 				<Feedback client:only="Svelte" Name={Name} />
 				<a class="btn btn-ghost w-full" id="logout">Logout→</a>
-				<a class="btn btn-ghost hover:bg-transparent w-full text-xl pt-5">≡</a>
+				<a class="btn btn-ghost hover:bg-transparent w-full text-xl pt-5 block sm:hidden">≡</a>
 			</div>
 			</div>
 		) : (
@@ -226,6 +227,9 @@ import Feedback from '../components/global/feedback.svelte';
 			width: 100vw;
 			transform: translateX(0);
 			transform: translateY(-95%);
+		}
+		nav:hover {
+			transform: translateY(-10%);
 		}
 	}
 
