@@ -85,15 +85,15 @@ import Feedback from '../components/global/feedback.svelte';
 		<title>{title}</title>
 	</head>
 <div class="grid">
+	<button class="btn btn-ghost block sm:hidden w-full" id="navCloseBtn">
+		⨯
+	</button>
 	<nav>
 		<!--  an arrow that is on the edge of the nav -->
 		{loggedIn ? (
 			<div>
 			<div class="flex flex-row justify-center">
 			<a class="btn btn-ghost w-auto h-auto" href="/dashboard/~"><img src={DraftOnn.src} class="h-16 w-16"/></a>
-			<button class="btn btn-ghost block sm:hidden" id="navCloseBtn">
-				⨯
-			</button>
 			</div>
 			<div class="flex justify-center pt-1">
 				<Create client:only="Svelte" AuthorName={Name} AuthorUid={user} docLocation={path} />
@@ -148,6 +148,7 @@ import Feedback from '../components/global/feedback.svelte';
 				<button class="btn btn-ghost w-full" onclick="Feedback.showModal()">Give Feedback!</button>
 				<Feedback client:only="Svelte" Name={Name} />
 				<a class="btn btn-ghost w-full" id="logout">Logout→</a>
+				<a class="btn btn-ghost hover:bg-transparent w-full text-xl pt-5">≡</a>
 			</div>
 			</div>
 		) : (
@@ -223,7 +224,8 @@ import Feedback from '../components/global/feedback.svelte';
 	@media (max-width: 600px) {
 		nav {
 			width: 100vw;
-			transform: translateX(-95%);
+			transform: translateX(0);
+			transform: translateY(-95%);
 		}
 	}
 
@@ -244,23 +246,19 @@ import Feedback from '../components/global/feedback.svelte';
 	}
 
 	#navCloseBtn {
-		position: absolute;
+		position: fixed;
 		top: 0;
-		right: 0;
-		width: 2rem;
-		height: 2rem;
+		left: 0;
 		font-size: 1.5rem;
 		font-weight: bold;
 		border-radius: 0 0.5rem 0.5rem 0;
-		background-color: #f1f1f1;
 		color: #444;
 		border: none;
-		box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 		z-index: 2000;
 	}
 
-	/*  when the navCloseBtn is hovered, make it slide the nav back to the left */
 	#navCloseBtn:hover nav{
-		transform: translateX(-100%);
+		transform: translateY(-95%);
 	}
+
 </style>
