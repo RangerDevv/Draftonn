@@ -83,7 +83,7 @@ Backend.appwriteDatabases.getDocument(databaseId, collectionId, pid).then((respo
             tools: {
                 header: Header,
                 list: {
-                    class: List,
+                    class: NestedList,
                     inlineToolbar: true,
                     config: {
                         defaultStyle: 'unordered'
