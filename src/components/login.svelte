@@ -18,9 +18,9 @@
       // the user name is the text before the @ symbol in the email address
       document.cookie = `userName=${response.providerUid.split('@')[0]}; expires=${new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toUTCString()}; path=/`;
   
-      const session = appwriteUser.getSession('current');
-      // console.log(session);
-      document.cookie = `session=${session.$id}; expires=${new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toUTCString()}; path=/`;
+      const session = appwriteUser.getSession('current').then((response) => {
+        document.cookie = `session=${response.$id}; expires=${new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toUTCString()}; path=/`;
+      });
       const curruser = appwriteUser.get();
       curruser.then((response) => {
         console.log(response);

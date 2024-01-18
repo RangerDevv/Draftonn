@@ -14,7 +14,8 @@ import {DB_ID, COLLECTION} from "../lib/ids"
 
 let user = Astro.cookies.get('user').value as string;
 let Name = Astro.cookies.get('userName').value;
-let loggedIn =  user && user !== 'undefined';
+let session = Astro.cookies.get('session').value;
+let loggedIn =  session && session !== 'undefined';
 
 let Docs = [] as any[]
 let Todo = [] as any[]
