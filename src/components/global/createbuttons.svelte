@@ -21,7 +21,7 @@
                 Location: path,
                 OwnerUid: AuthorUid
             }
-        ).then(_ => window.location.href = `${path}/${folderName}`)
+        ).then(_ => window.location.href = `${path.replace("~/","")}/${folderName}`)
     }
 
 // delete function that gets called when the delete button is clicked 

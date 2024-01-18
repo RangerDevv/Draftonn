@@ -8,13 +8,13 @@ const { title,path } = Astro.props;
 
 
 import DraftOnn from '../components/images/DraftOnn.png';
-import { appwriteDatabases } from '../lib/backend';
+import { appwriteDatabases, appwriteUser } from '../lib/backend';
 import { Query } from 'appwrite';
 import {DB_ID, COLLECTION} from "../lib/ids"
 
 let user = Astro.cookies.get('user').value as string;
 let Name = Astro.cookies.get('userName').value;
-let loggedIn = user && user !== 'undefined';
+let loggedIn =  user && user !== 'undefined';
 
 let Docs = [] as any[]
 let Todo = [] as any[]
@@ -66,6 +66,7 @@ import Feedback from '../components/global/feedback.svelte';
 	let LogOutBtn = document.getElementById('logout') as HTMLAnchorElement;
 
 	LogOutBtn.onclick = function logOut() {
+		window.location.href = '/login';
 		appwriteUser.deleteSession('current').then(() => {
 			document.cookie = `user=; expires=${new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toUTCString()}; path=/`;
 			document.cookie = `userName=; expires=${new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toUTCString()}; path=/`;
