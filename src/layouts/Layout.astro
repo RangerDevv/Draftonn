@@ -56,6 +56,10 @@ if (loggedIn) {
 		.then((response) => {
 			Drawings = response.documents as any[];
 		})
+} else {
+	Docs = []
+	Todo = []
+	Drawings = []
 }
 import Create from '../components/global/create.svelte';
 import Feedback from '../components/global/feedback.svelte';

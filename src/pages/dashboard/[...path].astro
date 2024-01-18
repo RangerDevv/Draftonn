@@ -7,6 +7,7 @@ import CreateButtons from "../../components/global/createbuttons.svelte"
 
 let user = Astro.cookies.get('user').value as string;
 let username = Astro.cookies.get('userName').value as string;
+let session = Astro.cookies.get('session').value as string;
 let { path } = Astro.params as { path: string };
 let currFolderID = '' as string;
 
@@ -52,6 +53,10 @@ if (path != "~") {
     ).then(response => response.documents[0].$id);
     // log the response
     console.log(currFolderID);
+}
+
+if(session == undefined || session == "") {
+    return Astro.redirect("/login")
 }
 
 
