@@ -118,7 +118,21 @@ function search() {
     if (modal instanceof HTMLDialogElement && typeof modal.showModal === 'function') {
         modal.showModal();
     }
-}}>Create</button>
+}}>
+<svg width="30px" height="30px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+
+    <rect x="0" fill="none" width="24" height="24"/>
+    
+    <g>
+    
+    <path d="M21 14v5c0 1.105-.895 2-2 2H5c-1.105 0-2-.895-2-2V5c0-1.105.895-2 2-2h5v2H5v14h14v-5h2z"/>
+    
+    <path d="M21 7h-4V3h-2v4h-4v2h4v4h2V9h4"/>
+    
+    </g>
+    
+</svg>
+</button>
 <button class="btn text-gray-800 bg-gray-200 items-center mx-auto hover:bg-gray-300" on:click={() => {
     const modal = document.getElementById('searchModal');
     // if the key combination of ctrl+q is pressed then open the search modal
@@ -132,7 +146,11 @@ function search() {
     if (modal instanceof HTMLDialogElement && typeof modal.showModal === 'function') {
         modal.showModal();
     }
-}}>Search 🔍</button>
+}}>
+<svg width="30px" height="30px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M11 6C13.7614 6 16 8.23858 16 11M16.6588 16.6549L21 21M19 11C19 15.4183 15.4183 19 11 19C6.58172 19 3 15.4183 3 11C3 6.58172 6.58172 3 11 3C15.4183 3 19 6.58172 19 11Z" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+</button>
 </div>
 <dialog id="my_modal_1" class="modal">
   <form method="dialog" class="modal-box bg-gray-200 flex flex-col gap-4">
