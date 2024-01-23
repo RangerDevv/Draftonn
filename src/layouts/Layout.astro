@@ -28,7 +28,7 @@ if (loggedIn) {
 		[
 			Query.search('AuthorUid', user),
 			Query.orderDesc("LastUpdated"),
-			Query.limit(10)
+			Query.limit(4)
 		])
 		.then((response) => {
 			Docs = response.documents as any[];
@@ -40,7 +40,7 @@ if (loggedIn) {
 		[
 			Query.search('AuthorUid', user),
 			Query.orderDesc("LastUpdated"),
-			Query.limit(10)
+			Query.limit(4)
 		])
 		.then((response) => {
 			Todo = response.documents as any[];
@@ -51,7 +51,7 @@ if (loggedIn) {
 		COLLECTION.Drawing, 
 		[
 			Query.search('AuthorUid', user),
-			Query.limit(10)
+			Query.limit(4)
 		])
 		.then((response) => {
 			Drawings = response.documents as any[];
