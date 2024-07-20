@@ -1,5 +1,5 @@
 <script>
-    import {appwriteUser} from '../lib/backend';
+    import {appwriteUser, appwriteClient} from '../lib/backend';
     
     import { ID } from 'appwrite';
   
@@ -10,28 +10,17 @@
     $: disabled = email === '' || password === '';
   
   function login() {
-    const promise = appwriteUser.createEmailSession(email, password);
-    promise.then((response) => {
-      console.log(response);
-      // set the response to a cookie that expires after 30 days
-      document.cookie = `user=${response.userId}; expires=${new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toUTCString()}; path=/`;
-      // the user name is the text before the @ symbol in the email address
-      document.cookie = `userName=${response.providerUid.split('@')[0]}; expires=${new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toUTCString()}; path=/`;
-  
-      const session = appwriteUser.getSession('current').then((response) => {
-        document.cookie = `session=${response.$id}; expires=${new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toUTCString()}; path=/`;
-      });
-      const curruser = appwriteUser.get();
-      curruser.then((response) => {
-        console.log(response);
-        document.cookie = `userName=${response.name}; expires=${new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toUTCString()}; path=/`;
-      window.location.href = '/dashboard/~';
-      }, (error) => {
-        console.log(error);
-        errorMessage = error.message;
-      });
-    }, (error) => {
-      console.log(error);
+    const promise = appwriteUser.createEmailSession(email, password).then(() => {
+      document.cookie('session', promise.secret, { // use the session secret as the cookie value
+            httpOnly: true,
+            secure: true,
+            sameSite: 'strict',
+            maxAge: promise.expire,
+            path: '/dashboard',
+        });
+        console.log('Logged in');
+        window.location.href = '/dashboard';
+    }).catch((error) => {
       errorMessage = error.message;
     });
   }
